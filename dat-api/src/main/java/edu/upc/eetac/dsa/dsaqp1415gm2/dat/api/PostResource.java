@@ -2,18 +2,34 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+
+
+
+
+
+
+
 
 
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
-import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Thread.PostCollection;
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Post;
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.PostCollection;
+
+
+
+@Path("/themeid/threadid/postid")
+
+
 
 public class PostResource {
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
@@ -25,13 +41,18 @@ public class PostResource {
 	private String UPDATE_POST_QUERY = "update post set content=ifnull(?, content) where postid=?";
 	
 
-	/*
+	
+
+	
+	
+	@SuppressWarnings("resource")
 	@GET
-	@Produces(MediaType.DAT_API_THREAD)
+	@Produces(MediaType.DAT_API_POST_COLLECTION)
 	public PostCollection getIdposts(@QueryParam("length") int length,
 			@QueryParam("before") long before, @QueryParam("after") long after) {
+		
 		PostCollection posts = new PostCollection();
-	 
+
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
@@ -39,37 +60,30 @@ public class PostResource {
 			throw new ServerErrorException("Could not connect to the database",
 					Response.Status.SERVICE_UNAVAILABLE);
 		}
-	 
+
 		PreparedStatement stmt = null;
 		try {
+			ResultSet rs = stmt.executeQuery();
 			boolean updateFromLast = after > 0;
-			stmt = updateFromLast ? conn
+			stmt = updateFromLast ? conn // condicion ternaria
 					.prepareStatement(GET_POSTS_QUERY_FROM_LAST) : conn
 					.prepareStatement(GET_POSTS_QUERY);
-
-		} catch (SQLException e) {
+			while (rs.next()) {
+				Post post = new Post();
+				post.setIdpost(rs.getInt("idpost"));
+				post.setUser_default(rs.getString("user_default"));
+				post.setContent	(rs.getString("content"));
+				post.setImage_link(rs.getString("image_link"));
+				posts.addPost(post);
+				
+			}
+			
+		}
+		catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
-			if (Idpost!=0) {
-				stmt.getIdpost(1, new Timestamp(after));
-			} else {
-				if (before > 0)
-					stmt.setTimestamp(1, new Timestamp(before));
-				else
-					stmt.setTimestamp(1, null);
-				length = (length <= 0) ? 5 : length;
-				stmt.setInt(2, length);
-			}
-			ResultSet rs = stmt.executeQuery();
-			boolean first = true;
-			long oldestTimestamp = 0;
-			while (rs.next()) {
-			}
-				
-				
-				
-			}
-		} finally {
+		}
+		finally {
 			try {
 				if (stmt != null)
 					stmt.close();
@@ -77,40 +91,7 @@ public class PostResource {
 			} catch (SQLException e) {
 			}
 		}
-	 
-		return posts;
-	}
 	
-*/
-}
-
-/*if (updateFromLast) {
-	stmt.setTimestamp(1, new Timestamp(after));
-} else {
-	if (before > 0)
-		stmt.setTimestamp(1, new Timestamp(before));
-	else
-		stmt.setTimestamp(1, null);
-	length = (length <= 0) ? 5 : length;
-	stmt.setInt(2, length);
-}
-ResultSet rs = stmt.executeQuery();
-boolean first = true;
-long oldestTimestamp = 0;
-while (rs.next()) {
-	Sting sting = new Sting();
-	sting.setStingid(rs.getInt("stingid"));
-	sting.setUsername(rs.getString("username"));
-	sting.setAuthor(rs.getString("name"));
-	sting.setSubject(rs.getString("subject"));
-	sting.setLastModified(rs.getTimestamp("last_modified").getTime());
-	sting.setCreationTimestamp(rs.getTimestamp("creation_timestamp").getTime()); 
-	oldestTimestamp = rs.getTimestamp("creation_timestamp").getTime();
-	sting.setLastModified(oldestTimestamp);
-	if (first) {
-		first = false;
-		stings.setNewestTimestamp(sting.getCreationTimestamp());
-	}
-	stings.addSting(sting);
-}
-stings.setOldestTimestamp(oldestTimestamp);*/
+	return posts;
+}}
+	

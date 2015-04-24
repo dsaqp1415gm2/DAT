@@ -15,9 +15,7 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.PostResource;
 
 public class Theme {
 	@InjectLinks({
-		@InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "create-sting", title = "Create thread", type = MediaType.DAT_API_THREAD),
-		@InjectLink(value = "/threads?before={before}", style = Style.ABSOLUTE, rel = "previous", title = "Previous thread", type = MediaType.DAT_API_THEME, bindings = { @Binding(name = "before", value = "${instance.oldestTimestamp}") }),
-		@InjectLink(value = "/thread?after={after}", style = Style.ABSOLUTE, rel = "current", title = "Newest thread", type = MediaType.DAT_API_THEME, bindings = { @Binding(name = "after", value = "${instance.newestTimestamp}") }) })
+		@InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "create-sting", title = "Create thread", type = MediaType.DAT_API_POST_COLLECTION)})
 private List<Link> links;
 
 public List<Link> getLinks() {
@@ -28,40 +26,23 @@ public void setLinks(List<Link> links) {
 	this.links = links;
 }
 
-private List<Thread> threads;
-private long newestTimestamp;
-private long oldestTimestamp;
+private List<PostCollection> threads;
 
-public long getNewestTimestamp() {
-	return newestTimestamp;
-}
-
-public void setNewestTimestamp(long newestTimestamp) {
-	this.newestTimestamp = newestTimestamp;
-}
-
-public long getOldestTimestamp() {
-	return oldestTimestamp;
-}
-
-public void setOldestTimestamp(long oldestTimestamp) {
-	this.oldestTimestamp = oldestTimestamp;
-}
 
 public Theme() {
 	super();
 	threads = new ArrayList<>();
 }
 
-public List<Thread> getThreads() {
+public List<PostCollection> getThreads() {
 	return threads;
 }
 
-public void setThreads(List<Thread> threads) {
+public void setThreads(List<PostCollection> threads) {
 	this.threads = threads;
 }
 
-public void addThread(Thread thread) {
+public void addThread(PostCollection thread) {
 	threads.add(thread);
 }
 }

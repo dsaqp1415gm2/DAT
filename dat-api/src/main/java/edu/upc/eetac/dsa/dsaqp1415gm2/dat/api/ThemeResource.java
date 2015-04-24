@@ -23,13 +23,13 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Theme;
 
 
 
-@Path("/theme")
+@Path("/themeid")
 public class ThemeResource {
 
 
 	@GET
 	@Produces("application/json")
-	public Post getSting() {
+	public Post getTheme() {
 		// Create CacheControl
 	 
 		Post post = new Post();

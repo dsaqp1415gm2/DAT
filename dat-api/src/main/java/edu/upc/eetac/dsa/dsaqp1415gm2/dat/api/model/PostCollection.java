@@ -2,7 +2,9 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 
 import java.util.List;
 
-public class Thread {
+
+
+public class PostCollection {
 	private String subject;
 	private String content;
 	private int idthread;
@@ -46,5 +48,7 @@ public class Thread {
 	public void setIdpost(int idpost) {
 		this.idpost = idpost;
 	}
-	
+	public void addPost(Post post) {
+		posts.add(post);
+	}
 }
