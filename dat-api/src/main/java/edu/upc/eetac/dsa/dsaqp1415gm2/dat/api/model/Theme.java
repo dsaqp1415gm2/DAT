@@ -2,7 +2,7 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 
 import java.util.List;
 
-public class Tema {
+public class Theme {
 	private String Title;
 	private List<Thread> threads;
 
