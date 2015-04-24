@@ -38,15 +38,6 @@ create table post (
 	foreign key(idpost) references thread(idthread) on delete cascade
 );
 
-
-
-
-
-
-
-
-
-
 insert into theme(idtheme,image_link) values (NULL,'http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');
 insert into thread(idthread,user_default,subject) values (NULL,'Anonymous','Test');
 insert into post(idpost,user_default,content,image_link) values (NULL,'Anonymous','prueba BD','http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');

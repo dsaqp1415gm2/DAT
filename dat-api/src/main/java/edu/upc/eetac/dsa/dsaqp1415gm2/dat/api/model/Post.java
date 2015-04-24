@@ -4,7 +4,7 @@ public class Post {
 	private String content;
 	private int idpost;
 	private int npost;
-	//kjghjdhmg
+	
 	public int getNpost() {
 		return npost;
 	}
