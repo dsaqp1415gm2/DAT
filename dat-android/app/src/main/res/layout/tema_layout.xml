@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App creada por:"
+            android:textColor="#ff616161"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:id="@+id/textAbout"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Juan Álvarez"
+            android:textColor="#ff616161"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:id="@+id/textAbout2"
+            android:gravity="center"
+            android:layout_below="@id/textAbout"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manel Méndez"
+            android:textColor="#ff616161"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:id="@+id/textAbout3"
+            android:gravity="center"
+            android:layout_below="@id/textAbout2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maksym Pryschepa"
+            android:textColor="#ff616161"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:id="@+id/textAbout4"
+            android:gravity="center"
+            android:layout_below="@id/textAbout3"/>
+    </RelativeLayout>
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plus_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_icon="@mipmap/add_plus"
+        fab:fab_colorNormal="@color/accent_color"
+        fab:fab_colorPressed="@color/accent_color"
+        android:layout_gravity="right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"/>
+</RelativeLayout>
