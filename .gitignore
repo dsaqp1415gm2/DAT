@@ -2,7 +2,7 @@
 .project
 .settings/
 target/
-
+ 
 # built application files
 *.apk
 *.ap_
