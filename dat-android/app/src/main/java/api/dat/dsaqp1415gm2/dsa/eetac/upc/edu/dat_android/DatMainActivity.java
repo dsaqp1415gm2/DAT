@@ -2,8 +2,10 @@ package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,7 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class DatMainActivity extends ActionBarActivity{
+public class DatMainActivity extends ActionBarActivity {
     //declaro el drawer y su listview
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -58,31 +60,65 @@ public class DatMainActivity extends ActionBarActivity{
         NavAdapter = new NavigationAdapter(this,DwItems);
         listView.setAdapter(NavAdapter);
         listView.setOnItemClickListener(new DrawerItemClickListener());
-        //codigo para cambiarle la fuente al boton por la que he añadido en assets
-        //tambien le añado un borde al texto con "shadow"
-        customButton = (Button)findViewById(R.id.bt1);
-        Typeface font = Typeface.createFromAsset(getAssets(),"BAUHS93.TTF");
-        customButton.setTypeface(font);
-        customButton.setShadowLayer(35, 0, 0, Color.WHITE);
-        //repito con los demas (la fuente ahora esta en la variable "font")
-        customButton = (Button)findViewById(R.id.bt2);
-        customButton.setTypeface(font);
-        customButton.setShadowLayer(35, 0, 0, Color.WHITE);
-        customButton = (Button)findViewById(R.id.bt3);
-        customButton.setTypeface(font);
-        customButton.setShadowLayer(35, 0, 0, Color.WHITE);
-        customButton = (Button)findViewById(R.id.bt4);
-        customButton.setTypeface(font);
-        customButton.setShadowLayer(35, 0, 0, Color.WHITE);
-
+        // Locate the viewpager in activity_main.xml
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        // Set the ViewPagerAdapter into ViewPager
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        View pagerStrip = findViewById(R.id.tab_strip);
+        if (pagerStrip instanceof PagerTabStrip)
+        {
+            PagerTabStrip pagerTabStrip = (PagerTabStrip) pagerStrip;
+            //pagerTabStrip.setDrawFullUnderline(true);
+            pagerTabStrip.setTabIndicatorColorResource(R.color.accent_color);
+        }
+        else if (pagerStrip instanceof PagerTitleStrip)
+        {
+            PagerTitleStrip pagerTitleStrip = (PagerTitleStrip) pagerStrip;
+            pagerTitleStrip.setTextColor(getResources().getColor(android.R.color.white));
+        }
     }
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                long arg3) {
-            Toast.makeText(DatMainActivity.this, "Item: " + titulos[arg2-1],
+        public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3)
+        {
+            if (arg2-1 < 0)
+            {
+                drawerLayout.closeDrawers();
+            }
+            else
+            {
+                Toast.makeText(DatMainActivity.this, "Item: " + titulos[arg2-1],
                     Toast.LENGTH_SHORT).show();
-            drawerLayout.closeDrawers();
+                muestra(arg2 - 1);
+                drawerLayout.closeDrawers();
+            }
+        }
+    }
+    private void muestra (int opcion)
+    {
+        switch (opcion)
+        {
+            case 0:
+                Intent i = new Intent(this, TemaActivity.class);
+                startActivity(i);
+                break;
+            case 1:
+                Intent i1 = new Intent(this, TemaActivity.class);
+                startActivity(i1);
+                break;
+            case 2:
+                Intent i2 = new Intent(this, About.class);
+                startActivity(i2);
+                break;
+            case 3:
+                Intent i3 = new Intent(this, About.class);
+                startActivity(i3);
+                break;
+            case 4:
+                Intent i4 = new Intent(this, About.class);
+                startActivity(i4);
+                break;
+
         }
     }
     //metodo para cerrar el drawer al pulsar el boton de ATRAS
@@ -95,13 +131,14 @@ public class DatMainActivity extends ActionBarActivity{
             super.onBackPressed();
         }
     }
+    //crea el menu de la derecha
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dat_main, menu);
         return true;
     }
-
+    //opciones al clikar en los items de menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -127,21 +164,4 @@ public class DatMainActivity extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
-    public void clickMe(View v) {
-        Intent i = new Intent(this, TemaActivity.class);
-        startActivity(i);
-    }
-    public void clickMe2(View v) {
-        Intent i = new Intent(this, TemaActivity.class);
-        startActivity(i);
-    }
-    public void clickMe3(View v) {
-        Intent i = new Intent(this, TemaActivity.class);
-        startActivity(i);
-    }
-    public void clickMe4(View v) {
-        Intent i = new Intent(this, TemaActivity.class);
-        startActivity(i);
-    }
-
 }
