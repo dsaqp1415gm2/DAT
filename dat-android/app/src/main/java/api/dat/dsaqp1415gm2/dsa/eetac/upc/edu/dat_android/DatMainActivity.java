@@ -2,13 +2,14 @@ package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,11 +24,16 @@ import java.util.ArrayList;
 public class DatMainActivity extends ActionBarActivity {
     //declaro el drawer y su listview
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
     private ListView listView;
     private String[] titulos;
     private ArrayList<Drawer_items> DwItems;
     private TypedArray DwIcons;
     NavigationAdapter NavAdapter;
+    private ViewPager viewPager;
+    private Toolbar toolbar;
+    SlidingTabLayout tabs;
+    ViewPagerAdapter adapterViewPager;
     // declaro el boton para cambiarle la fuente
     protected Button customButton;
     @Override
@@ -36,12 +41,26 @@ public class DatMainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dat_main);
         //añado la toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setToolbar();
+        //añado el drawer (menu lateral)
+        setDrawerLayout();
+        //añadir el viewPager con los tabs
+        setViewPager();
+        //añadir el refresh
+
+    }
+    //coge la toolbar del xml y le añade titulo y algun boton
+    public void setToolbar()
+    {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("DAT");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        //añado el drawer (menu lateral)
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    //coge el drawer creado en el activity_main y le añade el header y la lista
+    public void setDrawerLayout()
+    {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         listView = (ListView) findViewById(R.id.list_view);
         //Declarar el header
@@ -60,59 +79,87 @@ public class DatMainActivity extends ActionBarActivity {
         NavAdapter = new NavigationAdapter(this,DwItems);
         listView.setAdapter(NavAdapter);
         listView.setOnItemClickListener(new DrawerItemClickListener());
-        // Locate the viewpager in activity_main.xml
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        // Set the ViewPagerAdapter into ViewPager
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-        View pagerStrip = findViewById(R.id.tab_strip);
-        if (pagerStrip instanceof PagerTabStrip)
-        {
-            PagerTabStrip pagerTabStrip = (PagerTabStrip) pagerStrip;
-            //pagerTabStrip.setDrawFullUnderline(true);
-            pagerTabStrip.setTabIndicatorColorResource(R.color.accent_color);
-        }
-        else if (pagerStrip instanceof PagerTitleStrip)
-        {
-            PagerTitleStrip pagerTitleStrip = (PagerTitleStrip) pagerStrip;
-            pagerTitleStrip.setTextColor(getResources().getColor(android.R.color.white));
-        }
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,  R.string.app_name, R.string.app_name) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+
+        // Set the drawer toggle as the DrawerListener
+        drawerLayout.setDrawerListener(drawerToggle);
+
+        drawerToggle.syncState();
     }
+    //coge el viewPager creado en el activity_main y le añade las tabs creadas
+    public void setViewPager()
+    {
+        // Locate the viewpager in activity_main.xml
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        // Set the ViewPagerAdapter into ViewPager
+        adapterViewPager = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapterViewPager);
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tab_strip);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.accent_color);
+            }
+        });
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(viewPager);
+    }
+
+
+
+    //define que sucede al clicar en un item del drawer
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3)
+        public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            if (arg2-1 < 0)
+            if (posicion-1 < 0)
             {
                 drawerLayout.closeDrawers();
             }
             else
             {
-                Toast.makeText(DatMainActivity.this, "Item: " + titulos[arg2-1],
-                    Toast.LENGTH_SHORT).show();
-                muestra(arg2 - 1);
+                itemDrawerPulsado(posicion - 1);
                 drawerLayout.closeDrawers();
             }
         }
     }
-    private void muestra (int opcion)
+    //opciones al clickar en un item del drawer
+    private void itemDrawerPulsado (int opcion)
     {
         switch (opcion)
         {
             case 0:
-                Intent i = new Intent(this, TemaActivity.class);
-                startActivity(i);
+                viewPager.setCurrentItem(opcion);
                 break;
             case 1:
-                Intent i1 = new Intent(this, TemaActivity.class);
-                startActivity(i1);
+                viewPager.setCurrentItem(opcion);
                 break;
             case 2:
-                Intent i2 = new Intent(this, About.class);
-                startActivity(i2);
+                viewPager.setCurrentItem(opcion);
                 break;
             case 3:
-                Intent i3 = new Intent(this, About.class);
-                startActivity(i3);
+                viewPager.setCurrentItem(opcion);
                 break;
             case 4:
                 Intent i4 = new Intent(this, About.class);
@@ -133,8 +180,8 @@ public class DatMainActivity extends ActionBarActivity {
     }
     //crea el menu de la derecha
     @Override
+    //crea el menu de opciones a la derecha de la toolbar
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dat_main, menu);
         return true;
     }
