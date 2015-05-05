@@ -4,8 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT = 4;
     // Tab Titles
@@ -27,22 +28,22 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
             // Open FragmentTab1.java
             case 0:
-                FragmentTab1 fragmenttab1 = new FragmentTab1();
+                FragmentTab fragmenttab1 = new FragmentTab();
                 return fragmenttab1;
 
             // Open FragmentTab2.java
             case 1:
-                FragmentTab2 fragmenttab2 = new FragmentTab2();
+                FragmentTab fragmenttab2 = new FragmentTab();
                 return fragmenttab2;
 
             // Open FragmentTab3.java
             case 2:
-                FragmentTab3 fragmenttab3 = new FragmentTab3();
+                FragmentTab fragmenttab3 = new FragmentTab();
                 return fragmenttab3;
 
             // Open FragmentTab4.java
             case 3:
-                FragmentTab4 fragmenttab4 = new FragmentTab4();
+                FragmentTab fragmenttab4 = new FragmentTab();
                 return fragmenttab4;
         }
         return null;
