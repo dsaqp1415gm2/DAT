@@ -4,7 +4,7 @@ import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class DATApplication extends ResourceConfig{
-	public DATApplication(){//cambio para commit
+	public DATApplication(){//cambio para commit2
 		super();
 		register(DeclarativeLinkingFeature.class);
 	}
