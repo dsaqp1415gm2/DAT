@@ -23,13 +23,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".About"/>
         </activity>
-        <activity
-            android:name=".TemaActivity"
-            android:label="Tema" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TemaActivity"/>
-        </activity>
     </application>
 
 </manifest>
