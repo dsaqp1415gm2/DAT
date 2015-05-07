@@ -25,7 +25,7 @@ public class PostResource {
 	private String UPDATE_POST_QUERY = "update post set content=ifnull(?, content) where postid=?";
 	
 
-	
+	/*
 	@GET
 	@Produces(MediaType.DAT_API_THREAD)
 	public PostCollection getIdposts(@QueryParam("length") int length,
@@ -81,7 +81,7 @@ public class PostResource {
 		return posts;
 	}
 	
-
+*/
 }
 
 /*if (updateFromLast) {
