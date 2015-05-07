@@ -1,4 +1,4 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.R;
 import android.content.Context;

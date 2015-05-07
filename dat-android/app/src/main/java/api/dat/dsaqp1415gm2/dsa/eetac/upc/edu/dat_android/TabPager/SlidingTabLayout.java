@@ -1,9 +1,8 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;

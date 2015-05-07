@@ -1,4 +1,4 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
+
 public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

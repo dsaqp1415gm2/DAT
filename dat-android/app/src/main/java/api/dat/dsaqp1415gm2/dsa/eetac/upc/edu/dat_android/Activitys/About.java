@@ -1,8 +1,10 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
 public class About extends ActionBarActivity {
 

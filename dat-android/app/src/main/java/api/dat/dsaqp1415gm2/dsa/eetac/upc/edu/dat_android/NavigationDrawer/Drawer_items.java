@@ -1,4 +1,4 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer;
 
 public class Drawer_items {
     private String title;

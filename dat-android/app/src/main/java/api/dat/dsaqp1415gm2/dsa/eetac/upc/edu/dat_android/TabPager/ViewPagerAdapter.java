@@ -1,10 +1,11 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager.FragmentTab;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
