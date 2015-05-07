@@ -1,4 +1,4 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
 public class NavigationAdapter extends BaseAdapter {
     private Activity activity;

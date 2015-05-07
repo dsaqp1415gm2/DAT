@@ -1,12 +1,9 @@
-package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android;
+package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +16,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Dialog.Dialog_post;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.NavigationAdapter;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager.SlidingTabLayout;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager.ViewPagerAdapter;
 
 
 public class DatMainActivity extends ActionBarActivity {
@@ -210,5 +214,10 @@ public class DatMainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void clickPost (View view)
+    {
+        Dialog_post dialog_post = new Dialog_post(this);
+        dialog_post.show();
     }
 }
