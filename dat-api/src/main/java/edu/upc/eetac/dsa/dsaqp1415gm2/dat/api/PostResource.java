@@ -2,35 +2,40 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
-import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Thread.PostCollection;
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Post;
 
+@Path("/post")
 public class PostResource {
-	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
-	private String GET_POSTS_QUERY = "select s.*, u.name from post s, users u where u.username=s.username order by idpost desc limit ?";
-	private String GET_POSTS_QUERY_FROM_LAST = "select s.*, u.name from post s, users u where u.username=s.username  order by idpost desc";
-	private String GET_POST_BY_ID_QUERY = "select s.*, u.name from post s, users u where u.username=s.username and s.postid=?";
-	private String INSERT_POST_QUERY = "insert into post (user_default,content,image_link) values ('Anonymous', ?, ?)";
-	private String DELETE_POST_QUERY = "delete from post where postid=?";
-	private String UPDATE_POST_QUERY = "update post set content=ifnull(?, content) where postid=?";
 	
-
-	/*
+	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
+	
+	private String GET_POST_BY_ID_QUERY = "select * from post where idthema=?, idhilo=? and idpost=?";
+	private String GET_POST_BY_ID = "select s.*,"
+			+ "from post s, where u.username=s.username and s.stingid=?";
+	
 	@GET
-	@Produces(MediaType.DAT_API_THREAD)
-	public PostCollection getIdposts(@QueryParam("length") int length,
-			@QueryParam("before") long before, @QueryParam("after") long after) {
-		PostCollection posts = new PostCollection();
+	@Path("/{idtema}/{idhilo}/{idpost}")
+	@Produces("application/json")
+	public Post getpost(@PathParam("idtema") String idtema, @PathParam("idhilo") String idhilo,
+			@PathParam("idpost") String idpost) {
+		Post post = getPostFromDB(idtema,idhilo,idpost);
+		
+		return post;
+	}
+	private Post getPostFromDB(String idtema, String idhilo, String idpost) {
+		Post post = new Post();
 	 
 		Connection conn = null;
 		try {
@@ -42,33 +47,24 @@ public class PostResource {
 	 
 		PreparedStatement stmt = null;
 		try {
-			boolean updateFromLast = after > 0;
-			stmt = updateFromLast ? conn
-					.prepareStatement(GET_POSTS_QUERY_FROM_LAST) : conn
-					.prepareStatement(GET_POSTS_QUERY);
-
+			stmt = conn.prepareStatement(GET_POST_BY_ID_QUERY);
+			stmt.setInt(1, Integer.valueOf(idtema));
+			stmt.setInt(2, Integer.valueOf(idhilo));
+			stmt.setInt(3, Integer.valueOf(idpost));
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				post.setIdthema(rs.getInt("idtema"));
+				post.setIdhilo(rs.getInt("idhilo"));
+				post.setIdpost(rs.getInt("idpost"));
+				post.setContent(rs.getString("content"));
+				
+			} else {
+				throw new NotFoundException("There's no post with id="
+						+ idpost);
+			}
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
-			if (Idpost!=0) {
-				stmt.getIdpost(1, new Timestamp(after));
-			} else {
-				if (before > 0)
-					stmt.setTimestamp(1, new Timestamp(before));
-				else
-					stmt.setTimestamp(1, null);
-				length = (length <= 0) ? 5 : length;
-				stmt.setInt(2, length);
-			}
-			ResultSet rs = stmt.executeQuery();
-			boolean first = true;
-			long oldestTimestamp = 0;
-			while (rs.next()) {
-			}
-				
-				
-				
-			}
 		} finally {
 			try {
 				if (stmt != null)
@@ -78,39 +74,7 @@ public class PostResource {
 			}
 		}
 	 
-		return posts;
+		return post;
 	}
-	
-*/
 }
-
-/*if (updateFromLast) {
-	stmt.setTimestamp(1, new Timestamp(after));
-} else {
-	if (before > 0)
-		stmt.setTimestamp(1, new Timestamp(before));
-	else
-		stmt.setTimestamp(1, null);
-	length = (length <= 0) ? 5 : length;
-	stmt.setInt(2, length);
-}
-ResultSet rs = stmt.executeQuery();
-boolean first = true;
-long oldestTimestamp = 0;
-while (rs.next()) {
-	Sting sting = new Sting();
-	sting.setStingid(rs.getInt("stingid"));
-	sting.setUsername(rs.getString("username"));
-	sting.setAuthor(rs.getString("name"));
-	sting.setSubject(rs.getString("subject"));
-	sting.setLastModified(rs.getTimestamp("last_modified").getTime());
-	sting.setCreationTimestamp(rs.getTimestamp("creation_timestamp").getTime()); 
-	oldestTimestamp = rs.getTimestamp("creation_timestamp").getTime();
-	sting.setLastModified(oldestTimestamp);
-	if (first) {
-		first = false;
-		stings.setNewestTimestamp(sting.getCreationTimestamp());
-	}
-	stings.addSting(sting);
-}
-stings.setOldestTimestamp(oldestTimestamp);*/
+		

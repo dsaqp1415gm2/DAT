@@ -3,14 +3,9 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 public class Post {
 	private String content;
 	private int idpost;
-	private int npost;
+	private int idthema;
+	private int idhilo;
 	
-	public int getNpost() {
-		return npost;
-	}
-	public void setNpost(int npost) {
-		this.npost = npost;
-	}
 	public String getContent() {
 		return content;
 	}
@@ -22,6 +17,18 @@ public class Post {
 	}
 	public void setIdpost(int idpost) {
 		this.idpost = idpost;
+	}
+	public int getIdthema() {
+		return idthema;
+	}
+	public void setIdthema(int idthema) {
+		this.idthema = idthema;
+	}
+	public int getIdhilo() {
+		return idhilo;
+	}
+	public void setIdhilo(int idhilo) {
+		this.idhilo = idhilo;
 	}
 	
 }

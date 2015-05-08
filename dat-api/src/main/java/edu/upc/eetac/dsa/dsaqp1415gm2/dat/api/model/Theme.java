@@ -3,65 +3,51 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Link;
-
-import org.glassfish.jersey.linking.Binding;
-import org.glassfish.jersey.linking.InjectLink;
-import org.glassfish.jersey.linking.InjectLinks;
-import org.glassfish.jersey.linking.InjectLink.Style;
-
-import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
-import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.PostResource;
-
 public class Theme {
-	@InjectLinks({
-		@InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "create-sting", title = "Create thread", type = MediaType.DAT_API_THREAD),
-		@InjectLink(value = "/threads?before={before}", style = Style.ABSOLUTE, rel = "previous", title = "Previous thread", type = MediaType.DAT_API_THEME, bindings = { @Binding(name = "before", value = "${instance.oldestTimestamp}") }),
-		@InjectLink(value = "/thread?after={after}", style = Style.ABSOLUTE, rel = "current", title = "Newest thread", type = MediaType.DAT_API_THEME, bindings = { @Binding(name = "after", value = "${instance.newestTimestamp}") }) })
-private List<Link> links;
+	private int idtheme;
+	private String nametheme;
+	private String linktheme;
+	
+	private List<Thread> threads;
 
-public List<Link> getLinks() {
-	return links;
-}
+	public Theme() {
+		super();
+		threads = new ArrayList<>();
+	}
+	
+	public List<Thread> getThreads() {
+		return threads;
+	}
+	
+	public void setThreads(List<Thread> threads) {
+		this.threads = threads;
+	}
+	
+	public void addThread(Thread thread) {
+		threads.add(thread);
+	}
 
-public void setLinks(List<Link> links) {
-	this.links = links;
-}
+	public int getIdtheme() {
+		return idtheme;
+	}
 
-private List<Thread> threads;
-private long newestTimestamp;
-private long oldestTimestamp;
+	public void setIdtheme(int idtheme) {
+		this.idtheme = idtheme;
+	}
 
-public long getNewestTimestamp() {
-	return newestTimestamp;
-}
+	public String getNametheme() {
+		return nametheme;
+	}
 
-public void setNewestTimestamp(long newestTimestamp) {
-	this.newestTimestamp = newestTimestamp;
-}
+	public void setNametheme(String nametheme) {
+		this.nametheme = nametheme;
+	}
 
-public long getOldestTimestamp() {
-	return oldestTimestamp;
-}
+	public String getLinktheme() {
+		return linktheme;
+	}
 
-public void setOldestTimestamp(long oldestTimestamp) {
-	this.oldestTimestamp = oldestTimestamp;
-}
-
-public Theme() {
-	super();
-	threads = new ArrayList<>();
-}
-
-public List<Thread> getThreads() {
-	return threads;
-}
-
-public void setThreads(List<Thread> threads) {
-	this.threads = threads;
-}
-
-public void addThread(Thread thread) {
-	threads.add(thread);
-}
+	public void setLinktheme(String linktheme) {
+		this.linktheme = linktheme;
+	}
 }

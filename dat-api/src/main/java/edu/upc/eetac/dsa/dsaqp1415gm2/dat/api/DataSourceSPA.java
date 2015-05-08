@@ -5,7 +5,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
 public class DataSourceSPA {
     private DataSource dataSource;
 	private static DataSourceSPA instance;
@@ -16,12 +15,12 @@ public class DataSourceSPA {
 		try {
 			envContext = new InitialContext();
 			Context initContext = (Context) envContext.lookup("java:/comp/env");
-			dataSource = (DataSource) initContext.lookup("jdbc/beeterdb");
+			dataSource = (DataSource) initContext.lookup("jdbc/datdb");
 		} catch (NamingException e1) {
 			e1.printStackTrace();
 		}
 	}
- 
+	
 	public final static DataSourceSPA getInstance() {
 		if (instance == null)
 			instance = new DataSourceSPA();

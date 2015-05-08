@@ -19,29 +19,25 @@ create table user_roles (
 
 create table theme (
 	idtheme		int not null auto_increment primary key,
+	nametheme	varchar(20) not null,
 	image_link	varchar(500) not null	
 );
 
 create table thread (
+	idtema		int not null,
 	idthread	int not null auto_increment primary key,
-	user_default	varchar(20) not null,
 	subject		varchar(100) not null,
-	foreign key(idthread) references theme(idtheme) on delete cascade	
+	content		varchar(500) not null,
+	foreign key(idtema) references theme(idtheme) on delete cascade	
 );
 
 
 create table post (
+	idthema		int not null,
+	idhilo		int not null,
 	idpost		int not null auto_increment primary key,
-	user_default	varchar(20) not null,
 	content		varchar(1000) not null,
-	image_link	varchar(500) ,
-	foreign key(idpost) references thread(idthread) on delete cascade
+	image_link	varchar(500) not null,
+	foreign key(idthema) references thread(idtheme) on delete cascade,
+	foreign key(idhilo) references thread(idthread) on delete cascade
 );
-
-insert into theme(idtheme,image_link) values (NULL,'http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');
-insert into thread(idthread,user_default,subject) values (NULL,'Anonymous','Test');
-insert into post(idpost,user_default,content,image_link) values (NULL,'Anonymous','prueba BD','http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');
-
-
-
-
