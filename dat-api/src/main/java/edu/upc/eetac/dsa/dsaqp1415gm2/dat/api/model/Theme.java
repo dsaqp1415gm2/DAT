@@ -8,22 +8,22 @@ public class Theme {
 	private String nametheme;
 	private String linktheme;
 	
-	private List<Thread> threads;
+	private List<Threadx> threads;
 
 	public Theme() {
 		super();
 		threads = new ArrayList<>();
 	}
 	
-	public List<Thread> getThreads() {
+	public List<Threadx> getThreads() {
 		return threads;
 	}
 	
-	public void setThreads(List<Thread> threads) {
+	public void setThreads(List<Threadx> threads) {
 		this.threads = threads;
 	}
 	
-	public void addThread(Thread thread) {
+	public void addThread(Threadx thread) {
 		threads.add(thread);
 	}
 

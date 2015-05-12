@@ -1,11 +1,14 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
+import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,6 +20,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Theme;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPITecnologia;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAdapter;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Dialog.Dialog_post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.NavigationAdapter;
@@ -25,7 +33,7 @@ import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager.SlidingTabLay
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager.ViewPagerAdapter;
 
 
-public class DatMainActivity extends ActionBarActivity {
+public class DatMainActivity extends ActionBarActivity{
     //declaro el drawer y su listview
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -38,6 +46,8 @@ public class DatMainActivity extends ActionBarActivity {
     private Toolbar toolbar;
     SlidingTabLayout tabs;
     ViewPagerAdapter adapterViewPager;
+
+  private final static String TAG = DatMainActivity.class.toString();
     // declaro el boton para cambiarle la fuente
     protected Button customButton;
     @Override
@@ -51,6 +61,7 @@ public class DatMainActivity extends ActionBarActivity {
         //añadir el viewPager con los tabs
         setViewPager();
         //añadir el refresh
+
 
     }
     //coge la toolbar del xml y le añade titulo y algun boton
@@ -128,6 +139,7 @@ public class DatMainActivity extends ActionBarActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(viewPager);
+
     }
 
 
@@ -220,4 +232,5 @@ public class DatMainActivity extends ActionBarActivity {
         Dialog_post dialog_post = new Dialog_post(this);
         dialog_post.show();
     }
+
 }
