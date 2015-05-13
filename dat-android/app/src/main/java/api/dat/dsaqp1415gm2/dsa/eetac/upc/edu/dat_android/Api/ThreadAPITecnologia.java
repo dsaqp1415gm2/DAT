@@ -122,6 +122,7 @@ public class ThreadAPITecnologia {
                 thread.setSubject(jsonThread.getString("subject"));
                 thread.setIdtema(jsonThread.getInt("idtema"));
                 thread.setIdthread(jsonThread.getInt("idthread"));
+                thread.setImagen(jsonThread.getString("imagen"));
                 threads.getThreads().add(thread);
             }
         } catch (IOException e) {
