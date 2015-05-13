@@ -31,7 +31,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreads() {
 		Theme theme = new Theme();
-	 
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();

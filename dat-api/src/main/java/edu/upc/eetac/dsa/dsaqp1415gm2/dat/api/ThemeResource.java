@@ -26,7 +26,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreadsTecno() {
 		Theme theme = new Theme();
-		theme.setIdtheme(1);
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
@@ -40,7 +39,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(1));
 		ResultSet rs = stmt.executeQuery();
-		
 		while (rs.next()) {
 			Threadx threadx= new Threadx();
 			threadx.setIdtema(rs.getInt("idtema"));
@@ -61,7 +59,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
-	 
 		return theme;
 	}
 	
@@ -70,7 +67,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreadsDeportes() {
 		Theme theme = new Theme();
-		theme.setIdtheme(2);
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
@@ -84,7 +80,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(2));
 		ResultSet rs = stmt.executeQuery();
-		
 		while (rs.next()) {
 			Threadx threadx= new Threadx();
 			threadx.setIdtema(rs.getInt("idtema"));
@@ -113,7 +108,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreadsMotor() {
 		Theme theme = new Theme();
-		theme.setIdtheme(3);
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
@@ -156,7 +150,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreadsVideojuegos() {
 		Theme theme = new Theme();
-		theme.setIdtheme(4);
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();

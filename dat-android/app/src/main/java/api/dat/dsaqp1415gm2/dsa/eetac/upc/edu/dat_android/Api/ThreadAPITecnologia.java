@@ -126,9 +126,9 @@ public class ThreadAPITecnologia {
             }
         } catch (IOException e) {
             throw new AppException(
-                    "Can't get response from Beeter API Web Service");
+                    "Can't get response from API Web Service");
         } catch (JSONException e) {
-            throw new AppException("Error parsing Beeter Root API");
+            throw new AppException("Error parsing Root API");
         }
 
         return threads;

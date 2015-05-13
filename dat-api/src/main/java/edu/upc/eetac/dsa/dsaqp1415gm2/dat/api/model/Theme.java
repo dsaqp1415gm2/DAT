@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Theme {
-	private int idtheme;
 	private String nametheme;
 	private String linktheme;
 	
@@ -27,13 +26,6 @@ public class Theme {
 		threads.add(thread);
 	}
 
-	public int getIdtheme() {
-		return idtheme;
-	}
-
-	public void setIdtheme(int idtheme) {
-		this.idtheme = idtheme;
-	}
 
 	public String getNametheme() {
 		return nametheme;

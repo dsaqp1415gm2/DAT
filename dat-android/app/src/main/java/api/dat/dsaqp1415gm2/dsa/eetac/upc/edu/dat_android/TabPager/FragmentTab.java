@@ -40,6 +40,7 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         threadList = new ArrayList<Threadx>();
         adapter = new ThreadAdapter(getActivity(),threadList);
         listView.setAdapter(adapter);
+        (new FetchStingsTask()).execute();
         return view;
     }
     @Override
@@ -72,6 +73,14 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
             if (pd != null) {
                 pd.dismiss();
             }
+        }
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(getActivity());
+            pd.setTitle("Searching...");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
         }
     }
 
