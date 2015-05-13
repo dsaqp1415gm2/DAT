@@ -22,10 +22,10 @@ import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
 public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ListView listView;
+    private ListView list;
     private ThreadAdapter adapter;
     ArrayList<Threadx> threadList;
-    private ProgressDialog pd;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,10 +36,11 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
-        listView = (ListView) listView.findViewById(R.id.list);
+
         threadList = new ArrayList<Threadx>();
         adapter = new ThreadAdapter(getActivity(),threadList);
-        listView.setAdapter(adapter);
+        list=(ListView) view.findViewById(R.id.list);
+        list.setAdapter(adapter);
         (new FetchStingsTask()).execute();
         return view;
     }
@@ -55,7 +56,7 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
     }
     private class FetchStingsTask extends
             AsyncTask<Void, Void, Theme> {
-
+        private ProgressDialog pd;
 
         @Override
         protected Theme doInBackground(Void... params) {
@@ -74,14 +75,14 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
                 pd.dismiss();
             }
         }
-        @Override
+        /*@Override
         protected void onPreExecute() {
             pd = new ProgressDialog(getActivity());
             pd.setTitle("Searching...");
             pd.setCancelable(false);
             pd.setIndeterminate(true);
             pd.show();
-        }
+        }*/
     }
 
     private void addThreads(Theme theme){

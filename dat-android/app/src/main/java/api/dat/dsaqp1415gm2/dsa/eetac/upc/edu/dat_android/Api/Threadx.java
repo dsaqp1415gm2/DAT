@@ -9,6 +9,7 @@ public class Threadx {
     private String subject;
     private String content;
 
+
     public int getIdthread() {
         return idthread;
     }
