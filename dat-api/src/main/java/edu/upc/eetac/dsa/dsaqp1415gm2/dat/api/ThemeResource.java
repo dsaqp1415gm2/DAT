@@ -45,6 +45,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			threadx.setIdthread(rs.getInt("idthread"));
 			threadx.setSubject(rs.getString("subject"));
 			threadx.setContent(rs.getString("content"));
+			threadx.setImagen(rs.getString("imagen"));
+
 			theme.addThread(threadx);
 		}
 			
@@ -86,6 +88,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			threadx.setIdthread(rs.getInt("idthread"));
 			threadx.setSubject(rs.getString("subject"));
 			threadx.setContent(rs.getString("content"));
+			threadx.setImagen(rs.getString("imagen"));
 			theme.addThread(threadx);
 		}
 			
@@ -128,6 +131,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			threadx.setIdthread(rs.getInt("idthread"));
 			threadx.setSubject(rs.getString("subject"));
 			threadx.setContent(rs.getString("content"));
+			threadx.setImagen(rs.getString("imagen"));
 			theme.addThread(threadx);
 		}
 			
@@ -170,6 +174,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			threadx.setIdthread(rs.getInt("idthread"));
 			threadx.setSubject(rs.getString("subject"));
 			threadx.setContent(rs.getString("content"));
+			threadx.setImagen(rs.getString("imagen"));
 			theme.addThread(threadx);
 		}
 			
