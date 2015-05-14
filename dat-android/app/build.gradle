@@ -36,4 +36,6 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.2.1'
     //Libreria para volver circular una Imagen
     compile 'de.hdodenhof:circleimageview:1.2.1'
+    //picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

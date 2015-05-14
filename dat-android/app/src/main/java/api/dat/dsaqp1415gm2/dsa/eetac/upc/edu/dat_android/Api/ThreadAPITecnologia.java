@@ -131,7 +131,6 @@ public class ThreadAPITecnologia {
         } catch (JSONException e) {
             throw new AppException("Error parsing Root API");
         }
-
         return threads;
     }
 

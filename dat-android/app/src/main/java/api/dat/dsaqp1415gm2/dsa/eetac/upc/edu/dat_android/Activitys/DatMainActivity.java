@@ -4,6 +4,8 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -133,7 +135,8 @@ public class DatMainActivity extends ActionBarActivity{
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.accent_color);
+                return getResources().getColor(R.color.cardview_light_background);//ese es blanco
+                //return getResources().getColor(R.color.accent_color);
             }
         });
 
