@@ -53,13 +53,13 @@
 
 .btn-default:hover,
 .btn-default:focus {
-  background-color: #110022;
+  background-color: #e0e0e0;
   background-position: 0 -15px;
 }
 
 .btn-default:active,
 .btn-default.active {
-  background-color: #110022;
+  background-color: #e0e0e0;
   border-color: #dbdbdb;
 }
 

@@ -87,14 +87,30 @@ public class ThreadAPI {
         }
     }
 
-    public Theme getThreads() throws AppException {
+    public Theme getThreads(int x) throws AppException {
         Log.d(TAG, "getThreads()");
         Theme threads = new Theme();
-
+        String opcion =null;
+        if (x==1)
+        {
+            opcion="tecnologia";
+        }
+        if (x==2)
+        {
+            opcion="deportes";
+        }
+        if (x==3)
+        {
+            opcion="motor";
+        }
+        if (x==4)
+        {
+            opcion="videojuegos";
+        }
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-                    .get("tecnologia").getTarget()).openConnection();
+                    .get(opcion).getTarget()).openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();

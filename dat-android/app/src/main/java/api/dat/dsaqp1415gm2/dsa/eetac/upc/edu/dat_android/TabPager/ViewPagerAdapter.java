@@ -30,21 +30,25 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             // Open FragmentTab1.java
             case 0:
                 FragmentTab fragmenttab1 = new FragmentTab();
+                fragmenttab1.setID(1);
                 return fragmenttab1;
 
             // Open FragmentTab2.java
             case 1:
                 FragmentTab fragmenttab2 = new FragmentTab();
+                fragmenttab2.setID(2);
                 return fragmenttab2;
 
             // Open FragmentTab3.java
             case 2:
                 FragmentTab fragmenttab3 = new FragmentTab();
+                fragmenttab3.setID(3);
                 return fragmenttab3;
 
             // Open FragmentTab4.java
             case 3:
                 FragmentTab fragmenttab4 = new FragmentTab();
+                fragmenttab4.setID(4);
                 return fragmenttab4;
         }
         return null;

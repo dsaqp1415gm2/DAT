@@ -27,7 +27,7 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
     private ListView list;
     private ThreadAdapter adapter;
     ArrayList<Threadx> threadList;
-
+    private int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         protected Theme doInBackground(Void... params) {
             Theme theme = null;
             try {
-                theme = ThreadAPI.getInstance(getActivity()).getThreads();
+                theme = ThreadAPI.getInstance(getActivity()).getThreads(id);
             } catch (AppException e) {
                 e.printStackTrace();
             }
@@ -98,5 +98,9 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         {
             Toast.makeText(getActivity(),"Pulsado",Toast.LENGTH_SHORT).show();
         }
+    }
+    public void setID(int i)
+    {
+        id = i;
     }
 }
