@@ -12,15 +12,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.DATRootAPI;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Post;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Theme;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Threadx;
 @Path("/Theme")
 public class ThemeResource {
 
-private String GET_THREADS_QUERY = "select * from thread where idtema=?";
-private DataSource ds = DataSourceSPA.getInstance().getDataSource();
-
+	private String GET_THREADS_QUERY = "select * from thread where idtema=?";
+	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
+	@GET
+	public Theme getTheme() {
+		Theme api = new Theme();
+		return api;
+	}
 	@GET
 	@Path("/Tecnologia")
 	@Produces(MediaType.DAT_API_THREAD)
@@ -33,23 +38,24 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			throw new ServerErrorException("Could not connect to the database",
 					Response.Status.SERVICE_UNAVAILABLE);
 		}
-		
+
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(1));
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Threadx threadx= new Threadx();
-			threadx.setIdtema(rs.getInt("idtema"));
-			threadx.setIdthread(rs.getInt("idthread"));
-			threadx.setSubject(rs.getString("subject"));
-			threadx.setContent(rs.getString("content"));
-			threadx.setImagen(rs.getString("imagen"));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				String temp = rs.getString("imagen");
+				threadx.setImagen(temp);
 
-			theme.addThread(threadx);
-		}
-			
+				theme.addThread(threadx);
+			}
+
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
@@ -63,7 +69,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 		}
 		return theme;
 	}
-	
+
 	@GET
 	@Path("/Deportes")
 	@Produces(MediaType.DAT_API_THREAD)
@@ -76,22 +82,22 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			throw new ServerErrorException("Could not connect to the database",
 					Response.Status.SERVICE_UNAVAILABLE);
 		}
-		
+
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(2));
-		ResultSet rs = stmt.executeQuery();
-		while (rs.next()) {
-			Threadx threadx= new Threadx();
-			threadx.setIdtema(rs.getInt("idtema"));
-			threadx.setIdthread(rs.getInt("idthread"));
-			threadx.setSubject(rs.getString("subject"));
-			threadx.setContent(rs.getString("content"));
-			threadx.setImagen(rs.getString("imagen"));
-			theme.addThread(threadx);
-		}
-			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				threadx.setImagen(rs.getString("imagen"));
+				theme.addThread(threadx);
+			}
+
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
@@ -103,7 +109,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
-	 
+
 		return theme;
 	}
 	@GET
@@ -118,23 +124,23 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			throw new ServerErrorException("Could not connect to the database",
 					Response.Status.SERVICE_UNAVAILABLE);
 		}
-		
+
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(3));
-		ResultSet rs = stmt.executeQuery();
-		
-		while (rs.next()) {
-			Threadx threadx= new Threadx();
-			threadx.setIdtema(rs.getInt("idtema"));
-			threadx.setIdthread(rs.getInt("idthread"));
-			threadx.setSubject(rs.getString("subject"));
-			threadx.setContent(rs.getString("content"));
-			threadx.setImagen(rs.getString("imagen"));
-			theme.addThread(threadx);
-		}
-			
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				threadx.setImagen(rs.getString("imagen"));
+				theme.addThread(threadx);
+			}
+
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
@@ -146,7 +152,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
-	 
+
 		return theme;
 	}
 	@GET
@@ -161,23 +167,23 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			throw new ServerErrorException("Could not connect to the database",
 					Response.Status.SERVICE_UNAVAILABLE);
 		}
-		
+
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(GET_THREADS_QUERY);
 			stmt.setInt(1, Integer.valueOf(4));
-		ResultSet rs = stmt.executeQuery();
-		
-		while (rs.next()) {
-			Threadx threadx= new Threadx();
-			threadx.setIdtema(rs.getInt("idtema"));
-			threadx.setIdthread(rs.getInt("idthread"));
-			threadx.setSubject(rs.getString("subject"));
-			threadx.setContent(rs.getString("content"));
-			threadx.setImagen(rs.getString("imagen"));
-			theme.addThread(threadx);
-		}
-			
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				threadx.setImagen(rs.getString("imagen"));
+				theme.addThread(threadx);
+			}
+
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
@@ -189,7 +195,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
-	 
+
 		return theme;
 	}
 }

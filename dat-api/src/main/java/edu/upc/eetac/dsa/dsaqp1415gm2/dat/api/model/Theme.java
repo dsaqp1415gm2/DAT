@@ -17,6 +17,8 @@ public class Theme {
 		@InjectLink(value = "/Deportes", style = Style.ABSOLUTE, rel = "deportes", title = "tema deportes", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Motor", style = Style.ABSOLUTE, rel = "motor", title = "tema motor", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME)})
+	private List<Link> links;
+
 	private String nametheme;
 	private String linktheme;
 	
@@ -55,8 +57,7 @@ public class Theme {
 	public void setLinktheme(String linktheme) {
 		this.linktheme = linktheme;
 	}
-	private List<Link> links;
-
+	
 	public List<Link> getLinks() {
 		return links;
 	}
