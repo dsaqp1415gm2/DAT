@@ -3,7 +3,9 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 import java.util.List;
 
 
+
 public class Threadx {
+	
 	private String subject;
 	private String content;
 	private int idthread;
