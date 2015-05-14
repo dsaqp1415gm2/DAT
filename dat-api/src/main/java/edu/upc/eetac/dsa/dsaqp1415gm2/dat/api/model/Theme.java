@@ -13,10 +13,10 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
 
 public class Theme {
 	@InjectLinks({
-		@InjectLink(value = "/Tecnologia", style = Style.ABSOLUTE, rel = "tecnologia", title = "tema tecnologia", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Deportes", style = Style.ABSOLUTE, rel = "deportes", title = "tema deportes", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Motor", style = Style.ABSOLUTE, rel = "motor", title = "tema motor", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME)})
+		@InjectLink(value = "/Theme/Tecnologia", style = Style.ABSOLUTE, rel = "tecnologia", title = "tema tecnologia", type = MediaType.DAT_API_THEME),
+		@InjectLink(value = "/Theme/Deportes", style = Style.ABSOLUTE, rel = "deportes", title = "tema deportes", type = MediaType.DAT_API_THEME),
+		@InjectLink(value = "/Theme/Motor", style = Style.ABSOLUTE, rel = "motor", title = "tema motor", type = MediaType.DAT_API_THEME),
+		@InjectLink(value = "/Theme/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME)})
 	private List<Link> links;
 
 	private String nametheme;

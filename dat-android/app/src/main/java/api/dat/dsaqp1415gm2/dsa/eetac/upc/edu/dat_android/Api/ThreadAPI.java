@@ -78,6 +78,7 @@ public class ThreadAPI {
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray jsonLinks = jsonObject.getJSONArray("links");
             parseLinks(jsonLinks, rootAPI.getLinks());
+            JSONArray jsonThreads = jsonObject.getJSONArray("threads");
         } catch (IOException e) {
             throw new AppException(
                     "Can't get response from API Web Service");
@@ -113,6 +114,7 @@ public class ThreadAPI {
             }
 
             JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonLinks = jsonObject.getJSONArray("links");
             JSONArray jsonThreads = jsonObject.getJSONArray("threads");
 
             for (int i = 0; i < jsonThreads.length(); i++) {
