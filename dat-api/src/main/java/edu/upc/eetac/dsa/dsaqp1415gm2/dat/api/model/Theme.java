@@ -3,6 +3,8 @@ package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Link;
+
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLink.Style;
 import org.glassfish.jersey.linking.InjectLinks;
@@ -52,5 +54,14 @@ public class Theme {
 
 	public void setLinktheme(String linktheme) {
 		this.linktheme = linktheme;
+	}
+	private List<Link> links;
+
+	public List<Link> getLinks() {
+		return links;
+	}
+	
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 }

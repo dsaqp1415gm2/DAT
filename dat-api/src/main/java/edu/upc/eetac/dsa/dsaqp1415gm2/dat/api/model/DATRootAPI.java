@@ -17,9 +17,9 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.ThreadResource;
 public class DATRootAPI {
 	@InjectLinks({
         @InjectLink(resource = DATRootAPIResource.class, style = Style.ABSOLUTE, rel = "self bookmark home", title = "DAT Root API"),
-        @InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "collection", title = "Latest stings", type = MediaType.DAT_API_POST),
-    	@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "collection", title = "Latest stings", type = MediaType.DAT_API_THREAD),
-    	@InjectLink(resource = ThemeResource.class, style = Style.ABSOLUTE, rel = "collection", title = "Latest stings", type = MediaType.DAT_API_THEME)})
+        @InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "post", title = "post", type = MediaType.DAT_API_POST),
+    	@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "thread", title = "post collecction", type = MediaType.DAT_API_THREAD),
+    	@InjectLink(resource = ThemeResource.class, style = Style.ABSOLUTE, rel = "theme", title = "thread collection", type = MediaType.DAT_API_THEME)})
 	private List<Link> links;
 
 	public List<Link> getLinks() {
