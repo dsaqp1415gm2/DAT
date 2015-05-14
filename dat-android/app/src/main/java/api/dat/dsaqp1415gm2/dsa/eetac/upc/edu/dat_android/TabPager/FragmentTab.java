@@ -6,21 +6,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys.DatMainActivity;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Theme;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPITecnologia;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPI;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAdapter;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
@@ -68,7 +65,7 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         protected Theme doInBackground(Void... params) {
             Theme theme = null;
             try {
-                theme = ThreadAPITecnologia.getInstance(getActivity()).getThreads();
+                theme = ThreadAPI.getInstance(getActivity()).getThreads();
             } catch (AppException e) {
                 e.printStackTrace();
             }

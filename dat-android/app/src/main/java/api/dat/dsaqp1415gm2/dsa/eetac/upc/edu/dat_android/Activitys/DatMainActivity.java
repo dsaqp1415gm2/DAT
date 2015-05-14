@@ -1,12 +1,7 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -22,11 +17,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Theme;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPITecnologia;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAdapter;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Dialog.Dialog_post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.NavigationAdapter;
