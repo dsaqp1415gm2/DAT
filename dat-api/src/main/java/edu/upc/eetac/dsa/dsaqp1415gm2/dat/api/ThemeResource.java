@@ -202,80 +202,77 @@ public class ThemeResource {
 	@GET
 	@Path("/Tecnologia/{idhilo}")
 	@Produces("application/json")
-	public Threadx getpostwithIDT(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
-		idthema ="1";
-		Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
+	public Threadx getpostwithIDT(@PathParam("idhilo") String idhilo) {
+		Threadx thread = getPostFromDBwithIDs("1",idhilo);
 		
 		return thread;
 	}
-		//para obtener un post poniendo la id del tema, del thread y del post.
-		@GET
-		@Path("/Deportes/{idhilo}")
-		@Produces("application/json")
-		public Threadx getpostwithIDD(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
-			idthema ="2";
-			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
-			
-			return thread;
-		}
-		//para obtener un post poniendo la id del tema, del thread y del post.
-		@GET
-		@Path("/Motor/{idhilo}")
-		@Produces("application/json")
-		public Threadx getpostwithIDM(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
-			idthema ="3";
-			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
-			
-			return thread;
-		}
-		//para obtener un post poniendo la id del tema, del thread y del post.
-		@GET
-		@Path("/Videojuegos/{idhilo}")
-		@Produces("application/json")
-		public Threadx getpostwithIDV(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
-			idthema ="4";
-			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
-			
-			return thread;
-		}
-		private Threadx getPostFromDBwithIDs(String idthema, String idhilo) {
-		Threadx thread = new Threadx();
+	//para obtener un post poniendo la id del tema, del thread y del post.
+	@GET
+	@Path("/Deportes/{idhilo}")
+	@Produces("application/json")
+	public Threadx getpostwithIDD(@PathParam("idhilo") String idhilo) {
+		Threadx thread = getPostFromDBwithIDs("2",idhilo);
 		
-		Connection conn = null;
-		try {
-			conn = ds.getConnection();
-		} catch (SQLException e) {
-			throw new ServerErrorException("Could not connect to the database",
-					Response.Status.SERVICE_UNAVAILABLE);
-		}
-	 
-		PreparedStatement stmt = null;
-		try {
-			stmt = conn.prepareStatement(GET_POST_BY_IDS_QUERY);
-			stmt.setInt(1, Integer.valueOf(idthema));
-			stmt.setInt(2, Integer.valueOf(idhilo));
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Post post = new Post();
-				post.setIdthema(rs.getInt("idthema"));
-				post.setIdhilo(rs.getInt("idhilo"));
-				post.setIdpost(rs.getInt("idpost"));
-				post.setContent(rs.getString("content"));
-				thread.addPost(post);
-			}
-		} 
-			catch (SQLException e) {
-			throw new ServerErrorException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				conn.close();
-			} catch (SQLException e) {
-			}
-		}
-	 
 		return thread;
+	}
+	//para obtener un post poniendo la id del tema, del thread y del post.
+	@GET
+	@Path("/Motor/{idhilo}")
+	@Produces("application/json")
+	public Threadx getpostwithIDM(@PathParam("idhilo") String idhilo) {
+		Threadx thread = getPostFromDBwithIDs("3",idhilo);
+		
+		return thread;
+	}
+	//para obtener un post poniendo la id del tema, del thread y del post.
+	@GET
+	@Path("/Videojuegos/{idhilo}")
+	@Produces("application/json")
+	public Threadx getpostwithIDV(@PathParam("idhilo") String idhilo) {
+		Threadx thread = getPostFromDBwithIDs("4",idhilo);
+		
+		return thread;
+	}
+	private Threadx getPostFromDBwithIDs(String idthema, String idhilo) {
+	Threadx thread = new Threadx();
+	
+	Connection conn = null;
+	try {
+		conn = ds.getConnection();
+	} catch (SQLException e) {
+		throw new ServerErrorException("Could not connect to the database",
+				Response.Status.SERVICE_UNAVAILABLE);
+	}
+ 
+	PreparedStatement stmt = null;
+	try {
+		stmt = conn.prepareStatement(GET_POST_BY_IDS_QUERY);
+		stmt.setInt(1, Integer.valueOf(idthema));
+		stmt.setInt(2, Integer.valueOf(idhilo));
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			Post post = new Post();
+			post.setIdthema(rs.getInt("idthema"));
+			post.setIdhilo(rs.getInt("idhilo"));
+			post.setIdpost(rs.getInt("idpost"));
+			post.setContent(rs.getString("content"));
+			post.setImagelink(rs.getString("image_link"));
+			thread.addPost(post);
+		}
+	} 
+		catch (SQLException e) {
+		throw new ServerErrorException(e.getMessage(),
+				Response.Status.INTERNAL_SERVER_ERROR);
+	} finally {
+		try {
+			if (stmt != null)
+				stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+		}
+	}
+ 
+	return thread;
 	}
 }

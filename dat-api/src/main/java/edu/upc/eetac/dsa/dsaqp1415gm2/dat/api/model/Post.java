@@ -5,6 +5,7 @@ public class Post {
 	private int idpost;
 	private int idthema;
 	private int idhilo;
+	private String imagelink;
 	
 	public String getContent() {
 		return content;
@@ -29,6 +30,12 @@ public class Post {
 	}
 	public void setIdhilo(int idhilo) {
 		this.idhilo = idhilo;
+	}
+	public String getImagelink() {
+		return imagelink;
+	}
+	public void setImagelink(String imagelink) {
+		this.imagelink = imagelink;
 	}
 	
 }

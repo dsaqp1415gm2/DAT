@@ -1,17 +1,13 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,9 +17,7 @@ import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.PostAdapter;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Theme;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPI;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAdapter;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
@@ -40,21 +34,28 @@ public class ThreadActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //añadir actualizar
-        setSwipeRefresh();
-
+        tema = (int) getIntent().getExtras().get("tema");
+        thread = (int) getIntent().getExtras().get("thread");
+        setContentView(R.layout.postlist_layout);
         //añadir lista
         postList = new ArrayList<Post>();
         adapter = new PostAdapter(ThreadActivity.this, postList);
         list=(ListView) findViewById(R.id.post_list);
         list.setAdapter(adapter);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.t);
+        toolbar.setTitle("Thread");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //añadir actualizar
+        setSwipeRefresh();
         (new FetchStingsTask()).execute();
         //añadir opcion al pulsar item de lista
         list.setOnItemClickListener(new ListItemClickListener());
     }
+
     private void setSwipeRefresh()
     {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout2);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutListener());
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -67,8 +68,9 @@ public class ThreadActivity extends ActionBarActivity{
         @Override
         protected Threadx doInBackground(Void... params) {
             Threadx threadx = null;
+
             try {
-                threadx = ThreadAPI.getInstance(ThreadActivity.this).getPosts(1, 1);
+                threadx = ThreadAPI.getInstance(ThreadActivity.this).getPosts(tema, thread);
             } catch (AppException e) {
                 e.printStackTrace();
             }
@@ -101,11 +103,6 @@ public class ThreadActivity extends ActionBarActivity{
         {
             Toast.makeText(ThreadActivity.this, "Pulsado", Toast.LENGTH_SHORT).show();
         }
-    }
-    public void setID(int i,int j)
-    {
-        tema = i;
-        thread = j;
     }
 
     private class SwipeRefreshLayoutListener implements SwipeRefreshLayout.OnRefreshListener {

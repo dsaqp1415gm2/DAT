@@ -56,7 +56,7 @@ public class PostAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_row_thread, null);
+            convertView = inflater.inflate(R.layout.list_row_post, null);
             viewHolder = new ViewHolder();
             viewHolder.tvContent = (TextView) convertView
                     .findViewById(R.id.Content);

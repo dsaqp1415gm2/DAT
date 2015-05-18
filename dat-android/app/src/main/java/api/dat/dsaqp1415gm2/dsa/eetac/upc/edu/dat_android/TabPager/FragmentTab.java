@@ -95,10 +95,13 @@ public class FragmentTab extends Fragment{
         @Override
         public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            Toast.makeText(getActivity(),"Pulsado",Toast.LENGTH_SHORT).show();
-            ThreadActivity threadactivity = new ThreadActivity();
-            threadactivity.setID(1,1);
-            Intent q = new Intent(getActivity(), threadactivity.getClass());
+            int pos=posicion+1;
+            Toast.makeText(getActivity(),"Pulsado "+id+" y "+pos,Toast.LENGTH_SHORT).show();
+            //ThreadActivity threadactivity = new ThreadActivity();
+            //threadactivity.setID(id,pos);
+            Intent q = new Intent(getActivity(), ThreadActivity.class);
+            q.putExtra("tema",id);
+            q.putExtra("thread",pos);
             startActivity(q);
         }
     }

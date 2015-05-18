@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
@@ -174,24 +175,29 @@ public class ThreadAPI {
         String opcion =null;
         if (x==1)
         {
-            opcion="tecnologia";
+            opcion="Tecnologia";
         }
         if (x==2)
         {
-            opcion="deportes";
+            opcion="Deportes";
         }
         if (x==3)
         {
-            opcion="motor";
+            opcion="Motor";
         }
         if (x==4)
         {
-            opcion="videojuegos";
+            opcion="Videojuegos";
         }
         HttpURLConnection urlConnection = null;
+        String urlTecno = "http://147.83.7.156:8080/dat-api/dat/Theme/"+opcion+"/"+y;
         try {
-            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-                    .get(opcion).getTarget()).openConnection();
+            url= new URL(urlTecno);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
@@ -211,16 +217,15 @@ public class ThreadAPI {
             }
 
             JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONArray jsonLinks = jsonObject.getJSONArray("links");
-            JSONArray jsonThreads = jsonObject.getJSONArray("threads");
+            JSONArray jsonPosts = jsonObject.getJSONArray("posts");
 
-            for (int i = 0; i < jsonThreads.length(); i++) {
+            for (int i = 0; i < jsonPosts.length(); i++) {
                 Post post = new Post();
-                JSONObject jsonThread = jsonThreads.getJSONObject(i);
+                JSONObject jsonThread = jsonPosts.getJSONObject(i);
                 post.setContent(jsonThread.getString("content"));
-                post.setIdthema(jsonThread.getInt("idtema"));
-                post.setIdhilo(jsonThread.getInt("idthread"));
-                post.setImage(jsonThread.getString("imagen"));
+                post.setIdthema(jsonThread.getInt("idthema"));
+                post.setIdhilo(jsonThread.getInt("idhilo"));
+                post.setIdpost(jsonThread.getInt("idpost"));
                 thread.getPosts().add(post);
             }
         } catch (IOException e) {
