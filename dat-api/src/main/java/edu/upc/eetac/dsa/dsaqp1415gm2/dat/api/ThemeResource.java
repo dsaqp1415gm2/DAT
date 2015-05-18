@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,7 +18,7 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Theme;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Threadx;
 @Path("/Theme")
 public class ThemeResource {
-	private String GET_POST_BY_IDS_QUERY = "select * from post where (idthema=? and idhilo=? and idpost=?)";
+	private String GET_POST_BY_IDS_QUERY = "select * from post where (idthema=? and idhilo=?)";
 	private String GET_THREADS_QUERY = "select * from thread where idtema=?";
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@GET
@@ -199,52 +198,48 @@ public class ThemeResource {
 
 		return theme;
 	}
-	//para obtener un post poniendo la id del tema, del thread y del post.
-		@GET
-		@Path("/Tecnologia/{idhilo}/{idpost}")
-		@Produces("application/json")
-		public Post getpostwithIDT(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo,
-				@PathParam("idpost") String idpost) {
-			idthema ="1";
-			Post post = getPostFromDBwithIDs(idthema,idhilo,idpost);
-			
-			return post;
-		}
+	//para obtener un thread poniendo la id del tema y del thread
+	@GET
+	@Path("/Tecnologia/{idhilo}")
+	@Produces("application/json")
+	public Threadx getpostwithIDT(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
+		idthema ="1";
+		Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
+		
+		return thread;
+	}
 		//para obtener un post poniendo la id del tema, del thread y del post.
 		@GET
-		@Path("/Deportes/{idhilo}/{idpost}")
+		@Path("/Deportes/{idhilo}")
 		@Produces("application/json")
-		public Post getpostwithIDD(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo,
-				@PathParam("idpost") String idpost) {
+		public Threadx getpostwithIDD(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
 			idthema ="2";
-			Post post = getPostFromDBwithIDs(idthema,idhilo,idpost);
+			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
 			
-			return post;
+			return thread;
 		}
 		//para obtener un post poniendo la id del tema, del thread y del post.
 		@GET
-		@Path("/Motor/{idhilo}/{idpost}")
+		@Path("/Motor/{idhilo}")
 		@Produces("application/json")
-		public Post getpostwithIDM(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo,
-				@PathParam("idpost") String idpost) {
+		public Threadx getpostwithIDM(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
 			idthema ="3";
-			Post post = getPostFromDBwithIDs(idthema,idhilo,idpost);
+			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
 			
-			return post;
+			return thread;
 		}
 		//para obtener un post poniendo la id del tema, del thread y del post.
 		@GET
-		@Path("/Videojuegos/{idhilo}/{idpost}")
+		@Path("/Videojuegos/{idhilo}")
 		@Produces("application/json")
-		public Post getpostwithIDV(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo,
-				@PathParam("idpost") String idpost) {
+		public Threadx getpostwithIDV(@PathParam("idtema") String idthema, @PathParam("idhilo") String idhilo) {
 			idthema ="4";
-			Post post = getPostFromDBwithIDs(idthema,idhilo,idpost);
+			Threadx thread = getPostFromDBwithIDs(idthema,idhilo);
 			
-			return post;
+			return thread;
 		}
-	private Post getPostFromDBwithIDs(String idthema, String idhilo, String idpost) {
-		Post post = new Post();
+		private Threadx getPostFromDBwithIDs(String idthema, String idhilo) {
+		Threadx thread = new Threadx();
 		
 		Connection conn = null;
 		try {
@@ -259,19 +254,17 @@ public class ThemeResource {
 			stmt = conn.prepareStatement(GET_POST_BY_IDS_QUERY);
 			stmt.setInt(1, Integer.valueOf(idthema));
 			stmt.setInt(2, Integer.valueOf(idhilo));
-			stmt.setInt(3, Integer.valueOf(idpost));
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
+				Post post = new Post();
 				post.setIdthema(rs.getInt("idthema"));
 				post.setIdhilo(rs.getInt("idhilo"));
 				post.setIdpost(rs.getInt("idpost"));
 				post.setContent(rs.getString("content"));
-				
-			} else {
-				throw new NotFoundException("There's no post with id="
-						+ idpost);
+				thread.addPost(post);
 			}
-		} catch (SQLException e) {
+		} 
+			catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
 		} finally {
@@ -283,6 +276,6 @@ public class ThemeResource {
 			}
 		}
 	 
-		return post;
+		return thread;
 	}
 }

@@ -1,5 +1,6 @@
 package edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,7 +13,10 @@ public class Threadx {
 	private int idtema;
 	private List<Post> posts;
 	private String imagen;
-	
+	public Threadx() {
+		super();
+		posts = new ArrayList<>();
+	}
 	public String getImagen() {
 		return imagen;
 	}
@@ -49,5 +53,7 @@ public class Threadx {
 	public void setIdtema(int idtema) {
 		this.idtema = idtema;
 	}
-
+	public void addPost(Post post) {
+		posts.add(post);
+	}
 }

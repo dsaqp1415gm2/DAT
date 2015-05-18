@@ -5,6 +5,16 @@ package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api;
  */
 public class Post {
     private String content;
+    private String image;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public int getIdpost() {
         return idpost;

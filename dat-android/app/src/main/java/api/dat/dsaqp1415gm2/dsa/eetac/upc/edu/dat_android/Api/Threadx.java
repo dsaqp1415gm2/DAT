@@ -1,5 +1,8 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Manel on 12/05/2015.
  */
@@ -8,8 +11,19 @@ public class Threadx {
     private int idtema;
     private String subject;
     private String content;
+    private List<Post> posts;
 
+    public Threadx() {
+        super();
+        posts = new ArrayList<Post>();
+    }
+    public List<Post> getPosts() {
+        return posts;
+    }
 
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
     public int getIdthread() {
         return idthread;
     }

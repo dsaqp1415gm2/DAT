@@ -168,5 +168,67 @@ public class ThreadAPI {
                 map.put(s, link);
         }
     }
+    public Threadx getPosts(int x,int y) throws AppException {
+        Log.d(TAG, "getPosts()");
+        Threadx thread = new Threadx();
+        String opcion =null;
+        if (x==1)
+        {
+            opcion="tecnologia";
+        }
+        if (x==2)
+        {
+            opcion="deportes";
+        }
+        if (x==3)
+        {
+            opcion="motor";
+        }
+        if (x==4)
+        {
+            opcion="videojuegos";
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
+                    .get(opcion).getTarget()).openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+            urlConnection.connect();
+        } catch (IOException e) {
+            throw new AppException(
+                    "Can't connect to API Web Service");
+        }
 
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonLinks = jsonObject.getJSONArray("links");
+            JSONArray jsonThreads = jsonObject.getJSONArray("threads");
+
+            for (int i = 0; i < jsonThreads.length(); i++) {
+                Post post = new Post();
+                JSONObject jsonThread = jsonThreads.getJSONObject(i);
+                post.setContent(jsonThread.getString("content"));
+                post.setIdthema(jsonThread.getInt("idtema"));
+                post.setIdhilo(jsonThread.getInt("idthread"));
+                post.setImage(jsonThread.getString("imagen"));
+                thread.getPosts().add(post);
+            }
+        } catch (IOException e) {
+            throw new AppException(
+                    "Can't get response from API Web Service");
+        } catch (JSONException e) {
+            throw new AppException("Error parsing Root API");
+        }
+        return thread;
+    }
 }

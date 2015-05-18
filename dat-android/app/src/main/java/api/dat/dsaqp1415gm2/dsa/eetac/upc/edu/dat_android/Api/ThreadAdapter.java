@@ -55,6 +55,7 @@ public class ThreadAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView tvSubject;
         TextView tvContent;
+        TextView threadid;
         ImageView imagen;
     }
     @Override
@@ -67,6 +68,8 @@ public class ThreadAdapter extends BaseAdapter {
                     .findViewById(R.id.tvSubject);
             viewHolder.tvContent = (TextView) convertView
                     .findViewById(R.id.tvContent);
+            viewHolder.threadid = (TextView) convertView
+                    .findViewById(R.id.tvIdthread);
             viewHolder.imagen = (ImageView) convertView
                     .findViewById(R.id.image);
             convertView.setTag(viewHolder);
@@ -76,8 +79,11 @@ public class ThreadAdapter extends BaseAdapter {
         String subject = data.get(position).getSubject();
         String content = data.get(position).getContent();
         String imagen = data.get(position).getImagen();
+        int idt= data.get(position).getIdthread();
+        String id=Integer.toString(idt);
         viewHolder.tvSubject.setText(subject);
         viewHolder.tvContent.setText(content);
+        viewHolder.threadid.setText("Thread ID: "+id);
         new DownloadImageTask(viewHolder.imagen).execute(imagen);
         //Picasso.with(context).load("http://matrallune.com/images/imagen_corporativa.jpg").into(viewHolder.imagen);
         /*Bitmap bitmap = null;

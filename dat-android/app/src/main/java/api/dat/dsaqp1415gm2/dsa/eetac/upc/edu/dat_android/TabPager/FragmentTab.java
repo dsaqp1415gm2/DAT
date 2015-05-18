@@ -1,11 +1,13 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys.About;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys.ThreadActivity;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Theme;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPI;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAdapter;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
-public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class FragmentTab extends Fragment{
+    private final static String TAG = FragmentTab.class.getName();
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView list;
     private ThreadAdapter adapter;
@@ -33,30 +39,23 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
                              Bundle savedInstanceState) {
         // Get the view from fragmenttabxml
         View view = inflater.inflate(R.layout.fragmenttab, container, false);
+        //añadir actualizar
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutListener());
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
-
+        //añadir lista
         threadList = new ArrayList<Threadx>();
         adapter = new ThreadAdapter(getActivity(),threadList);
         list=(ListView) view.findViewById(R.id.list);
         list.setAdapter(adapter);
         (new FetchStingsTask()).execute();
+        //añadir opcion al pulsar item de lista
         list.setOnItemClickListener(new ListItemClickListener());
         return view;
     }
-    @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 2500);
-    }
+
     private class FetchStingsTask extends
             AsyncTask<Void, Void, Theme> {
         private ProgressDialog pd;
@@ -97,10 +96,27 @@ public class FragmentTab extends Fragment implements SwipeRefreshLayout.OnRefres
         public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
             Toast.makeText(getActivity(),"Pulsado",Toast.LENGTH_SHORT).show();
+            ThreadActivity threadactivity = new ThreadActivity();
+            threadactivity.setID(1,1);
+            Intent q = new Intent(getActivity(), threadactivity.getClass());
+            startActivity(q);
         }
     }
     public void setID(int i)
     {
         id = i;
+    }
+
+    private class SwipeRefreshLayoutListener implements SwipeRefreshLayout.OnRefreshListener {
+        @Override
+        public void onRefresh() {
+            swipeRefreshLayout.setRefreshing(true);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, 2500);
+        }
     }
 }
