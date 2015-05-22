@@ -26,7 +26,7 @@ public class Dialog_post extends Dialog implements android.view.View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.post_layout);
+        setContentView(R.layout.posting_thread_layout);
         post = (Button) findViewById(R.id.post_bt2);
         cancel = (Button) findViewById(R.id.post_bt1);
         post.setOnClickListener(this);

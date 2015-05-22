@@ -220,7 +220,7 @@ public class DatMainActivity extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
-    public void clickPost (View view)
+    public void clickPostingThread (View view)
     {
         Dialog_post dialog_post = new Dialog_post(this);
         dialog_post.show();

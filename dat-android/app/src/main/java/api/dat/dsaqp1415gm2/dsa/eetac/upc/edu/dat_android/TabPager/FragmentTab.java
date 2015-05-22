@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,13 +51,13 @@ public class FragmentTab extends Fragment{
         adapter = new ThreadAdapter(getActivity(),threadList);
         list=(ListView) view.findViewById(R.id.list);
         list.setAdapter(adapter);
-        (new FetchStingsTask()).execute();
+        new FetchThemeTask().execute();
         //añadir opcion al pulsar item de lista
         list.setOnItemClickListener(new ListItemClickListener());
         return view;
     }
 
-    private class FetchStingsTask extends
+    private class FetchThemeTask extends
             AsyncTask<Void, Void, Theme> {
         private ProgressDialog pd;
 
@@ -77,14 +78,14 @@ public class FragmentTab extends Fragment{
                 pd.dismiss();
             }
         }
-        /*@Override
+        @Override
         protected void onPreExecute() {
             pd = new ProgressDialog(getActivity());
-            pd.setTitle("Searching...");
+            pd.setTitle("Cargando Threads...");
             pd.setCancelable(false);
             pd.setIndeterminate(true);
             pd.show();
-        }*/
+        }
     }
 
     private void addThreads(Theme theme){
@@ -95,13 +96,13 @@ public class FragmentTab extends Fragment{
         @Override
         public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            int pos=posicion+1;
-            Toast.makeText(getActivity(),"Pulsado "+id+" y "+pos,Toast.LENGTH_SHORT).show();
-            //ThreadActivity threadactivity = new ThreadActivity();
-            //threadactivity.setID(id,pos);
+            String idthread = ((TextView) arg1.findViewById(R.id.tvIdthread)).getText().toString();
+            int ntrhead = 0;
+            ntrhead = Integer.parseInt(idthread);
+            //Toast.makeText(getActivity(),"Pulsado "+id+" y "+ntrhead,Toast.LENGTH_SHORT).show();
             Intent q = new Intent(getActivity(), ThreadActivity.class);
             q.putExtra("tema",id);
-            q.putExtra("thread",pos);
+            q.putExtra("thread",ntrhead);
             startActivity(q);
         }
     }

@@ -34,10 +34,19 @@
             android:focusable="false"
             android:clickable="false"/>
         <TextView
+            android:id="@+id/tvletrasthread"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="37"
+            android:textColor="#ffa8a8a8"
+            android:gravity="end"
+            android:focusable="false"
+            android:clickable="false" />
+        <TextView
             android:id="@+id/tvIdthread"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="45"
+            android:layout_weight="8"
             android:textColor="#ffa8a8a8"
             android:gravity="end"
             android:focusable="false"

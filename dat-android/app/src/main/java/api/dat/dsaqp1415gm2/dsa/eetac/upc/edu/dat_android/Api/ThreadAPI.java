@@ -135,14 +135,14 @@ public class ThreadAPI {
             JSONArray jsonThreads = jsonObject.getJSONArray("threads");
 
             for (int i = 0; i < jsonThreads.length(); i++) {
-                Threadx thread = new Threadx();
-                JSONObject jsonThread = jsonThreads.getJSONObject(i);
-                thread.setContent(jsonThread.getString("content"));
-                thread.setSubject(jsonThread.getString("subject"));
-                thread.setIdtema(jsonThread.getInt("idtema"));
-                thread.setIdthread(jsonThread.getInt("idthread"));
-                thread.setImagen(jsonThread.getString("imagen"));
-                threads.getThreads().add(thread);
+                    Threadx thread = new Threadx();
+                    JSONObject jsonThread = jsonThreads.getJSONObject(i);
+                    thread.setContent(jsonThread.getString("content"));
+                    thread.setSubject(jsonThread.getString("subject"));
+                    thread.setIdtema(jsonThread.getInt("idtema"));
+                    thread.setIdthread(jsonThread.getInt("idthread"));
+                    thread.setImagen(jsonThread.getString("imagen"));
+                    threads.getThreads().add(thread);
             }
         } catch (IOException e) {
             throw new AppException(
@@ -169,6 +169,69 @@ public class ThreadAPI {
                 map.put(s, link);
         }
     }
+ /*   public Threadx getPosts(int x,int y) throws AppException {
+        Log.d(TAG, "getPosts()");
+        Threadx thread = new Threadx();
+        String opcion =null;
+        if (x==1)
+        {
+            opcion="Tecnologia";
+        }
+        if (x==2)
+        {
+            opcion="Deportes";
+        }
+        if (x==3)
+        {
+            opcion="Motor";
+        }
+        if (x==4)
+        {
+            opcion="Videojuegos";
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
+                    .get(opcion).getTarget()).openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+            urlConnection.connect();
+        } catch (IOException e) {
+            throw new AppException(
+                    "Can't connect to API Web Service");
+        }
+
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonPosts = jsonObject.getJSONArray("posts");
+
+            for (int i = 0; i < jsonPosts.length(); i++) {
+                Post post = new Post();
+                JSONObject jsonThread = jsonPosts.getJSONObject(i);
+                post.setContent(jsonThread.getString("content"));
+                post.setIdthema(jsonThread.getInt("idthema"));
+                post.setIdhilo(jsonThread.getInt("idhilo"));
+                post.setIdpost(jsonThread.getInt("idpost"));
+                post.setImage(jsonThread.getString("imagelink"));
+                thread.getPosts().add(post);
+            }
+        } catch (IOException e) {
+            throw new AppException(
+                    "Can't get response from API Web Service");
+        } catch (JSONException e) {
+            throw new AppException("Error parsing Root API");
+        }
+        return thread;
+    } */
     public Threadx getPosts(int x,int y) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
@@ -226,6 +289,7 @@ public class ThreadAPI {
                 post.setIdthema(jsonThread.getInt("idthema"));
                 post.setIdhilo(jsonThread.getInt("idhilo"));
                 post.setIdpost(jsonThread.getInt("idpost"));
+                post.setImage(jsonThread.getString("imagelink"));
                 thread.getPosts().add(post);
             }
         } catch (IOException e) {

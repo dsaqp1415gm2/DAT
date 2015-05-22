@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ws.rs.core.Link;
 
-import org.glassfish.jersey.linking.Binding;
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLink.Style;
 import org.glassfish.jersey.linking.InjectLinks;
@@ -17,12 +16,8 @@ public class Theme {
 		@InjectLink(value = "/Theme/Tecnologia", style = Style.ABSOLUTE, rel = "tecnologia", title = "tema tecnologia", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Theme/Deportes", style = Style.ABSOLUTE, rel = "deportes", title = "tema deportes", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Theme/Motor", style = Style.ABSOLUTE, rel = "motor", title = "tema motor", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Theme/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Theme/Tecnologia/id", style = Style.ABSOLUTE, rel = "tecnothread", title = "threads tecnologia", type = MediaType.DAT_API_THREAD),
-		@InjectLink(value = "/Theme/Deportes/id", style = Style.ABSOLUTE, rel = "depthread", title = "threads depotes", type = MediaType.DAT_API_THREAD),
-		@InjectLink(value = "/Theme/Motor/id", style = Style.ABSOLUTE, rel = "motorthread", title = "threads motor", type = MediaType.DAT_API_THREAD),
-		@InjectLink(value = "/Theme/Videojuegos/id", style = Style.ABSOLUTE, rel = "videothread", title = "threads videojuegos", type = MediaType.DAT_API_THREAD)})
-	private List<Link> links;
+		@InjectLink(value = "/Theme/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME)})
+		private List<Link> links;
 
 	private String nametheme;
 	private String linktheme;
