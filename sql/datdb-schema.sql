@@ -18,7 +18,7 @@ create table thread (
 create table post (
 	idthema		int not null,
 	idhilo		int not null,
-	idpost		int not null primary key,
+	idpost		int not null auto_increment primary key,
 	content		varchar(1000) not null,
 	image_link	varchar(500) not null,
 	foreign key(idthema) references theme(idtheme),

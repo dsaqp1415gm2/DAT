@@ -11,12 +11,14 @@ import org.glassfish.jersey.linking.InjectLinks;
 import org.glassfish.jersey.linking.InjectLink.Style;
 
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.ThemeResource;
 
 
 
 public class Threadx {
 	@InjectLinks({
-		@InjectLink(value = "/Theme/{tema}/{idthread}", style = Style.ABSOLUTE, rel = "thread", title = "threads link", type = MediaType.DAT_API_THREAD,bindings = { @Binding(name = "tema", value = "${instance.tema}"),@Binding(name = "idthread", value = "${instance.idthread}")})})
+		@InjectLink(resource = ThemeResource.class, style = Style.ABSOLUTE, rel = "themes", title = "Temas", type = MediaType.DAT_API_THEME),
+		@InjectLink(value = "/Theme/{tema}/{idthread}", style = Style.ABSOLUTE, rel = "{idthread}", title = "threads link", type = MediaType.DAT_API_THREAD,bindings = { @Binding(name = "tema", value = "${instance.tema}"),@Binding(name = "idthread", value = "${instance.idthread}")})})
 	private List<Link> links;
 	private String subject;
 	private String content;

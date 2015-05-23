@@ -41,7 +41,7 @@ public class ThreadActivity extends ActionBarActivity{
         //añadir actualizar
         setSwipeRefresh();
         //empezar tareas
-        new FetchThreadTask().execute();
+        //new FetchThreadTask().execute();
     }
     private void setToolbar()
     {
