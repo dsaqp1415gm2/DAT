@@ -116,5 +116,6 @@ public class ThreadActivity extends ActionBarActivity{
     {
         Dialog_post dialog_post = new Dialog_post(this);
         dialog_post.show();
+        
     }
 }

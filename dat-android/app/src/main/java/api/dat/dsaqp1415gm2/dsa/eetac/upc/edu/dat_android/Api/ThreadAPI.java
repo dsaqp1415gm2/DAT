@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -298,4 +299,61 @@ public class ThreadAPI {
         }
         return thread;
     }*/
+    public Threadx createThread(int idtema, String subject, String content, String imagen) throws AppException {
+        Threadx threadx = new Threadx();
+        threadx.setIdtema(idtema);
+        threadx.setSubject(subject);
+        threadx.setContent(content);
+        threadx.setImagen(imagen);
+        HttpURLConnection urlConnection = null;
+        try {
+            JSONObject jsonThread = createJsonThread(threadx);
+            URL urlPostThread = new URL(rootAPI.getLinks().get("create-stings")
+                    .getTarget());
+            urlConnection = (HttpURLConnection) urlPostThread.openConnection();
+            urlConnection.setRequestProperty("Accept",
+                    MediaType.DAT_API_THREAD);
+            urlConnection.setRequestProperty("Content-Type",
+                    MediaType.DAT_API_THREAD);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+            PrintWriter writer = new PrintWriter(
+                    urlConnection.getOutputStream());
+            writer.println(jsonThread.toString());
+            writer.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            jsonThread = new JSONObject(sb.toString());
+
+            threadx.setIdtema(jsonThread.getInt("idtema"));
+            threadx.setSubject(jsonThread.getString("subject"));
+            threadx.setContent(jsonThread.getString("content"));
+            threadx.setImagen(jsonThread.getString("imagen"));
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error parsing response");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error getting response");
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+        return threadx;
+    }
+    private JSONObject createJsonThread(Threadx threadx) throws JSONException {
+        JSONObject jsonThread = new JSONObject();
+        jsonThread.put("idtema", threadx.getIdtema());
+        jsonThread.put("subject", threadx.getSubject());
+        jsonThread.put("content", threadx.getContent());
+        jsonThread.put("imagen", threadx.getImagen());
+        return jsonThread;
+    }
 }
