@@ -308,7 +308,7 @@ public class ThreadAPI {
         HttpURLConnection urlConnection = null;
         try {
             JSONObject jsonThread = createJsonThread(threadx);
-            URL urlPostThread = new URL(rootAPI.getLinks().get("create-stings")
+            URL urlPostThread = new URL(rootAPI.getLinks().get("thread")
                     .getTarget());
             urlConnection = (HttpURLConnection) urlPostThread.openConnection();
             urlConnection.setRequestProperty("Accept",
