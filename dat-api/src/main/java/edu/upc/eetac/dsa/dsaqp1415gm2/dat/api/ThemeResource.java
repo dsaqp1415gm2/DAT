@@ -27,6 +27,174 @@ public class ThemeResource {
 		return api;
 	}
 	@GET
+	@Path("/Tecnologia")
+	@Produces(MediaType.DAT_API_THREAD)
+	public Theme getthreads() {
+		Theme theme = new Theme();
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_THREADS_QUERY);
+			stmt.setInt(1, Integer.valueOf(1));
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				String temp = rs.getString("imagen");
+				threadx.setImagen(temp);
+				theme.addThread(threadx);
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return theme;
+	}
+	@GET
+	@Path("/Deportes")
+	@Produces(MediaType.DAT_API_THREAD)
+	public Theme getthreadsDep() {
+		Theme theme = new Theme();
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_THREADS_QUERY);
+			stmt.setInt(1, Integer.valueOf(2));
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				String temp = rs.getString("imagen");
+				threadx.setImagen(temp);
+				theme.addThread(threadx);
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return theme;
+	}
+	@GET
+	@Path("/Motor")
+	@Produces(MediaType.DAT_API_THREAD)
+	public Theme getthreadsMotor() {
+		Theme theme = new Theme();
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_THREADS_QUERY);
+			stmt.setInt(1, Integer.valueOf(3));
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				String temp = rs.getString("imagen");
+				threadx.setImagen(temp);
+				theme.addThread(threadx);
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return theme;
+	}
+	@GET
+	@Path("/Videojuegos")
+	@Produces(MediaType.DAT_API_THREAD)
+	public Theme getthreadsVideo() {
+		Theme theme = new Theme();
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_THREADS_QUERY);
+			stmt.setInt(1, Integer.valueOf(4));
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Threadx threadx= new Threadx();
+				threadx.setIdtema(rs.getInt("idtema"));
+				threadx.setIdthread(rs.getInt("idthread"));
+				threadx.setSubject(rs.getString("subject"));
+				threadx.setContent(rs.getString("content"));
+				String temp = rs.getString("imagen");
+				threadx.setImagen(temp);
+				theme.addThread(threadx);
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return theme;
+	}
+	/*@GET
 	@Path("/{nametheme}")
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreads(@PathParam("nametheme") String nametheme) {
@@ -83,7 +251,7 @@ public class ThemeResource {
 			}
 		}
 		return theme;
-	}
+	}*/
 	//para obtener un thread poniendo la id del tema y del thread
 	@GET
 	@Path("/{nametheme}/{idhilo}")
