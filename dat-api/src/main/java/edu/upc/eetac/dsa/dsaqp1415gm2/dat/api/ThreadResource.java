@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Post;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Theme;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Threadx;
 
@@ -240,6 +241,52 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			}
 		}
 		return threadx;
+	}
+	@POST
+	@Path("/post")
+	@Consumes(MediaType.DAT_API_THREAD)
+	@Produces(MediaType.DAT_API_THREAD)
+	public Post createPost(Post post) {
+		//validatePost(post);
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+		int idthread=0;
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(INSERT_POST_QUERY,
+					Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, post.getIdthema());
+			stmt.setInt(2, post.getIdhilo());
+			idthread=post.getIdhilo();
+			stmt.setInt(3,0);
+			stmt.setString(4, post.getContent());
+			stmt.setString(5, post.getImagelink());
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				Threadx threadx = new Threadx();
+				threadx = getThreadFromDB(Integer.toString(idthread));
+			} else {
+				// Something has failed...
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+		
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return post;
 	}
 	private void validateThreadx(Threadx threadx) {
 		if (threadx.getSubject() == null)

@@ -26,7 +26,6 @@ public class ThreadAPI {
     private final static String TAG = ThreadAPI.class.getName();
     private static ThreadAPI instance = null;
     private URL url;
-    Theme threads = new Theme();
     private ThreadRootAPI rootAPI = null;
 
     private ThreadAPI(Context context) throws IOException, AppException {
@@ -80,6 +79,7 @@ public class ThreadAPI {
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray jsonLinks = jsonObject.getJSONArray("links");
             parseLinks(jsonLinks, rootAPI.getLinks());
+            JSONArray jsonThreads = jsonObject.getJSONArray("threads");
         } catch (IOException e) {
             throw new AppException(
                     "Can't get response from API Web Service");
@@ -90,7 +90,7 @@ public class ThreadAPI {
 
     public Theme getThreads(int x) throws AppException {
         Log.d(TAG, "getThreads()");
-        //Theme threads = new Theme();
+        Theme threads = new Theme();
         String opcion =null;
         if (x==1)
         {
@@ -131,6 +131,7 @@ public class ThreadAPI {
             }
 
             JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonLinks = jsonObject.getJSONArray("links");
             JSONArray jsonThreads = jsonObject.getJSONArray("threads");
 
             for (int i = 0; i < jsonThreads.length(); i++) {
@@ -168,7 +169,7 @@ public class ThreadAPI {
                 map.put(s, link);
         }
     }
-    public Threadx getPosts(int x,int y) throws AppException {
+   /* public Threadx getPosts(int x,int y) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
         String opcion =null;
@@ -230,8 +231,8 @@ public class ThreadAPI {
             throw new AppException("Error parsing Root API");
         }
         return thread;
-    }
-    /*public Threadx getPosts(int x,int y) throws AppException {
+    }*/
+    public Threadx getPosts(int x,int y) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
         String opcion =null;
@@ -298,21 +299,19 @@ public class ThreadAPI {
             throw new AppException("Error parsing Root API");
         }
         return thread;
-    }*/
+    }
     public Threadx createThread(int idtema, String subject, String content, String imagen) throws AppException {
         Threadx threadx = new Threadx();
         threadx.setIdtema(idtema);
         threadx.setSubject(subject);
         threadx.setContent(content);
         threadx.setImagen(imagen);
+        String opcion="thread";
         HttpURLConnection urlConnection = null;
         try {
             JSONObject jsonThread = createJsonThread(threadx);
-            URL urlPostThread = new URL(rootAPI.getLinks().get("thread")
-                    .getTarget());
-            urlConnection = (HttpURLConnection) urlPostThread.openConnection();
-            urlConnection.setRequestProperty("Accept",
-                    MediaType.DAT_API_THREAD);
+            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
+                    .get(opcion).getTarget()).openConnection();
             urlConnection.setRequestProperty("Content-Type",
                     MediaType.DAT_API_THREAD);
             urlConnection.setRequestMethod("POST");
