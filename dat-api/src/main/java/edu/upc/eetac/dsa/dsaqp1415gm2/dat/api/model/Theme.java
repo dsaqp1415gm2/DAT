@@ -15,11 +15,11 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.ThreadResource;
 
 public class Theme {
 	@InjectLinks({
+		@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "thread", title = "Threads", type = MediaType.DAT_API_THREAD),
 		@InjectLink(value = "/Theme/Tecnologia", style = Style.ABSOLUTE, rel = "tecnologia", title = "tema tecnologia", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Theme/Deportes", style = Style.ABSOLUTE, rel = "deportes", title = "tema deportes", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/Theme/Motor", style = Style.ABSOLUTE, rel = "motor", title = "tema motor", type = MediaType.DAT_API_THEME),
-		@InjectLink(value = "/Theme/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME),
-		@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "thread", title = "Threads", type = MediaType.DAT_API_THREAD)})
+		@InjectLink(value = "/Theme/Videojuegos", style = Style.ABSOLUTE, rel = "videojuegos", title = "tema videojuegos", type = MediaType.DAT_API_THEME)})		
 		private List<Link> links;
 
 	private String nametheme;
