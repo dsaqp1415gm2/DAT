@@ -9,6 +9,7 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -31,7 +32,9 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	private String GET_THREADS_QUERY = "select * from thread";
 	private String INSERT_THREAD_QUERY = "insert into thread (idtema, idthread, subject, content, imagen) values (?, ?, ?, ?, ?)";
 	private String INSERT_POST_QUERY = "insert into post (idthema, idhilo, idpost, content, image_link) values (?, ?, ?, ?, ?)";
-
+	private String DELETE_THREAD_QUERY = "delete from thread where idthread=?";
+	private String DELETE_POSTS_QUERY = "delete from post where idhilo=?";
+	
 	@GET
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreads() {
@@ -297,6 +300,55 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			throw new BadRequestException("Subject can't be greater than 100 characters.");
 		if (threadx.getContent().length() > 500)
 			throw new BadRequestException("Content can't be greater than 500 characters.");
+	}
+	@DELETE
+	@Path("/{idthread}")
+	public void deleteThread(@PathParam("idthread") String idthread) {
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+	 
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(DELETE_POSTS_QUERY);
+			stmt.setInt(1, Integer.valueOf(idthread));
+	 
+			int rows = stmt.executeUpdate();
+			if (rows == 0)
+				;// Deleting inexistent sting
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		PreparedStatement stmt2 = null;
+		try {
+			stmt2 = conn.prepareStatement(DELETE_THREAD_QUERY);
+			stmt2.setInt(1, Integer.valueOf(idthread));
+	 
+			int rows = stmt2.executeUpdate();
+			if (rows == 0)
+				;// Deleting inexistent sting
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt2 != null)
+					stmt2.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
 	}
 }
 		

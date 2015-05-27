@@ -142,6 +142,7 @@ public class ThreadAPI {
                     thread.setIdtema(jsonThread.getInt("idtema"));
                     thread.setIdthread(jsonThread.getInt("idthread"));
                     thread.setImagen(jsonThread.getString("imagen"));
+                    parseLinks(jsonThread.getJSONArray("links"), thread.getLinks());
                     threads.getThreads().add(thread);
             }
         } catch (IOException e) {
@@ -169,98 +170,14 @@ public class ThreadAPI {
                 map.put(s, link);
         }
     }
-   /* public Threadx getPosts(int x,int y) throws AppException {
+    public Threadx getPosts(String url2) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
-        String opcion =null;
-        if (x==1)
-        {
-            opcion="Tecnologia";
-        }
-        if (x==2)
-        {
-            opcion="Deportes";
-        }
-        if (x==3)
-        {
-            opcion="Motor";
-        }
-        if (x==4)
-        {
-            opcion="Videojuegos";
-        }
+
         HttpURLConnection urlConnection = null;
         try {
-            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-                    .get("thread").getTarget()).openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setDoInput(true);
-            urlConnection.connect();
-        } catch (IOException e) {
-            throw new AppException(
-                    "Can't connect to API Web Service");
-        }
-
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new InputStreamReader(
-                    urlConnection.getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-
-            JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONArray jsonPosts = jsonObject.getJSONArray("posts");
-
-            for (int i = 0; i < jsonPosts.length(); i++) {
-                Post post = new Post();
-                JSONObject jsonThread = jsonPosts.getJSONObject(i);
-                post.setContent(jsonThread.getString("content"));
-                post.setIdthema(jsonThread.getInt("idthema"));
-                post.setIdhilo(jsonThread.getInt("idhilo"));
-                post.setIdpost(jsonThread.getInt("idpost"));
-                post.setImage(jsonThread.getString("imagelink"));
-                thread.getPosts().add(post);
-            }
-        } catch (IOException e) {
-            throw new AppException(
-                    "Can't get response from API Web Service");
-        } catch (JSONException e) {
-            throw new AppException("Error parsing Root API");
-        }
-        return thread;
-    }*/
-    public Threadx getPosts(int x,int y) throws AppException {
-        Log.d(TAG, "getPosts()");
-        Threadx thread = new Threadx();
-        String opcion =null;
-        if (x==1)
-        {
-            opcion="Tecnologia";
-        }
-        if (x==2)
-        {
-            opcion="Deportes";
-        }
-        if (x==3)
-        {
-            opcion="Motor";
-        }
-        if (x==4)
-        {
-            opcion="Videojuegos";
-        }
-        HttpURLConnection urlConnection = null;
-        String urlTecno = "http://147.83.7.156:8080/dat-api/dat/Theme/"+opcion+"/"+y;
-        try {
-            url= new URL(urlTecno);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
+            URL url3 = new URL(url2);
+            urlConnection = (HttpURLConnection) url3.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
@@ -300,6 +217,7 @@ public class ThreadAPI {
         }
         return thread;
     }
+
     public Threadx createThread(int idtema, String subject, String content, String imagen) throws AppException {
         Threadx threadx = new Threadx();
         threadx.setIdtema(idtema);
@@ -330,7 +248,6 @@ public class ThreadAPI {
                 sb.append(line);
             }
             jsonThread = new JSONObject(sb.toString());
-
             threadx.setIdtema(jsonThread.getInt("idtema"));
             threadx.setSubject(jsonThread.getString("subject"));
             threadx.setContent(jsonThread.getString("content"));

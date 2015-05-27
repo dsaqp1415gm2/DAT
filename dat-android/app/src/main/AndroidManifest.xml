@@ -33,6 +33,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activitys.ThreadActivity"/>
         </activity>
+        <activity
+            android:name=".Activitys.CreateThreadActivity"
+            android:label="CreateThreadActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.CreateThreadActivity"/>
+        </activity>
     </application>
 
 </manifest>

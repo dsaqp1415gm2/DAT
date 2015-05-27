@@ -3,6 +3,7 @@
 
     <string name="DAT">Discusión Anónima Temporal</string>
     <string name="about">About</string>
+    <string name="create">Create</string>
     <!-- Lista de titles del drawer -->
     <string-array name="draw_titles">
         <item>Tecnologia</item>

@@ -99,10 +99,12 @@ public class FragmentTab extends Fragment{
             String idthread = ((TextView) arg1.findViewById(R.id.tvIdthread)).getText().toString();
             int ntrhead = 0;
             ntrhead = Integer.parseInt(idthread);
+            Threadx threadx = threadList.get(posicion);
             //Toast.makeText(getActivity(),"Pulsado "+id+" y "+ntrhead,Toast.LENGTH_SHORT).show();
             Intent q = new Intent(getActivity(), ThreadActivity.class);
             q.putExtra("tema",id);
             q.putExtra("thread",ntrhead);
+            q.putExtra("url", threadx.getLinks().get("{idthread}").getTarget());
             startActivity(q);
         }
     }

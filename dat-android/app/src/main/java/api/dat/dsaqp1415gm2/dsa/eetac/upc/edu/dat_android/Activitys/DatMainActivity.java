@@ -17,7 +17,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Dialog.Dialog_post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.NavigationAdapter;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
@@ -222,8 +221,8 @@ public class DatMainActivity extends ActionBarActivity{
     }
     public void clickPostingThread (View view)
     {
-        Dialog_post dialog_post = new Dialog_post(this);
-        dialog_post.show();
+        Intent i = new Intent(this, CreateThreadActivity.class);
+        startActivity(i);
     }
 
 }

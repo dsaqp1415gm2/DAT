@@ -3,116 +3,102 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:padding="8dp">
+    >
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/t"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/radiobuttons"
-        android:gravity="center">
+        android:layout_below="@id/t">
         <RadioGroup
             android:id="@+id/RadioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="#ffe9e9e9"
-            android:padding="3dp"
+            android:gravity="center"
             >
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tecnologia"
-                android:textSize="8dp"
+                android:textSize="12dp"
                 android:textColor="#000000"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Deportes"
-                android:textSize="8dp"
+                android:textSize="12dp"
                 android:textColor="#000000"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Motor"
-                android:textSize="8dp"
+                android:textSize="12dp"
                 android:textColor="#000000"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Videojuegos"
-                android:textSize="8dp"
+                android:textSize="12dp"
                 android:textColor="#000000"/>
         </RadioGroup>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/post_tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Subject:"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:textColor="#424242"
-        android:layout_below="@id/radiobuttons"/>
-    <EditText
-        android:id="@+id/post_et1"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:textColor="#000000"
-        android:layout_below="@id/post_tv1"/>
-    <TextView
-        android:id="@+id/post_tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="URL Imagen:"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:textColor="#424242"
-        android:layout_below="@id/post_et1"/>
-    <EditText
-        android:id="@+id/post_et2"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:textColor="#000000"
-        android:layout_below="@id/post_tv2"/>
-    <TextView
-        android:id="@+id/post_tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Content:"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:textColor="#424242"
-        android:layout_below="@id/post_et2"/>
-    <EditText
-        android:id="@+id/post_et3"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:textColor="#000000"
-        android:layout_below="@id/post_tv3"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/post_et3"
-        android:gravity="center"
-        >
-        <Button
-            android:id="@+id/post_bt1"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/radiobuttons"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/post_tv1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textColor="#ffffff"
-            android:background="@drawable/buttonshape"
+            android:text="Subject:"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#424242"
             />
-        <Button
-            android:id="@+id/post_bt2"
+        <EditText
+            android:id="@+id/post_et1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:id="@+id/post_tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="URL Imagen:"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            />
+        <EditText
+            android:id="@+id/post_et2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:id="@+id/post_tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post"
-            android:textColor="#ffffff"
-            android:layout_margin="8dp"
-            android:background="@drawable/buttonshape"
+            android:text="Content:"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            />
+        <EditText
+            android:id="@+id/post_et3"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:textColor="#000000"
             />
     </LinearLayout>
 

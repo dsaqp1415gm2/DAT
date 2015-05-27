@@ -9,13 +9,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.PostAdapter;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPI;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
-import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Dialog.Dialog_post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 
 /**
@@ -28,11 +28,13 @@ public class ThreadActivity extends ActionBarActivity{
     ArrayList<Post> postList;
     private int tema;
     private int thread;
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tema = (int) getIntent().getExtras().get("tema");
         thread = (int) getIntent().getExtras().get("thread");
+        url = (String) getIntent().getExtras().get("url");
         setContentView(R.layout.postlist_layout);
         //añadir lista
         setList();
@@ -74,7 +76,7 @@ public class ThreadActivity extends ActionBarActivity{
             Threadx threadx = null;
 
             try {
-                threadx = ThreadAPI.getInstance(ThreadActivity.this).getPosts(tema, thread);
+                threadx = ThreadAPI.getInstance(ThreadActivity.this).getPosts(url);
             } catch (AppException e) {
                 e.printStackTrace();
             }
@@ -114,8 +116,6 @@ public class ThreadActivity extends ActionBarActivity{
     }
     public void clickPostingPost (View view)
     {
-        Dialog_post dialog_post = new Dialog_post(this);
-        dialog_post.show();
         
     }
 }
