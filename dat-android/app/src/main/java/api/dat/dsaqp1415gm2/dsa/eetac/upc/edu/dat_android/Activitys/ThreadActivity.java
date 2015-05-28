@@ -1,6 +1,7 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +9,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
@@ -35,7 +38,7 @@ public class ThreadActivity extends ActionBarActivity{
         tema = (int) getIntent().getExtras().get("tema");
         thread = (int) getIntent().getExtras().get("thread");
         url = (String) getIntent().getExtras().get("url");
-        setContentView(R.layout.postlist_layout);
+        setContentView(R.layout.list_of_post_layout);
         //añadir lista
         setList();
         //añadir toolbar
@@ -58,6 +61,8 @@ public class ThreadActivity extends ActionBarActivity{
         adapter = new PostAdapter(ThreadActivity.this, postList);
         list=(ListView) findViewById(R.id.post_list);
         list.setAdapter(adapter);
+        //a?adir opcion al pulsar item de lista
+        list.setOnItemClickListener(new ListItemClickListener());
     }
     private void setSwipeRefresh()
     {
@@ -66,6 +71,16 @@ public class ThreadActivity extends ActionBarActivity{
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
+    }
+    private class ListItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
+        {
+            Intent q = new Intent(ThreadActivity.this, CreatePostActivity.class);
+            q.putExtra("idtema",tema);
+            q.putExtra("idthread",thread);
+            startActivity(q);
+        }
     }
     private class FetchThreadTask extends
             AsyncTask<Void, Void, Threadx> {

@@ -40,19 +40,19 @@ public class FragmentTab extends Fragment{
                              Bundle savedInstanceState) {
         // Get the view from fragmenttabxml
         View view = inflater.inflate(R.layout.fragmenttab, container, false);
-        //añadir actualizar
+        //aï¿½adir actualizar
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutListener());
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
-        //añadir lista
+        //aï¿½adir lista
         threadList = new ArrayList<Threadx>();
         adapter = new ThreadAdapter(getActivity(),threadList);
         list=(ListView) view.findViewById(R.id.list);
         list.setAdapter(adapter);
         new FetchThemeTask().execute();
-        //añadir opcion al pulsar item de lista
+        //aï¿½adir opcion al pulsar item de lista
         list.setOnItemClickListener(new ListItemClickListener());
         return view;
     }
@@ -104,7 +104,7 @@ public class FragmentTab extends Fragment{
             Intent q = new Intent(getActivity(), ThreadActivity.class);
             q.putExtra("tema",id);
             q.putExtra("thread",ntrhead);
-            q.putExtra("url", threadx.getLinks().get("{idthread}").getTarget());
+            q.putExtra("url", threadx.getLinks().get("idthread").getTarget());
             startActivity(q);
         }
     }

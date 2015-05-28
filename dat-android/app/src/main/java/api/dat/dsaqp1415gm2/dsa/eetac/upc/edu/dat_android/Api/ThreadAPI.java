@@ -272,4 +272,58 @@ public class ThreadAPI {
         jsonThread.put("imagen", threadx.getImagen());
         return jsonThread;
     }
+    public Post createPost(int idthema, int idhilo, String content, String imagelink) throws AppException {
+        Post post = new Post();
+        post.setIdthema(idthema);
+        post.setIdhilo(idhilo);
+        post.setContent(content);
+        post.setImage(imagelink);
+        String opcion="posting";
+        HttpURLConnection urlConnection = null;
+        try {
+            JSONObject jsonPost = createJsonPost(post);
+            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
+                    .get(opcion).getTarget()).openConnection();
+            urlConnection.setRequestProperty("Content-Type",
+                    MediaType.DAT_API_THREAD);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+            PrintWriter writer = new PrintWriter(
+                    urlConnection.getOutputStream());
+            writer.println(jsonPost.toString());
+            writer.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            jsonPost = new JSONObject(sb.toString());
+            post.setIdthema(jsonPost.getInt("idtema"));
+            post.setIdhilo(jsonPost.getInt("idthilo"));
+            post.setContent(jsonPost.getString("content"));
+            post.setImage(jsonPost.getString("imagelink"));
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error parsing response");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error getting response");
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+        return post;
+    }
+    private JSONObject createJsonPost(Post post) throws JSONException {
+        JSONObject jsonPost = new JSONObject();
+        jsonPost.put("idthema", post.getIdthema());
+        jsonPost.put("idhilo", post.getIdhilo());
+        jsonPost.put("content", post.getContent());
+        jsonPost.put("imagelink", post.getImage());
+        return jsonPost;
+    }
 }

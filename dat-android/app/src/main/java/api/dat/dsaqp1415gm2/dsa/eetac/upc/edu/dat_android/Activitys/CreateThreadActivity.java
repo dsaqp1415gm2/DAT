@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -46,10 +47,15 @@ public class CreateThreadActivity extends ActionBarActivity {
         urlImagen=(EditText) findViewById(R.id.post_et2);
         content= (EditText) findViewById(R.id.post_et3);
         radioGroup =(RadioGroup) findViewById(R.id.RadioGroup);
-        radioButtonID = radioGroup.getCheckedRadioButtonId();
-        View radioButton = radioGroup.findViewById(radioButtonID);
-        idx = radioGroup.indexOfChild(radioButton);
-        idx = idx + 2;
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                //RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
+                //String text = checkedRadioButton.getText().toString();
+                idx = checkedId;
+            }
+        });
     }
     private void setToolbar()
     {
@@ -67,17 +73,12 @@ public class CreateThreadActivity extends ActionBarActivity {
     //opciones al clikar en los items de menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        String s = subject.getText().toString();
         if (id == R.id.action_create){
-            if ((s=="")||(content.getText().toString()==null)||(urlImagen.getText().toString()==null)||(idx==0))
+            if ((subject.getText().toString().equals(""))||(content.getText().toString().equals(""))
+                    || (urlImagen.getText().toString().equals(""))||(idx==0))
             {
-                Toast.makeText(CreateThreadActivity.this,"Faltan campos por rellenar",Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Faltan campos por rellenar",Toast.LENGTH_SHORT).show();
             }
             else {
                 new FetchCreateThreadTask().execute();
