@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Post;
@@ -61,8 +63,6 @@ public class ThreadActivity extends ActionBarActivity{
         adapter = new PostAdapter(ThreadActivity.this, postList);
         list=(ListView) findViewById(R.id.post_list);
         list.setAdapter(adapter);
-        //a?adir opcion al pulsar item de lista
-        list.setOnItemClickListener(new ListItemClickListener());
     }
     private void setSwipeRefresh()
     {
@@ -71,16 +71,6 @@ public class ThreadActivity extends ActionBarActivity{
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
-    }
-    private class ListItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
-        {
-            Intent q = new Intent(ThreadActivity.this, CreatePostActivity.class);
-            q.putExtra("idtema",tema);
-            q.putExtra("idthread",thread);
-            startActivity(q);
-        }
     }
     private class FetchThreadTask extends
             AsyncTask<Void, Void, Threadx> {
@@ -124,6 +114,9 @@ public class ThreadActivity extends ActionBarActivity{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    postList.clear();
+                    adapter.notifyDataSetChanged();
+                    new FetchThreadTask().execute();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }, 2500);
@@ -131,6 +124,25 @@ public class ThreadActivity extends ActionBarActivity{
     }
     public void clickPostingPost (View view)
     {
-        
+        Intent q = new Intent(this, CreatePostActivity.class);
+        q.putExtra("idtema",tema);
+        q.putExtra("idthread",thread);
+        startActivityForResult(q, POST_ACTIVITY);
+    }
+    //para actualizar los posts despues de crear uno
+    private final static int POST_ACTIVITY = 0;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case POST_ACTIVITY:
+                if (resultCode == RESULT_OK) {
+                    Bundle res = data.getExtras();
+                    String jsonPost = res.getString("json-post");
+                    Post post = new Gson().fromJson(jsonPost, Post.class);
+                    postList.add(0, post);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+        }
     }
 }

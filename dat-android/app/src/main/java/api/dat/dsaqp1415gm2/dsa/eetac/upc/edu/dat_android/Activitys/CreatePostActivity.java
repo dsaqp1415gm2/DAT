@@ -10,16 +10,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
+import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Post;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.ThreadAPI;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.Threadx;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
@@ -27,40 +26,28 @@ import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.R;
 /**
  * Created by Manel on 27/05/2015.
  */
-public class CreateThreadActivity extends ActionBarActivity {
+public class CreatePostActivity extends ActionBarActivity {
     public Activity c;
     public Dialog d;
-    public Button post, cancel;
-    public EditText subject;
     public EditText urlImagen;
     public EditText content;
-    public RadioGroup radioGroup;
-    public int idx;
-    int radioButtonID;
+    public int idthread;
+    public int idtema;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.posting_thread_layout);
+        setContentView(R.layout.posting_post_layout);
         setToolbar();
-        subject= (EditText) findViewById(R.id.post_et1);
+        idtema = (int) getIntent().getExtras().get("idtema");
+        idthread = (int) getIntent().getExtras().get("idthread");
         urlImagen=(EditText) findViewById(R.id.post_et2);
         content= (EditText) findViewById(R.id.post_et3);
-        radioGroup =(RadioGroup) findViewById(R.id.RadioGroup);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                //RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
-                //String text = checkedRadioButton.getText().toString();
-                idx = checkedId;
-            }
-        });
     }
     private void setToolbar()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.t);
-        toolbar.setTitle("Crear Thread");
+        toolbar.setTitle("Responder");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -75,8 +62,7 @@ public class CreateThreadActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_create){
-            if ((subject.getText().toString().equals(""))||(content.getText().toString().equals(""))
-                    || (urlImagen.getText().toString().equals(""))||(idx==0))
+            if ((content.getText().toString().equals("")) || (urlImagen.getText().toString().equals("")))
             {
                 Toast.makeText(this,"Faltan campos por rellenar",Toast.LENGTH_SHORT).show();
             }
@@ -90,35 +76,34 @@ public class CreateThreadActivity extends ActionBarActivity {
     }
 
     private class FetchCreateThreadTask extends
-            AsyncTask<Void, Void, Threadx> {
+            AsyncTask<Void, Void, Post> {
         private ProgressDialog pd;
 
         @Override
-        protected Threadx doInBackground(Void... params) {
-            Threadx threadx = null;
+        protected Post doInBackground(Void... params) {
+            Post post = null;
 
             try {
-                ThreadAPI.getInstance(CreateThreadActivity.this).createThread(idx, subject.getText().toString(), content.getText().toString(),
+                ThreadAPI.getInstance(CreatePostActivity.this).createPost(idtema, idthread, content.getText().toString(),
                         urlImagen.getText().toString());
             } catch (AppException e) {
                 e.printStackTrace();
             }
-            return threadx;
+            return post;
         }
         @Override
-        protected void onPostExecute(Threadx result) {
-            //Toast.makeText(getOwnerActivity(),"THREAD CREADO",Toast.LENGTH_SHORT).show();
-            showThread(result);
+        protected void onPostExecute(Post result) {
+            showPost(result);
             if (pd != null) {
                 pd.dismiss();
             }
         }
 
     }
-    private void showThread(Threadx result) {
+    private void showPost(Post result) {
         String json = new Gson().toJson(result);
         Bundle data = new Bundle();
-        data.putString("json-thread", json);
+        data.putString("json-post", json);
         Intent intent = new Intent();
         intent.putExtras(data);
         setResult(RESULT_OK, intent);

@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys.About;
@@ -34,6 +36,7 @@ public class FragmentTab extends Fragment{
     private ListView list;
     private ThreadAdapter adapter;
     ArrayList<Threadx> threadList;
+    public static final int RESULT_OK = -1;
     private int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,10 +105,10 @@ public class FragmentTab extends Fragment{
             Threadx threadx = threadList.get(posicion);
             //Toast.makeText(getActivity(),"Pulsado "+id+" y "+ntrhead,Toast.LENGTH_SHORT).show();
             Intent q = new Intent(getActivity(), ThreadActivity.class);
-            q.putExtra("tema",id);
-            q.putExtra("thread",ntrhead);
+            q.putExtra("tema", id);
+            q.putExtra("thread", ntrhead);
             q.putExtra("url", threadx.getLinks().get("idthread").getTarget());
-            startActivity(q);
+            startActivityForResult(q, WRITE_ACTIVITY);
         }
     }
     public void setID(int i)
@@ -120,9 +123,30 @@ public class FragmentTab extends Fragment{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    threadList.clear();
+                    adapter.notifyDataSetChanged();
+                    new FetchThemeTask().execute();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }, 2500);
         }
     }
+
+    //para actualizar los threads despues de crear uno
+    private final static int WRITE_ACTIVITY = 0;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case WRITE_ACTIVITY:
+                if (resultCode == RESULT_OK) {
+                    Bundle res = data.getExtras();
+                    String jsonThread = res.getString("json-thread");
+                    Threadx threadx = new Gson().fromJson(jsonThread, Threadx.class);
+                    threadList.add(0, threadx);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+        }
+    }
+
 }
