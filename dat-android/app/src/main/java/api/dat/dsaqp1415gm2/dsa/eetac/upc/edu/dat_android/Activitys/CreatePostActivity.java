@@ -62,7 +62,7 @@ public class CreatePostActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_create){
-            if ((content.getText().toString().equals("")) || (urlImagen.getText().toString().equals("")))
+            if ((content.getText().toString().equals("")))
             {
                 Toast.makeText(this,"Faltan campos por rellenar",Toast.LENGTH_SHORT).show();
             }

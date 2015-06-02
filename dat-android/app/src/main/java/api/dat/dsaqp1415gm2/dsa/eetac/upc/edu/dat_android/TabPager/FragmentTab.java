@@ -139,11 +139,14 @@ public class FragmentTab extends Fragment{
         switch (requestCode) {
             case WRITE_ACTIVITY:
                 if (resultCode == RESULT_OK) {
-                    Bundle res = data.getExtras();
+                    /*Bundle res = data.getExtras();
                     String jsonThread = res.getString("json-thread");
                     Threadx threadx = new Gson().fromJson(jsonThread, Threadx.class);
                     threadList.add(0, threadx);
+                    adapter.notifyDataSetChanged();*/
+                    threadList.clear();
                     adapter.notifyDataSetChanged();
+                    new FetchThemeTask().execute();
                 }
                 break;
         }

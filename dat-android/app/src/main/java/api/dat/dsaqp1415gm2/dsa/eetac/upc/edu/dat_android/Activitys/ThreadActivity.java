@@ -136,11 +136,14 @@ public class ThreadActivity extends ActionBarActivity{
         switch (requestCode) {
             case POST_ACTIVITY:
                 if (resultCode == RESULT_OK) {
-                    Bundle res = data.getExtras();
+                    /*Bundle res = data.getExtras();
                     String jsonPost = res.getString("json-post");
                     Post post = new Gson().fromJson(jsonPost, Post.class);
                     postList.add(0, post);
+                    adapter.notifyDataSetChanged();*/
+                    postList.clear();
                     adapter.notifyDataSetChanged();
+                    new FetchThreadTask().execute();
                 }
                 break;
         }
