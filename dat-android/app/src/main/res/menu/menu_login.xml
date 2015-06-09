@@ -3,15 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".DatMainActivity">
     <item
-        android:id="@+id/action_login"
-        android:title="@string/login"
+        android:id="@+id/action_logear"
+        android:title="Login"
         android:orderInCategory="100"
-        android:icon="@mipmap/ic_menu_login"
+        android:icon="@mipmap/ic_menu_send"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_about"
-        android:title="@string/about"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
 </menu>

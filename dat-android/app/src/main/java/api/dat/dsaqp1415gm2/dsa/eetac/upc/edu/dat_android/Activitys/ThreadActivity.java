@@ -9,11 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
@@ -40,7 +36,7 @@ public class ThreadActivity extends ActionBarActivity{
         tema = (int) getIntent().getExtras().get("tema");
         thread = (int) getIntent().getExtras().get("thread");
         url = (String) getIntent().getExtras().get("url");
-        setContentView(R.layout.list_of_post_layout);
+        setContentView(R.layout.posts_layout);
         //añadir lista
         setList();
         //añadir toolbar

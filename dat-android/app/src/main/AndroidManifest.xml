@@ -20,13 +20,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activitys.About" />
+            android:name=".Activitys.About"
+            android:label="About" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.About"/>
+        </activity>
         <activity
-            android:name=".Activitys.ThreadActivity" />
+            android:name=".Activitys.ThreadActivity"
+            android:label="ThreadActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.ThreadActivity"/>
+        </activity>
         <activity
-            android:name=".Activitys.CreateThreadActivity" />
+            android:name=".Activitys.CreateThreadActivity"
+            android:label="CreateThreadActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.CreateThreadActivity"/>
+        </activity>
         <activity
-            android:name=".Activitys.CreatePostActivity" />
+            android:name=".Activitys.CreatePostActivity"
+            android:label="CreatePostActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.CreatePostActivity"/>
+        </activity>
+        <activity
+            android:name=".Activitys.LoginActivity"
+            android:label="LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activitys.LoginActivity"/>
+        </activity>
     </application>
 
 </manifest>

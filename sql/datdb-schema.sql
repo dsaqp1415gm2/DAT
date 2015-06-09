@@ -2,6 +2,18 @@ drop database if exists datdb;
 create database datdb;
 use datdb;
 
+create table users (
+	username	varchar(20) not null primary key,
+	userpass	char(32) not null
+	);
+ 
+create table user_roles (
+	username			varchar(20) not null,
+	rolename 			varchar(20) not null,
+	foreign key(username) references users(username) on delete cascade,
+	primary key (username, rolename)
+);
+
 create table theme (
 	idtheme		int not null auto_increment primary key,
 	nametheme	varchar(20) not null,
@@ -25,6 +37,9 @@ create table post (
 	foreign key(idhilo) references thread(idthread)
 );
 
+insert into users values('admin', MD5('admin'));
+
+insert into user_roles values ('admin', 'registered');
 
 insert into theme(idtheme,nametheme,image_link) values (1,'Tecnologia','http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');
 insert into theme(idtheme,nametheme,image_link) values (2,'Deportes','http://www.bookofjoe.com/images/2007/03/22/pict0002hbhb_2.jpg');

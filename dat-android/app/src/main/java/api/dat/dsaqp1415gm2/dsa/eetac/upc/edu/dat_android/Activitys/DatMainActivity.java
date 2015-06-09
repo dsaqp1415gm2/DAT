@@ -1,6 +1,8 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.NavigationDrawer.Drawer_items;
@@ -52,8 +56,18 @@ public class DatMainActivity extends ActionBarActivity{
         //añadir el viewPager con los tabs
         setViewPager();
         //añadir el refresh
-
-
+        SharedPreferences prefs = getSharedPreferences("dat-profile",
+                Context.MODE_PRIVATE);
+        final String username = prefs.getString("username", null);
+        final String password = prefs.getString("password", null);
+        if((username!=null)&&(password!=null)) {
+            Authenticator.setDefault(new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password
+                            .toCharArray());
+                }
+            });
+        }
     }
     //coge la toolbar del xml y le añade titulo y algun boton
     public void setToolbar()
@@ -82,6 +96,7 @@ public class DatMainActivity extends ActionBarActivity{
         DwItems.add(new Drawer_items(titulos[2], DwIcons.getResourceId(2, -1)));
         DwItems.add(new Drawer_items(titulos[3], DwIcons.getResourceId(3, -1)));
         DwItems.add(new Drawer_items(titulos[4], DwIcons.getResourceId(4, -1)));
+        DwItems.add(new Drawer_items(titulos[5], DwIcons.getResourceId(5, -1)));
         NavAdapter = new NavigationAdapter(this,DwItems);
         listView.setAdapter(NavAdapter);
         listView.setOnItemClickListener(new DrawerItemClickListener());
@@ -170,8 +185,12 @@ public class DatMainActivity extends ActionBarActivity{
                 viewPager.setCurrentItem(opcion);
                 break;
             case 4:
-                Intent i4 = new Intent(this, About.class);
+                Intent i4 = new Intent(this, LoginActivity.class);
                 startActivity(i4);
+                break;
+            case 5:
+                Intent i5 = new Intent(this, About.class);
+                startActivity(i5);
                 break;
 
         }
@@ -209,6 +228,11 @@ public class DatMainActivity extends ActionBarActivity{
             } else {
                 drawerLayout.openDrawer(listView);
             }
+            return true;
+        }
+        if (id == R.id.action_login){
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
             return true;
         }
         if (id == R.id.action_about){
