@@ -35,6 +35,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	private String DELETE_THREAD_QUERY = "delete from thread where idthread=?";
 	private String DELETE_POSTS_QUERY = "delete from post where idhilo=?";
 	private String UPDATE_THREAD = "update thread SET lastidpost=? WHERE idthread=?";
+	private String DELETE_IDPOST_QUERY = " delete from post where idpost=?";
 
 	@GET
 	@Produces(MediaType.DAT_API_THREAD)
@@ -367,7 +368,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	 
 		PreparedStatement stmt = null;
 		try {
-			stmt = conn.prepareStatement(DELETE_POSTS_QUERY);
+			stmt = conn.prepareStatement(DELETE_IDPOST_QUERY);
 			stmt.setInt(1, Integer.valueOf(idpost));
 	 
 			int rows = stmt.executeUpdate();
@@ -383,25 +384,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
-		PreparedStatement stmt2 = null;
-		try {
-			stmt2 = conn.prepareStatement(DELETE_THREAD_QUERY);
-			stmt2.setInt(1, Integer.valueOf(idpost));
-	 
-			int rows = stmt2.executeUpdate();
-			if (rows == 0)
-				;// Deleting inexistent sting
-		} catch (SQLException e) {
-			throw new ServerErrorException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			try {
-				if (stmt2 != null)
-					stmt2.close();
-				conn.close();
-			} catch (SQLException e) {
-			}
-		}
+		
+		
 	}
 	
 	
