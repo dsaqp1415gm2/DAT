@@ -84,6 +84,14 @@ public class UserResource {
 	 
 			return user;
 		}
+		
+		private void validateUser(User user) {
+			if (user.getName() == null)
+				throw new BadRequestException("username cannot be null.");
+			if (user.getPassword() == null)
+				throw new BadRequestException("password cannot be null.");
+		}
+		
 	}
 		
 		
