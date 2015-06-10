@@ -353,9 +353,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			}
 		}
 	}
-	@PUT
-	@Consumes(MediaType.DAT_API_THREAD)
-	@Produces(MediaType.DAT_API_THREAD)
+	
 	public void updateThread(String idpost, String idthread) {
 		//validatePost(post);
 		Connection conn = null;
