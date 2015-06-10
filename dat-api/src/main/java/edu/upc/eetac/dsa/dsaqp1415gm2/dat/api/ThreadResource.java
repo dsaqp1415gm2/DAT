@@ -13,6 +13,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -34,7 +35,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	private String INSERT_POST_QUERY = "insert into post (idthema, idhilo, idpost, content, image_link) values (?, ?, ?, ?, ?)";
 	private String DELETE_THREAD_QUERY = "delete from thread where idthread=?";
 	private String DELETE_POSTS_QUERY = "delete from post where idhilo=?";
-	
+	private String UPDATE_THREAD = "update thread SET lastidpost=? WHERE idthread=?";
+
 	@GET
 	@Produces(MediaType.DAT_API_THREAD)
 	public Theme getthreads() {
@@ -228,7 +230,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt2.executeUpdate();
 			ResultSet rs2 = stmt2.getGeneratedKeys();
 			if (rs2.next()) {
-				threadx = getThreadFromDB(Integer.toString(idthread));
+				int idpost=rs2.getInt(2);
+				updateThread(Integer.toString(idpost), Integer.toString(idthread));
 			} else {
 				// Something has failed...
 			}
@@ -272,8 +275,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
-				Threadx threadx = new Threadx();
-				threadx = getThreadFromDB(Integer.toString(idthread));
+				int idpost=rs.getInt(3);
+				updateThread(Integer.toString(idpost),Integer.toString(idthread));
 			} else {
 				// Something has failed...
 			}
@@ -349,6 +352,39 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			} catch (SQLException e) {
 			}
 		}
+	}
+	@PUT
+	@Consumes(MediaType.DAT_API_THREAD)
+	@Produces(MediaType.DAT_API_THREAD)
+	public Threadx updateThread(String idpost, String idthread) {
+		//validatePost(post);
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(UPDATE_THREAD);
+			stmt.setInt(1, Integer.valueOf(idpost));
+			stmt.setInt(2, Integer.valueOf(idthread));
+			ResultSet rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+		
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		Threadx threadx = null;
+		return threadx;
 	}
 }
 		
