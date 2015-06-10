@@ -19,7 +19,7 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Threadx;
 @Path("/Theme")
 public class ThemeResource {
 	private String GET_POST_BY_IDS_QUERY = "select * from post where (idthema=? and idhilo=?)";
-	private String GET_THREADS_QUERY = "select t.*, p.idpost from thread t, post p where p.idhilo=t.idthread and t.idtema=? order by idpost desc";
+	private String GET_THREADS_QUERY = "select t.*, p.idpost from thread t, post p where t.idthread=p.idhilo and t.idtema=? order by p.idpost desc";
 	//private String GET_THREADS_QUERY = "select * from thread where idtema=? order by idthread desc";
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@GET
@@ -69,8 +69,9 @@ public class ThemeResource {
 				threadx.setContent(rs.getString("content"));
 				String temp = rs.getString("imagen");
 				threadx.setImagen(temp);
-
 				theme.addThread(threadx);
+				rs.next(); //este rs.next es porque recibo 2 threads de cada tema y asi me salto 1
+				//recibo dos por hacer el select p.idpost y t.thread=p.idhilo para poder ordenarlo por el ultimo post creado
 			}
 
 		} catch (SQLException e) {
