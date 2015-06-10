@@ -274,7 +274,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
-				int idpost=rs.getInt(3);
+				int idpost=rs.getInt(2);
 				updateThread(Integer.toString(idpost),Integer.toString(idthread));
 			} else {
 				// Something has failed...
