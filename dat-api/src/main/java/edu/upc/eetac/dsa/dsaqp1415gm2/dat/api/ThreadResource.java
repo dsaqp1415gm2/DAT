@@ -404,6 +404,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt = conn.prepareStatement(UPDATE_THREAD);
 			stmt.setInt(1, Integer.valueOf(idpost));
 			stmt.setInt(2, Integer.valueOf(idthread));
+			@SuppressWarnings("unused")
 			ResultSet rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),

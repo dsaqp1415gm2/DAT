@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Discusion Motor</title>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+   
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css2/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css2/heroic-features.css" rel="stylesheet">
+<style>
+  .modal-header, h4, .close {
+      background-color: #5882FA;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+  .btn-primary2 {
+      width: 100%;
+      padding: 10px;
+      background-color: #5882FA;
+      color:white !important;
+
+  }
+
+   .modal-header2, h4, .close {
+      background-color: #BEF781;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer2 {
+      background-color: #f9f9f9;
+  }
+  .btn-primary3 {
+      width: 100%;
+      padding: 10px;
+      background-color: #BEF781;
+      color:white !important;
+
+  }
+
+  </style>	
+	
+
+    
+
+</head>
+
+<body>
+
+	<header>	
+	<nav class="navbar navbar-inverse" role="navigation">
+	  <!-- El logotipo y el icono que despliega el menú se agrupan
+ 	      para mostrarlos mejor en los dispositivos móviles -->
+ 	 <div class="navbar-header">
+  	  <button type="button" class="navbar-toggle" data-toggle="collapse"
+    	        data-target=".navbar-ex1-collapse">
+  	    <span class="sr-only">Desplegar navegación</span>
+     	 <span class="icon-bar"></span>
+     	 <span class="icon-bar"></span>
+     	 <span class="icon-bar"></span>
+   	 </button>
+   	 <a class="navbar-brand">DAT</a>
+  	</div>
+ 
+  	<!-- Agrupar los enlaces de navegación, los formularios y cualquier
+    	   otro elemento que se pueda ocultar al minimizar la barra -->
+  	<div class="collapse navbar-collapse navbar-ex1-collapse">
+   	 <ul class="nav navbar-nav">
+     	 <li><a href="http://147.83.7.156:8080/dat-api/www/index.html">Inicio</a></li> 
+     	 <li><a href="http://147.83.7.156:8080/dat-api/www/Tecnologia.html">Tecnologia</a></li>
+	 <li><a href="http://147.83.7.156:8080/dat-api/www/Deportes.html">Deportes</a></li>
+	 <li class="active"><a href="http://147.83.7.156:8080/dat-api/www/Motor.html">Motor</a></li>
+	 <li><a href="http://147.83.7.156:8080/dat-api/www/Videojuegos.html">Videojuegos</a></li>
+   	 </ul>   	
+ 	 </div>
+	</nav>
+<header>
+  <!-- Begin page content -->
+  <div class="container">
+    <div class="page-header">
+      <h1>Motor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-primary btn-lg" id="Btn_crear_thread"><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</button></h1>
+
+ <!-- Modal crear_thread -->
+  <div class="modal fade" id="form_crear_thread" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content crear_thread-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+    <div class="form-group">
+      <label for="Subject">Titulo:</label>
+      <input type="text" class="form-control" id="Subject">
+    </div>
+     <div class="form-group">
+      <label for="Content">Contenido:</label>
+      <textarea class="form-control" rows="8" id="Content"></textarea>
+    </div> 
+    <div class="form-group">
+      <label for="link">url de la imagen:</label>
+      <input type="url" class="form-control" id="link">
+    </div>
+  </form>
+           
+              <button type="submit" class="btn btn-primary2">Que empiece la discusión!</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
+ 
+	<div class="panel-group">
+	 <div class="panel panel-primary" id ="get_thread_result">
+	</div> 
+    </div>
+      <p class="pull-right"><a href="#" class="topLink"">Subir arriba</a></p>
+  </div>
+</div>
+
+ 
+
+ <!-- Event and AJAX functions -->
+
+    <script type="text/javascript" src="js/Motor.js"></script>
+    <script type="text/javascript" src="js/Main.js"></script>
+    
+</body>
+</html>

@@ -85,6 +85,7 @@ public class UserResource {
 			return user;
 		}
 		
+		@SuppressWarnings("unused")
 		private void validateUser(User user) {
 			if (user.getName() == null)
 				throw new BadRequestException("username cannot be null.");
