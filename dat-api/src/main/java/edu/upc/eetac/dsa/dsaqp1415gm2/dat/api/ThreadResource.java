@@ -30,7 +30,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	private String GET_THREAD_BY_IDS_QUERY = "select * from thread where (idtema=? and idthread=?) order by idthread desc";
 	private String GET_THREAD_BY_ID_QUERY = "select * from thread where idthread=? order by idthread desc";
 	private String GET_THREADS_QUERY = "select * from thread";
-	private String INSERT_THREAD_QUERY = "insert into thread (idtema, idthread, subject, content, imagen) values (?, ?, ?, ?, ?)";
+	private String INSERT_THREAD_QUERY = "insert into thread (idtema, idthread, subject, content, imagen, lastidpost) values (?, ?, ?, ?, ?, ?)";
 	private String INSERT_POST_QUERY = "insert into post (idthema, idhilo, idpost, content, image_link) values (?, ?, ?, ?, ?)";
 	private String DELETE_THREAD_QUERY = "delete from thread where idthread=?";
 	private String DELETE_POSTS_QUERY = "delete from post where idhilo=?";
@@ -200,7 +200,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt.setString(3, threadx.getSubject());
 			stmt.setString(4, threadx.getContent());
 			stmt.setString(5, threadx.getImagen());
-			stmt2.setInt(6, 0);
+			stmt2.setInt(6, 100);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
