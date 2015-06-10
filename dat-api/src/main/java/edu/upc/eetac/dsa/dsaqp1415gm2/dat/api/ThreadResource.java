@@ -13,7 +13,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -231,7 +230,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			ResultSet rs2 = stmt2.getGeneratedKeys();
 			if (rs2.next()) {
 				int idpost=rs2.getInt(2);
-		//		updateThread(Integer.toString(idpost), Integer.toString(idthread));
+				updateThread(Integer.toString(idpost), Integer.toString(idthread));
 			} else {
 				// Something has failed...
 			}
@@ -378,7 +377,8 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 				if (stmt != null)
 					stmt.close();
 				conn.close();
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e) {
 			}
 		}
 	}
