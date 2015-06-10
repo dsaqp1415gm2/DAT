@@ -231,7 +231,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			ResultSet rs2 = stmt2.getGeneratedKeys();
 			if (rs2.next()) {
 				int idpost=rs2.getInt(2);
-				updateThread(Integer.toString(idpost), Integer.toString(idthread));
+		//		updateThread(Integer.toString(idpost), Integer.toString(idthread));
 			} else {
 				// Something has failed...
 			}
@@ -276,7 +276,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
 				int idpost=rs.getInt(3);
-				updateThread(Integer.toString(idpost),Integer.toString(idthread));
+	//			updateThread(Integer.toString(idpost),Integer.toString(idthread));
 			} else {
 				// Something has failed...
 			}
@@ -353,38 +353,6 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			}
 		}
 	}
-	@PUT
-	@Consumes(MediaType.DAT_API_THREAD)
-	@Produces(MediaType.DAT_API_THREAD)
-	public Threadx updateThread(String idpost, String idthread) {
-		//validatePost(post);
-		Connection conn = null;
-		try {
-			conn = ds.getConnection();
-		} catch (SQLException e) {
-			throw new ServerErrorException("Could not connect to the database",
-					Response.Status.SERVICE_UNAVAILABLE);
-		}
-		PreparedStatement stmt = null;
-		try {
-			stmt = conn.prepareStatement(UPDATE_THREAD);
-			stmt.setInt(1, Integer.valueOf(idpost));
-			stmt.setInt(2, Integer.valueOf(idthread));
-			ResultSet rs = stmt.executeQuery();
-		} catch (SQLException e) {
-			throw new ServerErrorException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-		
-			try {
-				if (stmt != null)
-					stmt.close();
-				conn.close();
-			} catch (SQLException e) {
-			}
-		}
-		Threadx threadx = null;
-		return threadx;
-	}
+	
 }
 		
