@@ -354,6 +354,58 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 		}
 	}
 	
+	@DELETE
+	@Path("/{idpost}")
+	public void deletePost(@PathParam("idpost") String idpost) {
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+	 
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(DELETE_POSTS_QUERY);
+			stmt.setInt(1, Integer.valueOf(idpost));
+	 
+			int rows = stmt.executeUpdate();
+			if (rows == 0)
+				;// Deleting inexistent sting
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		PreparedStatement stmt2 = null;
+		try {
+			stmt2 = conn.prepareStatement(DELETE_THREAD_QUERY);
+			stmt2.setInt(1, Integer.valueOf(idpost));
+	 
+			int rows = stmt2.executeUpdate();
+			if (rows == 0)
+				;// Deleting inexistent sting
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt2 != null)
+					stmt2.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+	}
+	
+	
+	
 	public void updateThread(String idpost, String idthread) {
 		//validatePost(post);
 		Connection conn = null;
