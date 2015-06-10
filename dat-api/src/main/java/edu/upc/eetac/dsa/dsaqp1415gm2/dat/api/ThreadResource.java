@@ -200,6 +200,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt.setString(3, threadx.getSubject());
 			stmt.setString(4, threadx.getContent());
 			stmt.setString(5, threadx.getImagen());
+			stmt2.setInt(6, 0);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
