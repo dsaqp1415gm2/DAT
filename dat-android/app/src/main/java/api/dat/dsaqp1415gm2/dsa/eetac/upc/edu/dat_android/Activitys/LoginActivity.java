@@ -2,11 +2,9 @@ package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -78,11 +76,15 @@ public class LoginActivity extends ActionBarActivity {
                 editor.putString("username", username);
                 editor.putString("password", password);
                 boolean done = editor.commit();
-                if (done)
+                if (done) {
                     Log.d(TAG, "preferences set");
+                    Intent i = new Intent(this, DatMainActivity.class);
+                    startActivity(i);
+                }
                 else
                     Log.d(TAG, "preferences not set. THIS A SEVERE PROBLEM");
             }
+
             return true;
         }
         return super.onOptionsItemSelected(item);

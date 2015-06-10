@@ -1,7 +1,9 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +40,8 @@ public class FragmentTab extends Fragment{
     ArrayList<Threadx> threadList;
     public static final int RESULT_OK = -1;
     private int id;
+    private String username;
+    private String password;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,9 +58,16 @@ public class FragmentTab extends Fragment{
         adapter = new ThreadAdapter(getActivity(),threadList);
         list=(ListView) view.findViewById(R.id.list);
         list.setAdapter(adapter);
+        SharedPreferences prefs = getActivity().getSharedPreferences("dat-profile",
+                Context.MODE_PRIVATE);
+        username = prefs.getString("username", null);
+        password = prefs.getString("password", null);
         new FetchThemeTask().execute();
         //a�adir opcion al pulsar item de lista
         list.setOnItemClickListener(new ListItemClickListener());
+        if((username!=null)&&(password!=null)) {
+            list.setOnItemLongClickListener(new ListItemLongClickListener());
+        }
         return view;
     }
 
@@ -109,6 +120,14 @@ public class FragmentTab extends Fragment{
             q.putExtra("thread", ntrhead);
             q.putExtra("url", threadx.getLinks().get("idthread").getTarget());
             startActivityForResult(q, WRITE_ACTIVITY);
+        }
+    }
+    private class ListItemLongClickListener implements ListView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView arg0, View arg1, int posicion, long arg3)
+        {
+            Toast.makeText(getActivity(),"Pulsado ",Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
     public void setID(int i)

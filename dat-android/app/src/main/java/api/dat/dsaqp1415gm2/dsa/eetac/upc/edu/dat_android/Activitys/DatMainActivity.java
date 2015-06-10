@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -41,6 +42,8 @@ public class DatMainActivity extends ActionBarActivity{
     private Toolbar toolbar;
     SlidingTabLayout tabs;
     ViewPagerAdapter adapterViewPager;
+    private String username;
+    private String password;
 
   private final static String TAG = DatMainActivity.class.toString();
     // declaro el boton para cambiarle la fuente
@@ -58,8 +61,8 @@ public class DatMainActivity extends ActionBarActivity{
         //añadir el refresh
         SharedPreferences prefs = getSharedPreferences("dat-profile",
                 Context.MODE_PRIVATE);
-        final String username = prefs.getString("username", null);
-        final String password = prefs.getString("password", null);
+        username = prefs.getString("username", null);
+        password = prefs.getString("password", null);
         if((username!=null)&&(password!=null)) {
             Authenticator.setDefault(new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -230,10 +233,15 @@ public class DatMainActivity extends ActionBarActivity{
             }
             return true;
         }
-        if (id == R.id.action_login){
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            return true;
+        if((username!=null)&&(password!=null)) {
+            Toast.makeText(DatMainActivity.this,"Ya estás logeado como administrador!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            if (id == R.id.action_login){
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+                return true;
+            }
         }
         if (id == R.id.action_about){
             Intent i = new Intent(this, About.class);
