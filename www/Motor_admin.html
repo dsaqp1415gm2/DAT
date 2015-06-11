@@ -9,12 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Discusion Tecnologia</title>
+    <title>Discusion Motor</title>
     
-    <link rel="shortcut icon" href="img/favicon.png">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
    
 
 
@@ -105,14 +105,14 @@
     	   otro elemento que se pueda ocultar al minimizar la barra -->
   	<div class="collapse navbar-collapse navbar-ex1-collapse">
    	 <ul class="nav navbar-nav">
-     	 <li><a href="index.html">Inicio</a></li> 
-     	 <li class="active"><a  href="Tecnologia.html">Tecnologia</a></li>
-	 <li><a href="Deportes.html">Deportes</a></li>
-	 <li ><a href="Motor.html">Motor</a></li>
-	 <li><a href="Videojuegos.html">Videojuegos</a></li>
+     	 <li><a href="index_admin.html">Inicio</a></li> 
+     	 <li><a href="Tecnologia_admin.html">Tecnologia</a></li>
+	 <li><a href="Deportes_admin.html">Deportes</a></li>
+	 <li class="active"><a href="Motor.html">Motor</a></li>
+	 <li><a href="Videojuegos_admin.html">Videojuegos</a></li>
    	 </ul> 
 	 <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="abrir_login"><span class="glyphicon glyphicon-log-in"></span> Loguear como Admin </a></li>
+        <li><a href="#" id="cerrar_sesion"><span class="glyphicon glyphicon-log-in"></span> Cerrar Sesion</a></li>
       </ul>  	
  	 </div>
 	</nav>
@@ -121,6 +121,7 @@
   <div class="container">
     <div class="page-header">
 	<span id="create_thread_result"></span>
+	<span id="create_method_result"></span>
 
 <!-- Modal para loguear como Administrador-->
   <div class="modal fade" id="form_login" role="dialog">
@@ -129,20 +130,20 @@
       <!-- Modal content login-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" onclick=redirigir() >&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form  name="formlogin" onsubmit=validar()>
+          <form role="form" id="login" onsubmit=validar()>
             
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" required  />
+              <input type="text" class="form-control" id="usrname" placeholder="Enter user" required/>
             
             
-              <label for="pass"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="psw" required />
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="psw" placeholder="Enter password" required/>
             
-              <input type="submit" class="btn btn-success btn-block" value="Login"  />
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
         </div>
   
@@ -152,6 +153,7 @@
     </div>
   </div> 
 </div>
+
 
 <!-- Modal para informa de login incorrecto-->
   <div class="modal fade" id="modal_error" role="dialog">
@@ -175,10 +177,10 @@
 </div>
 
 
-      <h1>Tecnologia 
+      <h1>Motor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 
 <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-primary btn-lg pull-right" id="Btn_form_crear_thread"><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</button></h1>
+  <button type="button" class="btn btn-primary btn-lg" id="Btn_form_crear_thread"><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</button></h1>
 
  <!-- Modal crear_thread -->
   <div class="modal fade" id="form_crear_thread" role="dialog">
@@ -214,7 +216,6 @@
 	 <div class="panel panel-primary" id ="get_thread_result">
 	</div> 
     </div>
-	
       <p class="pull-right"><a href="#" class="topLink"">Subir arriba</a></p>
   </div>
 </div>
@@ -223,7 +224,8 @@
 
  <!-- Event and AJAX functions -->
 
-    <script type="text/javascript" src="js/Tecnologia.js"></script>
+    <script type="text/javascript" src="js/Motor_admin.js"></script>
+    <script type="text/javascript" src="js/Main.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
     
 </body>

@@ -1,33 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Bienvenido a DAT</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Discusion Tecnologia</title>
-    
-    <link rel="shortcut icon" href="img/favicon.png">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-   
-
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css2/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css2/heroic-features.css" rel="stylesheet">
-
-    <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="img/main_icon.png">
-
-
+	<!-- Icono y Css -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/main_icon.png">
+	<link href="css/half-slider.css" rel="stylesheet">
+	<!-- Scripts -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
 
 <style>
   .modal-header, .close {
@@ -77,16 +66,14 @@
 	    background-repeat: no-repeat;
 }
 
-</style>	
-	
-
-    
-
+</style>
 </head>
 
-<body>
 
-	<header>	
+
+
+<body>
+	<!-- Navigation -->
 	<nav class="navbar navbar-inverse" role="navigation">
 	  <!-- El logotipo y el icono que despliega el menú se agrupan
  	      para mostrarlos mejor en los dispositivos móviles -->
@@ -105,22 +92,61 @@
     	   otro elemento que se pueda ocultar al minimizar la barra -->
   	<div class="collapse navbar-collapse navbar-ex1-collapse">
    	 <ul class="nav navbar-nav">
-     	 <li><a href="index.html">Inicio</a></li> 
-     	 <li class="active"><a  href="Tecnologia.html">Tecnologia</a></li>
+     	 <li class="active"><a href="index.html">Inicio</a></li> 
+     	 <li><a href="Tecnologia.html">Tecnologia</a></li>
 	 <li><a href="Deportes.html">Deportes</a></li>
-	 <li ><a href="Motor.html">Motor</a></li>
+	 <li><a href="Motor.html">Motor</a></li>
 	 <li><a href="Videojuegos.html">Videojuegos</a></li>
    	 </ul> 
 	 <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="abrir_login"><span class="glyphicon glyphicon-log-in"></span> Loguear como Admin </a></li>
+        <li><a href="#" id="abrir_login"><span class="glyphicon glyphicon-log-in"></span> Loguear como Admin</a></li>
       </ul>  	
  	 </div>
-	</nav>
-<header>
-  <!-- Begin page content -->
-  <div class="container">
-    <div class="page-header">
-	<span id="create_thread_result"></span>
+   </nav>
+	<!-- Half Page Image Background Carousel Header -->
+	<header id="myCarousel" class="carousel slide">
+
+
+	<!-- Indicators -->
+		<ol class="carousel-indicators">
+	<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	<li data-target="#myCarousel" data-slide-to="1"></li>
+	<li data-target="#myCarousel" data-slide-to="2"></li>
+	       </ol>
+
+
+	<!-- Wrapper for Slides -->
+	<div class="carousel-inner">
+	<div class="item active">
+	<!-- Set the first background image using inline CSS below. -->
+	<div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
+	<div class="carousel-caption">
+	<h2>Caption 1</h2>
+	</div>
+	</div>
+	<div class="item">
+	<!-- Set the second background image using inline CSS below. -->
+	<div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
+	<div class="carousel-caption">
+	<h2>Caption 2</h2>
+	</div>
+	</div>
+	<div class="item">
+	<!-- Set the third background image using inline CSS below. -->
+	<div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+	<div class="carousel-caption">
+	<h2>Caption 3</h2>
+	</div>
+	</div>
+	</div>
+	<!-- Controls -->
+	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+	<span class="icon-prev"></span>
+	</a>
+	<a class="right carousel-control" href="#myCarousel" data-slide="next">
+	<span class="icon-next"></span>
+	</a>
+</header>
 
 <!-- Modal para loguear como Administrador-->
   <div class="modal fade" id="form_login" role="dialog">
@@ -153,6 +179,7 @@
   </div> 
 </div>
 
+
 <!-- Modal para informa de login incorrecto-->
   <div class="modal fade" id="modal_error" role="dialog">
     <div class="modal-dialog">
@@ -160,7 +187,7 @@
       <!-- Modal content error-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
-	<h4> FATAL ERROR! <h4>
+	  <h4> FATAL ERROR! <h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
           <p>Error! Usuario o Contraseña Incorrectos</p>
@@ -175,56 +202,75 @@
 </div>
 
 
-      <h1>Tecnologia 
+<div class="container">
+	<div class="row text-center">
+		<div class="col-md-3 col-sm-6 ">
+			 <div class="thumbnail">
+			 <img src="http://static.facegfx.com/vector/2013/10/23/facegfx-vector-shiny-blue-technology-style-backgorund-04-vector.jpg" alt="">
+			 <div class="caption">
 
-<!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-primary btn-lg pull-right" id="Btn_form_crear_thread"><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</button></h1>
-
- <!-- Modal crear_thread -->
-  <div class="modal fade" id="form_crear_thread" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content crear_thread-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal" onclick= borrarCampos()>&times;</button>
-          <h4><span class="glyphicon glyphicon-plus-sign"></span> Nueva Discusión</h4>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
-     <form onsubmit=createThread()>
-    
-      <label for="Subject" >Titulo:</label>
-      <input type="text" class="form-control" id="Subject" placeholder="escribe tu titulo" required />
-    
-      <label for="Content" >Contenido:</label>
-      <textarea class="form-control" rows="8" id="Content" placeholder="Contenido" required/></textarea>
-    
-      <label for="link">url de la imagen:</label>
-      <input type="url" class="form-control" id="Link" placeholder="url" required/>	
-           
-              <input type="submit" class="btn-primary2" value="Crear Thread">
-          </form>
-        </div>
-      </div>
-      
-    </div>
-  </div> 
-
-	<div class="panel-group">
-	 <div class="panel panel-primary" id ="get_thread_result">
-	</div> 
-    </div>
-	
-      <p class="pull-right"><a href="#" class="topLink"">Subir arriba</a></p>
-  </div>
+			<h3>Tecnologia</h3>
+				
+			<p> <a class="btn btn-primary" href="Tecnologia.html" role="button">Acceder</a> </p>
+		</div>
+	</div>
 </div>
+		<div class="col-md-3 col-sm-6 ">
+			 <div class="thumbnail">
+			 <img src="http://www.truestudentathletes.com/interactive/wp-content/uploads/2013/10/College-Sports-News-and-Photos.png" alt="">
+			 <div class="caption">
 
- 
+			<h3>Deportes</h3>
+				
+			<p> <a class="btn btn-primary" href="Deportes.html" role="button">Acceder</a> </p>
+		</div>
+	</div>
+</div>
+		<div class="col-md-3 col-sm-6 ">
+			 <div class="thumbnail">
+			 <img src="https://s-media-cache-ak0.pinimg.com/736x/a1/50/da/a150dae7627be343d0bfe4a301cf803a.jpg" alt="">
+			 <div class="caption">
 
- <!-- Event and AJAX functions -->
+			<h3>Motor</h3>
+				
+			<p> <a class="btn btn-primary" href="Motor.html" role="button">Acceder</a> </p>
+		</div>
+	</div>
+</div>	
+		<div class="col-md-3 col-sm-6 ">
+			 <div class="thumbnail">
+			 <img src="http://inibot.net/margot/wp-content/uploads/2014/07/controller-m-340x340.jpg" alt="">
+			 <div class="caption">
 
-    <script type="text/javascript" src="js/Tecnologia.js"></script>
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    
+			<h3>Videojuegos</h3>
+				
+			<p> <a class="btn btn-primary" href="Videojuegos.html" role="button">Acceder</a> </p>
+		</div>
+	</div>
+</div>	
+		
+<hr>
+
+
+
+<hr>
+<hr>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="btn-group btn-group-xs">
+				 <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> About</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Legal</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-right"></em> FAQ</button> <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-justify"></em> Authors</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	
+
+<script>
+$('.carousel').carousel({
+interval: 5000 //changes the speed
+})
+</script>
 </body>
 </html>
