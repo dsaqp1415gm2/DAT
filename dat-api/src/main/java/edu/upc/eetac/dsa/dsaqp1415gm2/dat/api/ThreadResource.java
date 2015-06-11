@@ -28,8 +28,7 @@ public class ThreadResource {
 private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	
 	private String GET_THREAD_BY_IDS_QUERY = "select * from thread where (idtema=? and idthread=?) order by idthread desc";
-	//private String GET_THREAD_BY_ID_QUERY = "select * from thread where idthread=? order by idthread desc";
-	private String GET_THREAD_BY_ID_QUERY = "select thread.idthread, MAX(post.idpost) from post inner join thread on thread.idthread=post.idhilo group by thread.idthread order by MAX(post.idpost) desc";
+	private String GET_THREAD_BY_ID_QUERY = "select * from thread where idthread=? order by idthread desc";
 	private String GET_THREADS_QUERY = "select * from thread";
 	private String INSERT_THREAD_QUERY = "insert into thread (idtema, idthread, subject, content, imagen) values (?, ?, ?, ?, ?)";
 	private String INSERT_POST_QUERY = "insert into post (idthema, idhilo, idpost, content, image_link) values (?, ?, ?, ?, ?)";
