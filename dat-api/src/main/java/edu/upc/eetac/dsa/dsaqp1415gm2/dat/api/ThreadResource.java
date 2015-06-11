@@ -304,7 +304,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 		if (threadx.getContent().length() > 500)
 			throw new BadRequestException("Content can't be greater than 500 characters.");
 	}
-/*	
+	
 	@DELETE
 	@Path("/{idthread}")
 	public void deleteThread(@PathParam("idthread") String idthread) {
@@ -354,7 +354,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			}
 		}
 	}
-	
+	/*	
 	@DELETE
 	@Path("/{idpost}")
 	public void deletePost(@PathParam("idpost") String idpost) {
