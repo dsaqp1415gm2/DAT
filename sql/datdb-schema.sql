@@ -25,7 +25,7 @@ create table thread (
 	subject		varchar(100) not null,
 	content		varchar(500) not null,
 	imagen		varchar(1000) not null,
-	lastidpost  int not null,
+	lastidpost  int not null auto_increment,
 	foreign key(idtema) references theme(idtheme)
 );
 create table post (
