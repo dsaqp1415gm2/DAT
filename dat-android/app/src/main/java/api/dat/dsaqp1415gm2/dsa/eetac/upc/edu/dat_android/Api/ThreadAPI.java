@@ -110,8 +110,7 @@ public class ThreadAPI {
         }
         HttpURLConnection urlConnection = null;
         try {
-            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-                    .get(opcion).getTarget()).openConnection();
+            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks().get(opcion).getTarget()).openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
@@ -173,7 +172,7 @@ public class ThreadAPI {
     public Threadx getPosts(String url2) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
-
+        //conexion
         HttpURLConnection urlConnection = null;
         try {
             URL url3 = new URL(url2);
