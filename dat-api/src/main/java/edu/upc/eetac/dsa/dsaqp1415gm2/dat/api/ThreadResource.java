@@ -331,32 +331,14 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			try {
 				if (stmt != null)
 					stmt.close();
-			} catch (SQLException e) {
-			}
-		}
-		PreparedStatement stmt2 = null;
-		try {
-			stmt2 = conn.prepareStatement(DELETE_THREAD_QUERY);
-			stmt2.setInt(1, Integer.valueOf(idthread));
-	 
-			int rows = stmt2.executeUpdate();
-			if (rows == 0)
-				;// Deleting inexistent sting
-		} catch (SQLException e) {
-			throw new ServerErrorException(e.getMessage(),
-					Response.Status.INTERNAL_SERVER_ERROR);
-		} finally {
-			try {
-				if (stmt2 != null)
-					stmt2.close();
 				conn.close();
 			} catch (SQLException e) {
 			}
 		}
 	}
-	/*	
+		
 	@DELETE
-	@Path("/{idpost}")
+	@Path("/post/{idpost}")
 	public void deletePost(@PathParam("idpost") String idpost) {
 		Connection conn = null;
 		try {
@@ -381,6 +363,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			try {
 				if (stmt != null)
 					stmt.close();
+				conn.close();
 			} catch (SQLException e) {
 			}
 		}
@@ -389,7 +372,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	}
 	
 	
-	
+/*//update, en principio no necesario 	
 	public void updateThread(String idpost, String idthread) {
 		//validatePost(post);
 		Connection conn = null;

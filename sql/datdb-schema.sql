@@ -34,7 +34,7 @@ create table post (
 	content		varchar(1000) not null,
 	image_link	varchar(500) not null,
 	foreign key(idthema) references theme(idtheme),
-	foreign key(idhilo) references thread(idthread)
+	foreign key(idhilo) references thread(idthread) on delete cascade
 );
 
 insert into users values('admin', MD5('admin'));
