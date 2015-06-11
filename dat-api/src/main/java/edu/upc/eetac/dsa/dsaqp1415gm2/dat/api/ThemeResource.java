@@ -19,7 +19,7 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.model.Threadx;
 @Path("/Theme")
 public class ThemeResource {
 	private String GET_POST_BY_IDS_QUERY = "select * from post where (idthema=? and idhilo=?)";
-	private String GET_THREADS_QUERY = "select t.* from post p inner join thread t on t.idthread=p.idhilo where idtema=? group by t.idthread order by MAX(p.idpost) desc";
+	private String GET_THREADS_QUERY = "select t.* from post p inner join thread t on t.idthread=p.idhilo where t.idtema=? group by t.idthread order by MAX(p.idpost) desc";
 	//private String GET_THREADS_QUERY = "select * from thread where idtema=? order by lastidpost desc";
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	@GET
