@@ -35,6 +35,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	private String DELETE_THREAD_QUERY = "delete from thread where idthread=?";
 	private String DELETE_POSTS_QUERY = "delete from post where idhilo=?";
 	private String UPDATE_THREAD = "update thread SET lastidpost=? WHERE idthread=?";
+	private String DELETE_IDPOST_QUERY = " delete from post where idpost=?";
 
 	@GET
 	@Produces(MediaType.DAT_API_THREAD)
@@ -354,6 +355,41 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 		}
 	}
 	
+	@DELETE
+	@Path("/{idpost}")
+	public void deletePost(@PathParam("idpost") String idpost) {
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+	 
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(DELETE_IDPOST_QUERY);
+			stmt.setInt(1, Integer.valueOf(idpost));
+	 
+			int rows = stmt.executeUpdate();
+			if (rows == 0)
+				;// Deleting inexistent sting
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		
+		
+	}
+	
+	
+	
 	public void updateThread(String idpost, String idthread) {
 		//validatePost(post);
 		Connection conn = null;
@@ -368,6 +404,7 @@ private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 			stmt = conn.prepareStatement(UPDATE_THREAD);
 			stmt.setInt(1, Integer.valueOf(idpost));
 			stmt.setInt(2, Integer.valueOf(idthread));
+			@SuppressWarnings("unused")
 			ResultSet rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
