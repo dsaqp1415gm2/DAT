@@ -5,4 +5,5 @@ package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api;
  */
 public interface MediaType {
     public final static String DAT_API_THREAD = "application/vnd.dat.api.thread+json";
+    public final static String DAT_API_USER = "application/vnd.dat.api.user+json";
 }

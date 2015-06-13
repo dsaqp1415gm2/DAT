@@ -35,3 +35,44 @@ Element.prototype.hasClass = function(className) {
 };
 
 
+
+
+
+//Abre el form del login
+$(document).ready(function(){
+    $("#abrir_login").click(function(){
+        $("#form_login").modal();
+
+    });
+});
+// redirigir
+
+function redirigir(){
+	console.log('ok');
+	location.href = "index.html";
+}
+
+
+// Validacion para acceder a la web secreta de admin
+
+function validar(){
+    
+    var inputuname = $('#usrname').val();
+    var inputpass  = $('#psw').val();
+    console.log('ok'); 
+    if(inputuname == "admin" && inputpass == "admin") {
+      // successful validation and create cookie
+      $.cookie('username', 'admin', { expires: 1 });
+      var currentusr = $.cookie('username');
+      window.location = "index_admin.html";
+    }
+}
+$(document).ready(function(){
+$('#cerrar_sesion').click(function(){
+   
+    if($.removeCookie('username')) {
+      window.setTimeout('location.href = "index.html"', 2000); // refresh after 2 sec
+    }
+  });
+ 
+});

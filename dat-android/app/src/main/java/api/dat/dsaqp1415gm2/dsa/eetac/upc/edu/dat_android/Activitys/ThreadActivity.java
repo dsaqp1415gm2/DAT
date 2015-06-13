@@ -1,7 +1,11 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +13,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Api.AppException;
@@ -30,6 +36,9 @@ public class ThreadActivity extends ActionBarActivity{
     private int tema;
     private int thread;
     private String url;
+    private String username;
+    private String password;
+    private int npost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +54,14 @@ public class ThreadActivity extends ActionBarActivity{
         setSwipeRefresh();
         //empezar tareas
         new FetchThreadTask().execute();
+        //a?adir opcion al pulsar item de lista
+        SharedPreferences prefs = ThreadActivity.this.getSharedPreferences("dat-profile",
+                Context.MODE_PRIVATE);
+        username = prefs.getString("username", null);
+        password = prefs.getString("password", null);
+        if((username!=null)&&(password!=null)) {
+            list.setOnItemClickListener(new ListItemClickListener());
+        }
     }
     private void setToolbar()
     {
@@ -142,6 +159,37 @@ public class ThreadActivity extends ActionBarActivity{
                     new FetchThreadTask().execute();
                 }
                 break;
+        }
+    }
+    private class ListItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
+        {
+            npost = postList.get(posicion).getIdpost();
+            AlertDialog.Builder builder = new AlertDialog.Builder(ThreadActivity.this);
+            builder.setTitle("Eliminarás este post").setMessage("Estás seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    new FetchDeletePostTask().execute();
+                    postList.clear();
+                    adapter.notifyDataSetChanged();
+                    new FetchThreadTask().execute();
+                }
+            }).setNegativeButton("No", null).show();
+        }
+    }
+    private class FetchDeletePostTask extends
+            AsyncTask<Void, Void, Threadx> {
+        private ProgressDialog pd;
+
+        @Override
+        protected Threadx doInBackground(Void... params) {
+            Threadx threadx = new Threadx();
+            try {
+                ThreadAPI.getInstance(ThreadActivity.this).deletePost(npost);
+            } catch (AppException e) {
+                e.printStackTrace();
+            }
+            return threadx;
         }
     }
 }

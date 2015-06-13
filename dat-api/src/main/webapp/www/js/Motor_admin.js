@@ -6,34 +6,55 @@
 
 var API_BASE_URL = "http://147.83.7.156:8080/dat-api";
 
-// Carga la pagina con todos los threads y posts asociados al tema
-$(document).ready(function(){
-	var url = API_BASE_URL + '/dat/Theme/Deportes';
-	getThreads(url);
-});
+function deleteThread(idthread){
+	var url = API_BASE_URL+'/dat/thread/'+idthread;
+	$("#create_method_result").text('');
 
-// Abre el formulario para crear un thread
-$(document).ready(function(){
-    $("#Btn_form_crear_thread").click(function(){
-        $("#form_crear_thread").modal();
+	$.ajax({
+		url : url,
+		type : 'DELETE',
+		crossDomain : true,
+		dataType : 'json',
+        	async: false
+	}).done(function(data, status, jqxhr) {
+				$('<div class="alert alert-succes"> <strong>Oh!</strong> Eliminado! </div>').appendTo($("#get_method_result"));
+				window.location.reload();
 
-    });
-});
-
-
-// redirigir
-
-function redirigir(){
-	console.log('ok');
-	location.href = "index.html";
+		}).fail(function() {
+				$('<div class="alert alert-danger"> <strong>Oh!</strong> Error! </div>').appendTo($("#get_method_result"));
+	});	
+		
 }
+
+function deletePost(idpost){
+
+
+	var url = API_BASE_URL+'/dat/thread/post/'+idpost;
+	
+	$("#create_method_result").text('');
+
+	$.ajax({
+		url : url,
+		type : 'DELETE',
+		crossDomain : true,
+		dataType : 'json',
+        	async: false
+	}).done(function(data, status, jqxhr) {
+				$('<div class="alert alert-succes"> <strong>Oh!</strong> Eliminado! </div>').appendTo($("#get_method_result"));
+				window.location.reload();
+
+		}).fail(function() {
+				$('<div class="alert alert-danger"> <strong>Oh!</strong> Error! </div>').appendTo($("#get_method_result"));
+	});
+	
+}
+
 
 // Evento de validacion del login
 $("#validar_login").click(function(){
 
 validar();
 });
-// Validacion para acceder a la web secreta de admin
 
 function validar(){
     
@@ -44,26 +65,66 @@ function validar(){
       // successful validation and create cookie
       $.cookie('username', 'admin', { expires: 1 });
       var currentusr = $.cookie('username');
-      window.location = "Deportes_admin.html";
+      window.location = "Motor_admin.html";
     }
     else{
 	$("#modal_error").modal();
-}
+    }
 }
 
+
+function redirigir(){
+	console.log('ok');
+	location.href = "index.html";
+}
+
+$(function(){
+  if($.cookie('username')) {
+$(document).ready(function(){
+	var url = API_BASE_URL + '/dat/Theme/Motor';
+	getThreads(url);
+});    
+console.log('ok');
+  }
+  else{
+	$("#form_login").modal();
+console.log('ok2');
+  }
+
+});
+// Carga la pagina con todos los threads y posts asociados al tema
+/*$(document).ready(function(){
+	var url = API_BASE_URL + '/dat/Theme/Motor';
+	getThreads(url);
+});*/
+
+// Abre el formulario para crear un thread
+$(document).ready(function(){
+    $("#Btn_form_crear_thread").click(function(){
+        $("#form_crear_thread").modal();
+
+    });
+});
 
 
       
 //Abre el form del login
 $(document).ready(function(){
     $("#abrir_login").click(function(){
-	if($.cookie('username')){
-	window.location="Deportes_admin.html";
-	}
-     else{
         $("#form_login").modal();
-     }
+
     });
+});
+
+ 
+$(document).ready(function(){
+$('#cerrar_sesion').click(function(){
+   
+    if($.removeCookie('username')) {
+      location.href = "index.html";
+    }
+  });
+ 
 });
 
 // Animacion para subir al top de la web
@@ -100,12 +161,12 @@ function borraCamposThread(idthread){
 function borrarCamposPost(idpost){
 	console.log('OK');
 	
-	$("#Content_reply_to_post"+idpost).val('');
+	$("#Content_reply_to_post"+idpost).val('#'+idpost);
 	$("#link_reply_to_post"+idpost).val('');
 }
 
 function getThreads() {
-	var url = API_BASE_URL+'/dat/Theme/Deportes';
+	var url = API_BASE_URL+'/dat/Theme/Motor';
 	
 	$("#get_thread_number").text('');
 	$("#get_post_result").text('');
@@ -125,7 +186,7 @@ function getThreads() {
     
     $.each(threads, function(i, v) {
         var thread = v;
-        var url2 = API_BASE_URL+'/dat/Theme/Deportes/'+thread.idthread;
+        var url2 = API_BASE_URL+'/dat/Theme/Motor/'+thread.idthread;
 	var newPost;
 
         $.ajax({
@@ -138,6 +199,7 @@ function getThreads() {
             var posts = data.posts
             $(thread.idthread ).appendTo($('#get_thread_number'));
             $('<div class="panel-heading">'+ thread.subject +'</div>').appendTo($('#get_thread_result'));
+	$('<button type="button"  class="btn btn-danger btn pull-right" id="borrar'+thread.idthread+'" onclick=deleteThread('+thread.idthread+') >Borrar thread</button>').appendTo($('#get_thread_result'));
             var img=document.createElement('img');
             img.setAttribute("src",thread.imagen);
             img.setAttribute("align","left");
@@ -145,7 +207,6 @@ function getThreads() {
             img.setAttribute("height","66");
             img.setAttribute("class","img-thumbnail");
             $(img).appendTo($('#get_thread_result'));
-	    
             $('<div class="panel-body">'+ thread.content +'</div>').appendTo($('#get_thread_result'));
             $('<button type="button"  class="btn btn-success" data-toggle="collapse" data-target="#'+thread.idthread+'">Desplegar Thread</button>').appendTo($('#get_thread_result'));
 	    $('<button type="button"  class="btn btn-default" id="resp'+thread.idthread+'">Responder thread</button>').appendTo($('#get_thread_result'));
@@ -153,9 +214,7 @@ function getThreads() {
 
 
 //FORMULARIO RESPONDER THREAD
-
-	   
-	   $('<div class="modal fade" id="form_responder_thread'+thread.idthread+'" role="dialog"> <div class="modal-dialog"><div class="modal-content"><div class="modal-header2" style="padding:35px 50px;"> <button type="button" class="close" data-dismiss="modal" onclick=borraCamposThread('+thread.idthread+')  >&times;</button><h4>Responder Thread&nbsp;&nbsp;#'+thread.idthread+'</h4></div><div class="modal-body" style="padding:40px 50px;"><form action="Deportes.html" onsubmit=reply_to_thread('+thread.idthread+')> <label for="Content_reply">Content:</label><textarea class="form-control" rows="8" id="Content_reply'+thread.idthread+'" required></textarea><label for="link">url de la imagen:</label><input type="url" class="form-control" id="link'+thread.idthread+'"/> <input type="submit" class="btn btn-primary3" value="Responder" /></form></div></div></div></div>').appendTo($('#get_thread_result'));
+	   $('<div class="modal fade" id="form_responder_thread'+thread.idthread+'" role="dialog"> <div class="modal-dialog"><div class="modal-content"><div class="modal-header2" style="padding:35px 50px;"> <button type="button" class="close" data-dismiss="modal" onclick=borraCamposThread('+thread.idthread+')  >&times;</button><h4>Responder Thread&nbsp;&nbsp;#'+thread.idthread+'</h4></div><div class="modal-body" style="padding:40px 50px;"><form action="Motor_admin.html" onsubmit=reply_to_thread('+thread.idthread+')> <label for="Content_reply">Content:</label><textarea class="form-control" rows="8" id="Content_reply'+thread.idthread+'" required></textarea><label for="link">url de la imagen:</label><input type="url" class="form-control" id="link'+thread.idthread+'"/> <input type="submit" class="btn btn-primary3" value="Responder" /></form></div></div></div></div>').appendTo($('#get_thread_result'));
 	     
 
 	   // funcion asociada a cada boton del thread
@@ -167,22 +226,19 @@ function getThreads() {
 
 
 	
-	    $("#get_post_result"+thread.idthread).text('');
+		$("#get_post_result"+thread.idthread).text('');
             $.each(posts, function(i, u) {
 		  
                    var post = u;
                    if(i==0){
                    }
                    else{		    
-                    $('<div class="panel-heading"><a name="'+post.idpost+'"><button type="button" id ="btn_reply_post'+post.idpost+'">#'+ post.idpost +'</button></a></div>').appendTo($("#get_post_result"+thread.idthread));
+                    $('<div class="panel-heading"><button type="button" id ="btn_reply_post'+post.idpost+'">#'+ post.idpost +'</button></div>').appendTo($("#get_post_result"+thread.idthread));
+		    $('<button type="button"  class="btn btn-danger btn pull-right" id="borrar'+post.idpost+'" onclick=deletePost('+post.idpost+')>Borrar post</button>').appendTo($("#get_post_result"+thread.idthread));
+
 
 // CREAMOS FORMULARIO PARA RESPONDER A LOS POSTS
-
-
-$('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"> <div class="modal-dialog"><div class="modal-content"><div class="modal-header2" style="padding:35px 50px;"> <button type="button" class="close" data-dismiss="modal" onclick=borrarCamposPost('+post.idpost+')>&times;</button><h4>Responder Post&nbsp;&nbsp;#'+post.idpost+'</h4></div><div class="modal-body" style="padding:40px 50px;"><form action="Deportes.html" onsubmit=reply_to_post('+post.idhilo+','+post.idpost+')> <label for="Content_reply">Content:</label><textarea class="form-control" rows="8" id="Content_reply_to_post'+post.idpost+'"required></textarea><label for="link">url de la imagen:</label><input type="url" class="form-control" id="link_reply_to_post'+post.idpost+'"> <input type="submit" class="btn btn-primary3" value="Responde!" /></form></div></div></div></div>').appendTo($("#get_post_result"+thread.idthread));
-
-
-
+$('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"> <div class="modal-dialog"><div class="modal-content"><div class="modal-header2" style="padding:35px 50px;"> <button type="button" class="close" data-dismiss="modal" onclick=borrarCamposPost('+post.idpost+')>&times;</button><h4>Responder Post&nbsp;&nbsp;#'+post.idpost+'</h4></div><div class="modal-body" style="padding:40px 50px;"><form action="Motor_admin.html" onsubmit=reply_to_post('+post.idhilo+','+post.idpost+')> <label for="Content_reply">Content:</label><textarea class="form-control" rows="8" id="Content_reply_to_post'+post.idpost+'"required></textarea><label for="link">url de la imagen:</label><input type="url" class="form-control" id="link_reply_to_post'+post.idpost+'"> <input type="submit" class="btn btn-primary3" value="Responde!" /></form></div></div></div></div>').appendTo($("#get_post_result"+thread.idthread));
 
 
  // funcion asociada a cada post
@@ -205,7 +261,6 @@ $('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"
                     img.setAttribute("class","img-thumbnail");
                     $(img).appendTo($("#get_post_result"+thread.idthread));
 		    }
-		    //$('<span id="prueba"></span>').appendTo($("#get_post_result"+thread.idthread));
                     $('<div class="panel-body">'+ post.content +'</div>').appendTo($("#get_post_result"+thread.idthread));
 //$('<div class="collapse" id="'+thread.idthread+'"></div>').appendTo($('#get_thread_result')); 
 		    $('<div class="collapse " id="'+thread.idthread+'"><div class="panel panel-success" id="get_post_result'+thread.idthread+'">').appendTo($('#get_thread_result')); 
@@ -226,7 +281,7 @@ function createThread(){
 
 	
 	var newThread = new Object();
-	newThread.idtema = '2';
+	newThread.idtema = '3';
 	newThread.subject = $("#Subject").val();
 	newThread.content = $("#Content").val();
 	newThread.imagen = $("#Link").val();
@@ -263,7 +318,7 @@ function createThread(){
 		$("#Subject").val('');
 		$("#Content").val('');	
 		$("#Link").val('');
-		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
+		$('<div class="alert alert-success"> OK! Error </div>').appendTo($("#create_thread_result"));
 		//window.reload();
 	});	
 
@@ -273,7 +328,7 @@ function reply_to_thread(thread_to_reply){
 	
 	console.log('ok');
 	var newPost = new Object();
-	newPost.idthema = '2';
+	newPost.idthema = '3';
 	newPost.idhilo= thread_to_reply;
 	newPost.content = $("#Content_reply"+thread_to_reply).val();	
 	console.log(newPost.content);
@@ -307,7 +362,7 @@ function reply_to_thread(thread_to_reply){
 		
 		$("#Content_reply"+thread_to_reply).val('');
 		$("#link"+thread_to_reply).val('');
-		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
+		$('<div class="alert alert-success"> OK! Error </div>').appendTo($("#create_thread_result"));
 		//window.reload();
 	});
 }
@@ -318,7 +373,7 @@ function reply_to_post(idthread,idpost){
 	//$("#Content_reply_to_post"+idpost).appendTo($('#prueba'));
 	console.log($('#prueba').val());
 	var newPost = new Object();
-	newPost.idthema = '2';
+	newPost.idthema = '3';
 	newPost.idhilo= idthread;
 	newPost.content = referencia.concat(content);	
 	console.log(newPost.content);
@@ -344,17 +399,14 @@ function reply_to_post(idthread,idpost){
 		$("#form_responder_post"+idpost).modal('hide');
 		$("#Content_reply_to_post"+idpost).val('');	
 		$("#link_reply_to_post"+idpost).val('');
-		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));	
-		//window.reload();			
+		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));
+		//window.reload();				
   	}).fail(function() {
 		$("#form_responder_post"+idpost).modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
-		
 		$("#Content_reply_to_post"+idpost).val('');
 		$("#link_reply_to_post"+idpost).val('');
-		$('<div class="alert alert-danger"> OK! </div>').appendTo($("#create_thread_result"));
+		$('<div class="alert alert-success"> <strong>OK! </div>').appendTo($("#create_thread_result"));
 		//window.reload();
-		
 	});
 	
 	

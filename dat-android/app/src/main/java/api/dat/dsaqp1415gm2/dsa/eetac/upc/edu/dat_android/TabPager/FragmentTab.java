@@ -1,9 +1,12 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.TabPager;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +42,7 @@ public class FragmentTab extends Fragment{
     private ThreadAdapter adapter;
     ArrayList<Threadx> threadList;
     public static final int RESULT_OK = -1;
+    public int nthread;
     private int id;
     private String username;
     private String password;
@@ -111,13 +115,12 @@ public class FragmentTab extends Fragment{
         public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
             String idthread = ((TextView) arg1.findViewById(R.id.tvIdthread)).getText().toString();
-            int ntrhead = 0;
-            ntrhead = Integer.parseInt(idthread);
+            nthread = Integer.parseInt(idthread);
             Threadx threadx = threadList.get(posicion);
             //Toast.makeText(getActivity(),"Pulsado "+id+" y "+ntrhead,Toast.LENGTH_SHORT).show();
             Intent q = new Intent(getActivity(), ThreadActivity.class);
             q.putExtra("tema", id);
-            q.putExtra("thread", ntrhead);
+            q.putExtra("thread", nthread);
             q.putExtra("url", threadx.getLinks().get("idthread").getTarget());
             startActivityForResult(q, WRITE_ACTIVITY);
         }
@@ -126,7 +129,17 @@ public class FragmentTab extends Fragment{
         @Override
         public boolean onItemLongClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            Toast.makeText(getActivity(),"Pulsado ",Toast.LENGTH_SHORT).show();
+            String idthread = ((TextView) arg1.findViewById(R.id.tvIdthread)).getText().toString();
+            nthread = Integer.parseInt(idthread);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Eliminarás este thread").setMessage("Estás seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    new FetchDeleteTask().execute();
+                    threadList.clear();
+                    adapter.notifyDataSetChanged();
+                    new FetchThemeTask().execute();
+                }
+            }).setNegativeButton("No", null).show();
             return true;
         }
     }
@@ -170,5 +183,19 @@ public class FragmentTab extends Fragment{
                 break;
         }
     }
+    private class FetchDeleteTask extends
+            AsyncTask<Void, Void, Theme> {
+        private ProgressDialog pd;
 
+        @Override
+        protected Theme doInBackground(Void... params) {
+            Theme theme = new Theme();
+            try {
+                ThreadAPI.getInstance(getActivity()).deleteThread(nthread);
+            } catch (AppException e) {
+                e.printStackTrace();
+            }
+            return theme;
+        }
+    }
 }

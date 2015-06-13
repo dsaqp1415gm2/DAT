@@ -91,22 +91,18 @@ public class ThreadAPI {
     public Theme getThreads(int x) throws AppException {
         Log.d(TAG, "getThreads()");
         Theme threads = new Theme();
-        String opcion =null;
-        if (x==1)
-        {
-            opcion="tecnologia";
+        String opcion = null;
+        if (x == 1) {
+            opcion = "tecnologia";
         }
-        if (x==2)
-        {
-            opcion="deportes";
+        if (x == 2) {
+            opcion = "deportes";
         }
-        if (x==3)
-        {
-            opcion="motor";
+        if (x == 3) {
+            opcion = "motor";
         }
-        if (x==4)
-        {
-            opcion="videojuegos";
+        if (x == 4) {
+            opcion = "videojuegos";
         }
         HttpURLConnection urlConnection = null;
         try {
@@ -134,15 +130,15 @@ public class ThreadAPI {
             JSONArray jsonThreads = jsonObject.getJSONArray("threads");
 
             for (int i = 0; i < jsonThreads.length(); i++) {
-                    Threadx thread = new Threadx();
-                    JSONObject jsonThread = jsonThreads.getJSONObject(i);
-                    thread.setContent(jsonThread.getString("content"));
-                    thread.setSubject(jsonThread.getString("subject"));
-                    thread.setIdtema(jsonThread.getInt("idtema"));
-                    thread.setIdthread(jsonThread.getInt("idthread"));
-                    thread.setImagen(jsonThread.getString("imagen"));
-                    parseLinks(jsonThread.getJSONArray("links"), thread.getLinks());
-                    threads.getThreads().add(thread);
+                Threadx thread = new Threadx();
+                JSONObject jsonThread = jsonThreads.getJSONObject(i);
+                thread.setContent(jsonThread.getString("content"));
+                thread.setSubject(jsonThread.getString("subject"));
+                thread.setIdtema(jsonThread.getInt("idtema"));
+                thread.setIdthread(jsonThread.getInt("idthread"));
+                thread.setImagen(jsonThread.getString("imagen"));
+                parseLinks(jsonThread.getJSONArray("links"), thread.getLinks());
+                threads.getThreads().add(thread);
             }
         } catch (IOException e) {
             throw new AppException(
@@ -169,6 +165,7 @@ public class ThreadAPI {
                 map.put(s, link);
         }
     }
+
     public Threadx getPosts(String url2) throws AppException {
         Log.d(TAG, "getPosts()");
         Threadx thread = new Threadx();
@@ -223,7 +220,7 @@ public class ThreadAPI {
         threadx.setSubject(subject);
         threadx.setContent(content);
         threadx.setImagen(imagen);
-        String opcion="thread";
+        String opcion = "thread";
         HttpURLConnection urlConnection = null;
         try {
             JSONObject jsonThread = createJsonThread(threadx);
@@ -263,6 +260,7 @@ public class ThreadAPI {
         }
         return threadx;
     }
+
     private JSONObject createJsonThread(Threadx threadx) throws JSONException {
         JSONObject jsonThread = new JSONObject();
         jsonThread.put("idtema", threadx.getIdtema());
@@ -271,13 +269,14 @@ public class ThreadAPI {
         jsonThread.put("imagen", threadx.getImagen());
         return jsonThread;
     }
+
     public Post createPost(int idthema, int idhilo, String content, String imagelink) throws AppException {
         Post post = new Post();
         post.setIdthema(idthema);
         post.setIdhilo(idhilo);
         post.setContent(content);
         post.setImage(imagelink);
-        String opcion="posting";
+        String opcion = "posting";
         HttpURLConnection urlConnection = null;
         try {
             JSONObject jsonPost = createJsonPost(post);
@@ -317,6 +316,7 @@ public class ThreadAPI {
         }
         return post;
     }
+
     private JSONObject createJsonPost(Post post) throws JSONException {
         JSONObject jsonPost = new JSONObject();
         jsonPost.put("idthema", post.getIdthema());
@@ -324,5 +324,109 @@ public class ThreadAPI {
         jsonPost.put("content", post.getContent());
         jsonPost.put("imagelink", post.getImage());
         return jsonPost;
+    }
+
+    public void deleteThread(int idthread) throws AppException {
+        String opcion = "thread";
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(rootAPI.getLinks().get(opcion).getTarget());
+            String direccion = url.toString() + "/" + idthread;
+            url = new URL(direccion);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("DELETE");
+            int responseCode = urlConnection.getResponseCode(); //no se pq solo funciona con el response code
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error getting response");
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+    }
+
+    public void deletePost(int idpost) throws AppException {
+        String opcion = "posting";
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(rootAPI.getLinks().get(opcion).getTarget());
+            String direccion = url.toString() + "/" + idpost;
+            url = new URL(direccion);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("DELETE");
+            int responseCode = urlConnection.getResponseCode();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error getting response");
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+    }
+
+    public User loginUser(String username, String password) throws AppException {
+        User user = new User();
+
+        user.setUsername(username);
+        user.setPassword(password);
+
+        HttpURLConnection urlConnection = null;
+        try {
+            JSONObject jsonUser = createJsonUser(user);
+
+
+            URL urlPostUser = new URL(rootAPI.getLinks().get("gelapp-profile").getTarget());
+
+            urlConnection = (HttpURLConnection) urlPostUser.openConnection();
+            urlConnection.setRequestProperty("Content-Type",
+                    MediaType.DAT_API_USER);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+            PrintWriter writer = new PrintWriter(
+                    urlConnection.getOutputStream());
+            writer.println(jsonUser.toString());
+            writer.close();
+
+            int rc = urlConnection.getResponseCode();
+            if (rc == 404) {
+                user.setLoginSuccesful(false);
+                return user;
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            jsonUser = new JSONObject(sb.toString());
+
+            user.setUsername(jsonUser.getString("username"));
+            user.setLoginSuccesful(jsonUser.getBoolean("loginSuccesful"));
+
+            //JSONArray jsonLinks = jsonUser.getJSONArray("links");
+            //parseLinks(jsonLinks, user.getLinks());
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error parsing response");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Error getting response");
+        } finally {
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+        return user;
+    }
+
+
+    private JSONObject createJsonUser(User user) throws JSONException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("username", user.getUsername());
+        jsonUser.put("password", user.getPassword());
+
+        return jsonUser;
     }
 }

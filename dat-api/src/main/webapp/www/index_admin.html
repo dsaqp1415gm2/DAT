@@ -92,15 +92,15 @@
     	   otro elemento que se pueda ocultar al minimizar la barra -->
   	<div class="collapse navbar-collapse navbar-ex1-collapse">
    	 <ul class="nav navbar-nav">
-     	 <li class="active"><a href="index.html">Inicio</a></li> 
-     	 <li><a href="Tecnologia.html">Tecnologia</a></li>
-	 <li><a href="Deportes.html">Deportes</a></li>
-	 <li><a href="Motor.html">Motor</a></li>
-	 <li><a href="Videojuegos.html">Videojuegos</a></li>
+     	 <li class="active"><a href="index_admin.html">Inicio</a></li> 
+     	 <li><a href="Tecnologia_admin.html">Tecnologia</a></li>
+	 <li><a href="Deportes_admin.html">Deportes</a></li>
+	 <li><a href="Motor_admin.html">Motor</a></li>
+	 <li><a href="Videojuegos_admin.html">Videojuegos</a></li>
    	 </ul> 
 	 <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="abrir_login"><span class="glyphicon glyphicon-log-in"></span> Loguear como Admin</a></li>
-      </ul>  	
+        <li><a href="#" id="cerrar_sesion"><span class="glyphicon glyphicon-log-in"></span> Cerrar Sesion </a></li>
+      </ul>  		
  	 </div>
    </nav>
 	<!-- Half Page Image Background Carousel Header -->
@@ -156,7 +156,7 @@
       <!-- Modal content login-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" onclick=redirigir()>&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
@@ -179,7 +179,6 @@
     </div>
   </div> 
 </div>
-
 
 <!-- Modal para informa de login incorrecto-->
   <div class="modal fade" id="modal_error" role="dialog">
@@ -212,7 +211,7 @@
 
 			<h3>Tecnologia</h3>
 				
-			<p> <a class="btn btn-primary" href="Tecnologia.html" role="button">Acceder</a> </p>
+			<p> <a class="btn btn-primary" href="Tecnologia_admin.html" role="button">Acceder</a> </p>
 		</div>
 	</div>
 </div>
@@ -223,7 +222,7 @@
 
 			<h3>Deportes</h3>
 				
-			<p> <a class="btn btn-primary" href="Deportes.html" role="button">Acceder</a> </p>
+			<p> <a class="btn btn-primary" href="Deportes_admin.html" role="button">Acceder</a> </p>
 		</div>
 	</div>
 </div>
@@ -234,7 +233,7 @@
 
 			<h3>Motor</h3>
 				
-			<p> <a class="btn btn-primary" href="Motor.html" role="button">Acceder</a> </p>
+			<p> <a class="btn btn-primary" href="Motor_admin.html" role="button">Acceder</a> </p>
 		</div>
 	</div>
 </div>	
@@ -245,14 +244,14 @@
 
 			<h3>Videojuegos</h3>
 				
-			<p> <a class="btn btn-primary" href="Videojuegos.html" role="button">Acceder</a> </p>
+			<p> <a class="btn btn-primary" href="Videojuegos_admin.html" role="button">Acceder</a> </p>
 		</div>
 	</div>
 </div>	
 		
 
 
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/index_admin.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script>
 $('.carousel').carousel({
