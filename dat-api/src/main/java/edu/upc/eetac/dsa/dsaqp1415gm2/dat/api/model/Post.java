@@ -15,16 +15,13 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
 public class Post {
 	@InjectLinks({
 		@InjectLink(value = "/thread/post/{idpost}", style = Style.ABSOLUTE, rel = "idpost", title = "post link", type = MediaType.DAT_API_POST,bindings = { @Binding(name = "idpost", value = "${instance.idpost}")})})
+	private List<Link> links;
 	private String content;
 	private int idpost;
 	private int idthema;
 	private int idhilo;
 	private String imagelink;
-	private List<Link> links;
-	public Post() {
-		super();
-		links = new ArrayList<>();
-	}
+
 	
 	public String getContent() {
 		return content;
