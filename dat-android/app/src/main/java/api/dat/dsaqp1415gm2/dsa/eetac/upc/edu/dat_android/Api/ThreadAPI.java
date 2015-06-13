@@ -326,14 +326,11 @@ public class ThreadAPI {
         return jsonPost;
     }
 
-    public void deleteThread(int idthread) throws AppException {
-        String opcion = "thread";
+    public void deleteThread(String url) throws AppException {
         HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL(rootAPI.getLinks().get(opcion).getTarget());
-            String direccion = url.toString() + "/" + idthread;
-            url = new URL(direccion);
-            urlConnection = (HttpURLConnection) url.openConnection();
+            URL url2 = new URL(url);
+            urlConnection = (HttpURLConnection) url2.openConnection();
             urlConnection.setRequestMethod("DELETE");
             int responseCode = urlConnection.getResponseCode(); //no se pq solo funciona con el response code
         } catch (IOException e) {

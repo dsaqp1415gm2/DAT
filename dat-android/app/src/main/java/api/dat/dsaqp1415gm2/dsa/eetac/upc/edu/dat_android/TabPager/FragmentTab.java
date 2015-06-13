@@ -46,6 +46,7 @@ public class FragmentTab extends Fragment{
     private int id;
     private String username;
     private String password;
+    public String url;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,7 +122,7 @@ public class FragmentTab extends Fragment{
             Intent q = new Intent(getActivity(), ThreadActivity.class);
             q.putExtra("tema", id);
             q.putExtra("thread", nthread);
-            q.putExtra("url", threadx.getLinks().get("idthread").getTarget());
+            q.putExtra("url", threadx.getLinks().get("idthreadbytheme").getTarget());
             startActivityForResult(q, WRITE_ACTIVITY);
         }
     }
@@ -129,8 +130,8 @@ public class FragmentTab extends Fragment{
         @Override
         public boolean onItemLongClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            String idthread = ((TextView) arg1.findViewById(R.id.tvIdthread)).getText().toString();
-            nthread = Integer.parseInt(idthread);
+            Threadx threadx = threadList.get(posicion);
+            url = threadx.getLinks().get("idthread").getTarget();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Eliminarás este thread").setMessage("Estás seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -184,18 +185,18 @@ public class FragmentTab extends Fragment{
         }
     }
     private class FetchDeleteTask extends
-            AsyncTask<Void, Void, Theme> {
+            AsyncTask<Void, Void, Threadx> {
         private ProgressDialog pd;
 
         @Override
-        protected Theme doInBackground(Void... params) {
-            Theme theme = new Theme();
+        protected Threadx doInBackground(Void... params) {
+            Threadx threadx = new Threadx();
             try {
-                ThreadAPI.getInstance(getActivity()).deleteThread(nthread);
+                ThreadAPI.getInstance(getActivity()).deleteThread(url);
             } catch (AppException e) {
                 e.printStackTrace();
             }
-            return theme;
+            return threadx;
         }
     }
 }

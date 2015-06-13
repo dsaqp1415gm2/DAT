@@ -16,7 +16,9 @@ import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
 
 public class Threadx {
 	@InjectLinks({
-		@InjectLink(value = "/Theme/{tema}/{idthread}", style = Style.ABSOLUTE, rel = "idthread", title = "threads link", type = MediaType.DAT_API_THREAD,bindings = { @Binding(name = "tema", value = "${instance.tema}"),@Binding(name = "idthread", value = "${instance.idthread}")})})
+		@InjectLink(value = "/Theme/{tema}/{idthread}", style = Style.ABSOLUTE, rel = "idthreadbytheme", title = "threads link by theme", type = MediaType.DAT_API_THREAD,bindings = { @Binding(name = "tema", value = "${instance.tema}"),@Binding(name = "idthread", value = "${instance.idthread}")}),
+		@InjectLink(value = "/thread/{idthread}", style = Style.ABSOLUTE, rel = "idthread", title = "threads link", type = MediaType.DAT_API_THREAD,bindings = { @Binding(name = "tema", value = "${instance.tema}"),@Binding(name = "idthread", value = "${instance.idthread}")})})
+
 	private List<Link> links;
 	private String subject;
 	private String content;

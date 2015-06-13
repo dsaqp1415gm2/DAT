@@ -67,7 +67,6 @@ public class UserResource {
 					user.setName(rs.getString("username"));
 					if (password)
 						user.setPassword(rs.getString("userpass"));
-					user.setName(rs.getString("name"));
 				} else
 					throw new NotFoundException(username + " not found.");
 			} catch (SQLException e) {
