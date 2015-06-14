@@ -1,9 +1,5 @@
-/*!
- * Bootstrap v3.3.4 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
 
+//URL BASE de la API
 var API_BASE_URL = "http://147.83.7.156:8080/dat-api";
 
 // Carga la pagina con todos los threads y posts asociados al tema
@@ -14,7 +10,7 @@ $(document).ready(function(){
 
 // Abre el formulario para crear un thread
 $(document).ready(function(){
-    $("#Btn_form_crear_thread").click(function(){
+    	$("#Btn_form_crear_thread").click(function(){
         $("#form_crear_thread").modal();
 
     });
@@ -24,14 +20,14 @@ $(document).ready(function(){
 // redirigir
 
 function redirigir(){
-	console.log('ok');
+	
 	location.href = "index.html";
 }
 
 // Evento de validacion del login
 $("#validar_login").click(function(){
 
-validar();
+	validar();
 });
 // Validacion para acceder a la web secreta de admin
 
@@ -39,9 +35,9 @@ function validar(){
     
     var inputuname = $('#usrname').val();
     var inputpass  = $('#psw').val();
-    console.log('ok'); 
+    
     if(inputuname == "admin" && inputpass == "admin") {
-      // successful validation and create cookie
+      // creamos la cookie
       $.cookie('username', 'admin', { expires: 1 });
       var currentusr = $.cookie('username');
       window.location = "Deportes_admin.html";
@@ -83,14 +79,14 @@ $(document).ready(function() {
 
 //Borra campos si presiona el icono close de los formularios
 function borrarCampos(){
-	console.log('OK');
+	
 	$("#Subject").val('');
 	$("#Content").val('');	
 	$("#Link").val('');
 }
 
 function borraCamposThread(idthread){
-	console.log('OK');
+	
 	
 	$("#Content_reply"+idthread).val('');	
 	$("#link"+idthread).val('');
@@ -98,18 +94,19 @@ function borraCamposThread(idthread){
 
 
 function borrarCamposPost(idpost){
-	console.log('OK');
+	
 	
 	$("#Content_reply_to_post"+idpost).val('');
 	$("#link_reply_to_post"+idpost).val('');
 }
 
 function getThreads() {
+
 	var url = API_BASE_URL+'/dat/Theme/Deportes';
 	
 	$("#get_thread_number").text('');
 	$("#get_post_result").text('');
-
+	//Primer GET para coger todos los threads correspondientes a un tema
 	$.ajax({
 		url : url,
 		type : 'GET',
@@ -127,7 +124,7 @@ function getThreads() {
         var thread = v;
         var url2 = API_BASE_URL+'/dat/Theme/Deportes/'+thread.idthread;
 	var newPost;
-
+	// Segundo GET para coger todos los posts asociados a un thread(por ID)
         $.ajax({
             url : url2,
             type : 'GET',
@@ -186,11 +183,11 @@ $('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"
 
 
  // funcion asociada a cada post
-	  $(document).ready(function(){
-           $("#btn_reply_post"+post.idpost).click(function(){
-            $("#form_responder_post"+post.idpost).modal();
-           });
-           });
+	 	   $(document).ready(function(){
+          	    $("#btn_reply_post"+post.idpost).click(function(){
+          	     $("#form_responder_post"+post.idpost).modal();
+          	    });
+         	    });
 	
 
 		   // console.log(post.imagelink);
@@ -205,9 +202,9 @@ $('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"
                     img.setAttribute("class","img-thumbnail");
                     $(img).appendTo($("#get_post_result"+thread.idthread));
 		    }
-		    //$('<span id="prueba"></span>').appendTo($("#get_post_result"+thread.idthread));
+		    
                     $('<div class="panel-body">'+ post.content +'</div>').appendTo($("#get_post_result"+thread.idthread));
-//$('<div class="collapse" id="'+thread.idthread+'"></div>').appendTo($('#get_thread_result')); 
+
 		    $('<div class="collapse " id="'+thread.idthread+'"><div class="panel panel-success" id="get_post_result'+thread.idthread+'">').appendTo($('#get_thread_result')); 
                    }
                     
@@ -230,18 +227,12 @@ function createThread(){
 	newThread.subject = $("#Subject").val();
 	newThread.content = $("#Content").val();
 	newThread.imagen = $("#Link").val();
+
 	var url = API_BASE_URL+'/dat/thread';
 	var data = JSON.stringify(newThread);
 	
 	$("#create_thread_result").text('');
 	
-	
-	
-	
-
-
-
-
 
 	$.ajax({
 		url : url,
@@ -256,27 +247,25 @@ function createThread(){
 	}).done(function(data, status, jqxhr) {
 		$("#form_crear_thread").modal('hide');
 		$('<div class="alert alert-success">Thread creado!</div>').appendTo($("#create_thread_result"));
-		//window.reload();				
+						
   	}).fail(function() {
 		$("#form_crear_thread").modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
 		$("#Subject").val('');
 		$("#Content").val('');	
 		$("#Link").val('');
 		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});	
 
 }
 
 function reply_to_thread(thread_to_reply){
 	
-	console.log('ok');
+	
 	var newPost = new Object();
 	newPost.idthema = '2';
 	newPost.idhilo= thread_to_reply;
 	newPost.content = $("#Content_reply"+thread_to_reply).val();	
-	console.log(newPost.content);
 	newPost.imagelink = $("#link"+thread_to_reply).val();
 
 	var url = API_BASE_URL+'/dat/thread/post';
@@ -315,13 +304,12 @@ function reply_to_post(idthread,idpost){
 	var referencia= '<a href ="#'+idpost+'">#'+idpost+'</a>\t\t';
 	var content = $("#Content_reply_to_post"+idpost).val();
 
-	//$("#Content_reply_to_post"+idpost).appendTo($('#prueba'));
-	console.log($('#prueba').val());
+	
+	
 	var newPost = new Object();
 	newPost.idthema = '2';
 	newPost.idhilo= idthread;
 	newPost.content = referencia.concat(content);	
-	console.log(newPost.content);
 	newPost.imagelink = $("#link_reply_to_post"+idpost).val();
 
 	var url = API_BASE_URL+'/dat/thread/post';
@@ -345,15 +333,13 @@ function reply_to_post(idthread,idpost){
 		$("#Content_reply_to_post"+idpost).val('');	
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));	
-		//window.reload();			
+					
   	}).fail(function() {
 		$("#form_responder_post"+idpost).modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
-		
 		$("#Content_reply_to_post"+idpost).val('');
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-danger"> OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 		
 	});
 	
@@ -361,7 +347,4 @@ function reply_to_post(idthread,idpost){
 	
 }
 
-function funciona(){
 
- console.log('OK');
-}

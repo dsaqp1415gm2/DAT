@@ -1,8 +1,4 @@
-/*!
- * Bootstrap v3.3.4 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+
 
 var API_BASE_URL = "http://147.83.7.156:8080/dat-api";
 
@@ -20,7 +16,7 @@ $(document).ready(function(){
     });
 });
 
-// formulario para acceder como admin
+
 // redirigir
 
 function redirigir(){
@@ -237,13 +233,6 @@ function createThread(){
 	
 	$("#create_thread_result").text('');
 	
-	
-	
-	
-
-
-
-
 
 	$.ajax({
 		url : url,
@@ -258,15 +247,14 @@ function createThread(){
 	}).done(function(data, status, jqxhr) {
 		$("#form_crear_thread").modal('hide');
 		$('<div class="alert alert-success">Thread creado!</div>').appendTo($("#create_thread_result"));
-		//window.reload();				
+						
   	}).fail(function() {
 		$("#form_crear_thread").modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
 		$("#Subject").val('');
 		$("#Content").val('');	
 		$("#Link").val('');
 		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});	
 
 }
@@ -302,7 +290,7 @@ function reply_to_thread(thread_to_reply){
 		$("#Content_reply"+thread_to_reply).val('');	
 		$("#link"+thread_to_reply).val('');
 		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));	
-		//window.reload();			
+					
   	}).fail(function() {
 		$("#form_responder_thread"+thread_to_reply).modal('hide');
 	//prueba para ver si borra texto(debe ir despues de la funcion)
@@ -310,14 +298,14 @@ function reply_to_thread(thread_to_reply){
 		$("#Content_reply"+thread_to_reply).val('');
 		$("#link"+thread_to_reply).val('');
 		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});
 }
 function reply_to_post(idthread,idpost){
 	var referencia= '<a href ="#'+idpost+'">#'+idpost+'</a>\t\t';
 	var content = $("#Content_reply_to_post"+idpost).val();
 
-	//$("#Content_reply_to_post"+idpost).appendTo($('#prueba'));
+	
 	console.log($('#prueba').val());
 	var newPost = new Object();
 	newPost.idthema = '3';
@@ -347,15 +335,13 @@ function reply_to_post(idthread,idpost){
 		$("#Content_reply_to_post"+idpost).val('');	
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));	
-		//window.reload();			
+					
   	}).fail(function() {
-		$("#form_responder_post"+idpost).modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
-		
+		$("#form_responder_post"+idpost).modal('hide');	
 		$("#Content_reply_to_post"+idpost).val('');
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-success"> OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 		
 	});
 	
@@ -363,10 +349,6 @@ function reply_to_post(idthread,idpost){
 	
 }
 
-function funciona(){
-
- console.log('OK');
-}
 
 
 

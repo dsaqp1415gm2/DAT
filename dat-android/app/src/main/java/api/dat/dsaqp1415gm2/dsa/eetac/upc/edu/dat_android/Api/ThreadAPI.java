@@ -197,12 +197,13 @@ public class ThreadAPI {
 
             for (int i = 0; i < jsonPosts.length(); i++) {
                 Post post = new Post();
-                JSONObject jsonThread = jsonPosts.getJSONObject(i);
-                post.setContent(jsonThread.getString("content"));
-                post.setIdthema(jsonThread.getInt("idthema"));
-                post.setIdhilo(jsonThread.getInt("idhilo"));
-                post.setIdpost(jsonThread.getInt("idpost"));
-                post.setImage(jsonThread.getString("imagelink"));
+                JSONObject jsonPost = jsonPosts.getJSONObject(i);
+                post.setContent(jsonPost.getString("content"));
+                post.setIdthema(jsonPost.getInt("idthema"));
+                post.setIdhilo(jsonPost.getInt("idhilo"));
+                post.setIdpost(jsonPost.getInt("idpost"));
+                post.setImage(jsonPost.getString("imagelink"));
+                parseLinks(jsonPost.getJSONArray("links"), post.getLinks());
                 thread.getPosts().add(post);
             }
         } catch (IOException e) {
@@ -342,14 +343,11 @@ public class ThreadAPI {
         }
     }
 
-    public void deletePost(int idpost) throws AppException {
-        String opcion = "posting";
+    public void deletePost(String url) throws AppException {
         HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL(rootAPI.getLinks().get(opcion).getTarget());
-            String direccion = url.toString() + "/" + idpost;
-            url = new URL(direccion);
-            urlConnection = (HttpURLConnection) url.openConnection();
+            URL url2 = new URL(url);
+            urlConnection = (HttpURLConnection) url2.openConnection();
             urlConnection.setRequestMethod("DELETE");
             int responseCode = urlConnection.getResponseCode();
         } catch (IOException e) {

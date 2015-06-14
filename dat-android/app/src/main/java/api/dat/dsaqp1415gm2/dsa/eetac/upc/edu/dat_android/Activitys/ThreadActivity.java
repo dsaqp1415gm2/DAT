@@ -38,7 +38,7 @@ public class ThreadActivity extends ActionBarActivity{
     private String url;
     private String username;
     private String password;
-    private int npost;
+    private String urlpost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +165,7 @@ public class ThreadActivity extends ActionBarActivity{
         @Override
         public void onItemClick(AdapterView arg0, View arg1, int posicion, long arg3)
         {
-            npost = postList.get(posicion).getIdpost();
+            urlpost = postList.get(posicion).getLinks().get("idpost").getTarget();
             AlertDialog.Builder builder = new AlertDialog.Builder(ThreadActivity.this);
             builder.setTitle("Eliminarás este post").setMessage("Estás seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -178,18 +178,18 @@ public class ThreadActivity extends ActionBarActivity{
         }
     }
     private class FetchDeletePostTask extends
-            AsyncTask<Void, Void, Threadx> {
+            AsyncTask<Void, Void, Post> {
         private ProgressDialog pd;
 
         @Override
-        protected Threadx doInBackground(Void... params) {
-            Threadx threadx = new Threadx();
+        protected Post doInBackground(Void... params) {
+            Post post = new Post();
             try {
-                ThreadAPI.getInstance(ThreadActivity.this).deletePost(npost);
+                ThreadAPI.getInstance(ThreadActivity.this).deletePost(urlpost);
             } catch (AppException e) {
                 e.printStackTrace();
             }
-            return threadx;
+            return post;
         }
     }
 }

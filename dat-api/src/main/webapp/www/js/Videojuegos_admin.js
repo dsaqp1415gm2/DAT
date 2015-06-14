@@ -1,8 +1,4 @@
-/*!
- * Bootstrap v3.3.4 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+
 
 var API_BASE_URL = "http://147.83.7.156:8080/dat-api";
 
@@ -92,11 +88,7 @@ console.log('ok2');
   }
 
 });
-// Carga la pagina con todos los threads y posts asociados al tema
-/*$(document).ready(function(){
-	var url = API_BASE_URL + '/dat/Theme/Motor';
-	getThreads(url);
-});*/
+
 
 // Abre el formulario para crear un thread
 $(document).ready(function(){
@@ -251,7 +243,7 @@ $('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"
            });
 	
 
-		   // console.log(post.imagelink);
+		   
 		    if(post.imagelink==""){
 		    }
 		    else{
@@ -264,7 +256,7 @@ $('<div class="modal fade" id="form_responder_post'+post.idpost+'" role="dialog"
                     $(img).appendTo($("#get_post_result"+thread.idthread));
 		    }
                     $('<div class="panel-body">'+ post.content +'</div>').appendTo($("#get_post_result"+thread.idthread));
-//$('<div class="collapse" id="'+thread.idthread+'"></div>').appendTo($('#get_thread_result')); 
+ 
 		    $('<div class="collapse " id="'+thread.idthread+'"><div class="panel panel-success" id="get_post_result'+thread.idthread+'">').appendTo($('#get_thread_result')); 
                    }
                     
@@ -292,13 +284,6 @@ function createThread(){
 	
 	$("#create_thread_result").text('');
 	
-	
-	
-	
-
-
-
-
 
 	$.ajax({
 		url : url,
@@ -313,15 +298,15 @@ function createThread(){
 	}).done(function(data, status, jqxhr) {
 		$("#form_crear_thread").modal('hide');
 		$('<div class="alert alert-success">Thread creado!</div>').appendTo($("#create_thread_result"));
-		//window.reload();				
+						
   	}).fail(function() {
 		$("#form_crear_thread").modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
+	
 		$("#Subject").val('');
 		$("#Content").val('');	
 		$("#Link").val('');
 		$('<div class="alert alert-success"> OK! Error </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});	
 
 }
@@ -357,22 +342,22 @@ function reply_to_thread(thread_to_reply){
 		$("#Content_reply"+thread_to_reply).val('');	
 		$("#link"+thread_to_reply).val('');
 		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));
-		//window.reload();				
+						
   	}).fail(function() {
 		$("#form_responder_thread"+thread_to_reply).modal('hide');
-	//prueba para ver si borra texto(debe ir despues de la funcion)
+	
 		
 		$("#Content_reply"+thread_to_reply).val('');
 		$("#link"+thread_to_reply).val('');
 		$('<div class="alert alert-success"> OK! Error </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});
 }
 function reply_to_post(idthread,idpost){
 	var referencia= '<a href ="#'+idpost+'">#'+idpost+'</a>\t\t';
 	var content = $("#Content_reply_to_post"+idpost).val();
 
-	//$("#Content_reply_to_post"+idpost).appendTo($('#prueba'));
+	
 	console.log($('#prueba').val());
 	var newPost = new Object();
 	newPost.idthema = '4';
@@ -402,20 +387,17 @@ function reply_to_post(idthread,idpost){
 		$("#Content_reply_to_post"+idpost).val('');	
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-success">Tu respuesta ha sido añadida!</div>').appendTo($("#create_thread_result"));
-		//window.reload();				
+						
   	}).fail(function() {
 		$("#form_responder_post"+idpost).modal('hide');
 		$("#Content_reply_to_post"+idpost).val('');
 		$("#link_reply_to_post"+idpost).val('');
 		$('<div class="alert alert-success"> <strong>OK! </div>').appendTo($("#create_thread_result"));
-		//window.reload();
+		
 	});
 	
 	
 	
 }
 
-function funciona(){
 
- console.log('OK');
-}
