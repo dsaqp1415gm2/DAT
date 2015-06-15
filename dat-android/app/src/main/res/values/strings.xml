@@ -11,7 +11,7 @@
         <item>Deportes</item>
         <item>Motor</item>
         <item>Videojuegos</item>
-        <item>Login</item>
+        <item>Login/Logout</item>
         <item>About</item>
     </string-array>
     <!-- Lista de iconos del drawer -->

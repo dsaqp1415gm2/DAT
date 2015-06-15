@@ -12,9 +12,11 @@ import org.glassfish.jersey.linking.InjectLinks;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.MediaType;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.ThemeResource;
 import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.ThreadResource;
+import edu.upc.eetac.dsa.dsaqp1415gm2.dat.api.UserResource;
 
 public class Theme {
 	@InjectLinks({
+		@InjectLink(resource = UserResource.class, style = Style.ABSOLUTE, rel = "user", title = "Users", type = MediaType.DAT_API_USER),
 		@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "thread", title = "Threads", type = MediaType.DAT_API_THREAD),
 		@InjectLink(resource = ThemeResource.class, style = Style.ABSOLUTE, rel = "theme", title = "Themes", type = MediaType.DAT_API_THEME),
 		@InjectLink(value = "/thread/post", style = Style.ABSOLUTE, rel = "posting", title = "create post", type = MediaType.DAT_API_POST),

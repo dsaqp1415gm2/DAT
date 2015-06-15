@@ -361,7 +361,7 @@ public class ThreadAPI {
 
     public User loginUser(String username, String password) throws AppException {
         User user = new User();
-
+        User user2 = new User();
         user.setUsername(username);
         user.setPassword(password);
 
@@ -397,8 +397,8 @@ public class ThreadAPI {
             }
             jsonUser = new JSONObject(sb.toString());
 
-            user.setUsername(jsonUser.getString("username"));
-            user.setLoginSuccesful(jsonUser.getBoolean("loginSuccesful"));
+            user2.setUsername(jsonUser.getString("username"));
+            user2.setLoginSuccesful(jsonUser.getBoolean("loginSuccessful"));
 
             //JSONArray jsonLinks = jsonUser.getJSONArray("links");
             //parseLinks(jsonLinks, user.getLinks());
@@ -412,14 +412,14 @@ public class ThreadAPI {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
-        return user;
+        return user2;
     }
 
 
     private JSONObject createJsonUser(User user) throws JSONException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("username", user.getUsername());
-        jsonUser.put("password", user.getPassword());
+        jsonUser.put("userpass", user.getPassword());
 
         return jsonUser;
     }

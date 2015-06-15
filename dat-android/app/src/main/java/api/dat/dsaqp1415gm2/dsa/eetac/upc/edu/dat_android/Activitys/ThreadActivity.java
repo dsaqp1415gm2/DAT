@@ -46,11 +46,11 @@ public class ThreadActivity extends ActionBarActivity{
         thread = (int) getIntent().getExtras().get("thread");
         url = (String) getIntent().getExtras().get("url");
         setContentView(R.layout.posts_layout);
-        //añadir lista
+        //aï¿½adir lista
         setList();
-        //añadir toolbar
+        //aï¿½adir toolbar
         setToolbar();
-        //añadir actualizar
+        //aï¿½adir actualizar
         setSwipeRefresh();
         //empezar tareas
         new FetchThreadTask().execute();
@@ -167,7 +167,7 @@ public class ThreadActivity extends ActionBarActivity{
         {
             urlpost = postList.get(posicion).getLinks().get("idpost").getTarget();
             AlertDialog.Builder builder = new AlertDialog.Builder(ThreadActivity.this);
-            builder.setTitle("Eliminarás este post").setMessage("Estás seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            builder.setTitle("EliminarÃ¡s este post").setMessage("EstÃ¡s seguro?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     new FetchDeletePostTask().execute();
                     postList.clear();

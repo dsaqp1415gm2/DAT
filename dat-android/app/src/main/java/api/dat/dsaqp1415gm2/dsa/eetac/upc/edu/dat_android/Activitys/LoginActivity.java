@@ -76,19 +76,7 @@ public class LoginActivity extends ActionBarActivity {
                 username = user.getText().toString();
                 password = pass.getText().toString();
                 new FetchLoginTask().execute();
-                SharedPreferences prefs = getSharedPreferences("dat-profile",
-                        Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
-                editor.putString("username", username);
-                editor.putString("password", password);
-                boolean done = editor.commit();
-                if (done) {
-                    Log.d(TAG, "preferences set");
-                    Intent i = new Intent(this, DatMainActivity.class);
-                    startActivity(i);
-                } else
-                    Log.d(TAG, "preferences not set. THIS A SEVERE PROBLEM");
+
             }
 
             return true;
@@ -110,6 +98,34 @@ public class LoginActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
             return user;
+        }
+        @Override
+        protected void onPostExecute(User result) {
+            setLog(result);
+            if (pd != null) {
+                pd.dismiss();
+            }
+        }
+    }
+    private void setLog(User user){
+        if (user.isLoginSuccesful()==true)
+        {
+            SharedPreferences prefs = getSharedPreferences("dat-profile",
+                    Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
+            editor.putString("username", username);
+            editor.putString("password", password);
+            boolean done = editor.commit();
+            if (done) {
+                Log.d(TAG, "preferences set");
+                Intent i = new Intent(this, DatMainActivity.class);
+                startActivity(i);
+            } else{
+                Log.d(TAG, "preferences not set. THIS A SEVERE PROBLEM");
+            }
+        } else{
+            Toast.makeText(LoginActivity.this, "Contraseña o Usuario incorrecto", Toast.LENGTH_SHORT).show();
         }
     }
 }

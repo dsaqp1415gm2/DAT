@@ -1,6 +1,8 @@
 package api.dat.dsaqp1415gm2.dsa.eetac.upc.edu.dat_android.Activitys;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +66,7 @@ public class DatMainActivity extends ActionBarActivity{
                 Context.MODE_PRIVATE);
         username = prefs.getString("username", null);
         password = prefs.getString("password", null);
-        if((username!=null)&&(password!=null)) {
+        if(username!=null) {
             Authenticator.setDefault(new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(username, password
@@ -188,8 +191,20 @@ public class DatMainActivity extends ActionBarActivity{
                 viewPager.setCurrentItem(opcion);
                 break;
             case 4:
-                Intent i4 = new Intent(this, LoginActivity.class);
-                startActivity(i4);
+                if((username!=null)&&(password!=null)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DatMainActivity.this);
+                    builder.setTitle("Ya estás logueado").setMessage("Si continúas harás Logout, quieres continuar?")
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    logOut();
+                                }
+                            }).setNegativeButton("No", null).show();
+                }
+                else
+                {
+                    Intent i = new Intent(this, LoginActivity.class);
+                    startActivity(i);
+                }
                 break;
             case 5:
                 Intent i5 = new Intent(this, About.class);
@@ -234,7 +249,13 @@ public class DatMainActivity extends ActionBarActivity{
             return true;
         }
         if((username!=null)&&(password!=null)) {
-            Toast.makeText(DatMainActivity.this,"Ya estás logeado como administrador!",Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(DatMainActivity.this);
+            builder.setTitle("Ya estás logueado").setMessage("Si continúas harás Logout, quieres continuar?")
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    logOut();
+                }
+            }).setNegativeButton("No", null).show();
         }
         else{
             if (id == R.id.action_login){
@@ -256,5 +277,21 @@ public class DatMainActivity extends ActionBarActivity{
         Intent i = new Intent(this, CreateThreadActivity.class);
         startActivity(i);
     }
-
+    public void logOut()
+    {
+        SharedPreferences prefs = getSharedPreferences("dat-profile",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.putString("username", null);
+        editor.putString("password", null);
+        boolean done = editor.commit();
+        if (done) {
+            Log.d(TAG, "preferences set");
+            Intent i = new Intent(this, DatMainActivity.class);
+            startActivity(i);
+        } else{
+            Log.d(TAG, "preferences not set. THIS A SEVERE PROBLEM");
+        }
+    }
 }
