@@ -29,21 +29,21 @@ public class UserResource {
 		//private final static String INSERT_USER_INTO_USERS = "insert into users values(?, MD5(?), ?, ?)";
 		//private final static String INSERT_USER_INTO_USER_ROLES = "insert into user_roles values (?, 'registered')";
 		
-		@Path("/login")
 		@POST
+		@Path("/login")
 		@Produces(MediaType.DAT_API_USER)
 		@Consumes(MediaType.DAT_API_USER)
 		public User login(User user) {
-			if (user.getName() == null || user.getPassword() == null)
+			if (user.getUsername() == null || user.getUserpass() == null)
 				throw new BadRequestException(
 						"username and password cannot be null.");
 	 
-			String pwdDigest = DigestUtils.md5Hex((byte[]) user.getPassword());
-			String storedPwd = (String) getUserFromDatabase(user.getName(), true)
-					.getPassword();
+			String pwdDigest = DigestUtils.md5Hex(user.getUserpass());
+			String storedPwd = (String) getUserFromDatabase(user.getUsername(), true)
+					.getUserpass();
 	 
 			user.setLoginSuccessful(pwdDigest.equals(storedPwd));
-			user.setPassword(null);
+			user.setUserpass(null);
 			return user;
 		}
 		
@@ -64,9 +64,9 @@ public class UserResource {
 	 
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
-					user.setName(rs.getString("username"));
+					user.setUsername(rs.getString("username"));
 					if (password)
-						user.setPassword(rs.getString("userpass"));
+						user.setUserpass(rs.getString("userpass"));
 				} else
 					throw new NotFoundException(username + " not found.");
 			} catch (SQLException e) {
@@ -86,9 +86,9 @@ public class UserResource {
 		
 		@SuppressWarnings("unused")
 		private void validateUser(User user) {
-			if (user.getName() == null)
+			if (user.getUsername() == null)
 				throw new BadRequestException("username cannot be null.");
-			if (user.getPassword() == null)
+			if (user.getUserpass() == null)
 				throw new BadRequestException("password cannot be null.");
 		}
 		

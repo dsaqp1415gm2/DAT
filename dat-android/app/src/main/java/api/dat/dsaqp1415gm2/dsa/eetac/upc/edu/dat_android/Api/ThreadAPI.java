@@ -370,8 +370,7 @@ public class ThreadAPI {
             JSONObject jsonUser = createJsonUser(user);
 
 
-            URL urlPostUser = new URL(rootAPI.getLinks().get("gelapp-profile").getTarget());
-
+            URL urlPostUser = new URL("http://147.83.7.156:8080/dat-api/dat/users/login");
             urlConnection = (HttpURLConnection) urlPostUser.openConnection();
             urlConnection.setRequestProperty("Content-Type",
                     MediaType.DAT_API_USER);

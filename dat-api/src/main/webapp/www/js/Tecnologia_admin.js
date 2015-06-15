@@ -225,7 +225,7 @@ function getThreads() {
                    if(i==0){
                    }
                    else{		    
-                    $('<div class="panel-heading"><button type="button" id ="btn_reply_post'+post.idpost+'">#'+ post.idpost +'</button></div>').appendTo($("#get_post_result"+thread.idthread));
+                    $('<div class="panel-heading"><a name="'+post.idpost+'"><button type="button" id ="btn_reply_post'+post.idpost+'">#'+ post.idpost +'</button></a></div>').appendTo($("#get_post_result"+thread.idthread));
 		    $('<button type="button"  class="btn btn-danger btn pull-right" id="borrar'+post.idpost+'" onclick=deletePost('+post.idpost+')>Borrar post</button>').appendTo($("#get_post_result"+thread.idthread));
 
 // CREAMOS FORMULARIO PARA RESPONDER A LOS POSTS

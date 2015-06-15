@@ -20,7 +20,7 @@ public class DATRootAPI {
         @InjectLink(resource = DATRootAPIResource.class, style = Style.ABSOLUTE, rel = "self bookmark home", title = "DAT Root API"),
         @InjectLink(resource = PostResource.class, style = Style.ABSOLUTE, rel = "post", title = "post", type = MediaType.DAT_API_POST),
     	@InjectLink(resource = ThreadResource.class, style = Style.ABSOLUTE, rel = "thread", title = "post collecction", type = MediaType.DAT_API_THREAD),
-    	@InjectLink(resource = UserResource.class, style = Style.ABSOLUTE, rel = "user", title = "users", type = MediaType.DAT_API_THREAD),
+    	@InjectLink(resource = UserResource.class, style = Style.ABSOLUTE, rel = "user", title = "users", type = MediaType.DAT_API_USER),
     	@InjectLink(resource = ThemeResource.class, style = Style.ABSOLUTE, rel = "theme", title = "thread collection", type = MediaType.DAT_API_THEME)})
 	private List<Link> links;
 
